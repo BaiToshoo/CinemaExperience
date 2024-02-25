@@ -1,4 +1,4 @@
-﻿using CinemaExperience.Data;
+﻿using CinemaExperience.infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +13,7 @@ public static class ServiceCollectionExtension
 	public static IServiceCollection AddApplicationDbContext(this IServiceCollection services, IConfiguration config)
 	{
 		var connectionString = config.GetConnectionString("DefaultConnection");
-		services.AddDbContext<ApplicationDbContext>(options =>
+		services.AddDbContext<CinemaExperienceDbContext>(options =>
 			options.UseSqlServer(connectionString));
 
 		services.AddDatabaseDeveloperPageExceptionFilter();
@@ -24,7 +24,7 @@ public static class ServiceCollectionExtension
 	{
 		services.
 			 AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-			.AddEntityFrameworkStores<ApplicationDbContext>();
+			.AddEntityFrameworkStores<CinemaExperienceDbContext>();
 
 		return services;
 	}
