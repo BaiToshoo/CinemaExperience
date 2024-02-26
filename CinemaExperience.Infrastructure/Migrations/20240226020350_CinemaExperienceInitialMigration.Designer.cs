@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaExperience.Infrastructure.Migrations
 {
     [DbContext(typeof(CinemaExperienceDbContext))]
-    [Migration("20240226014642_CreatingDataBaseModels")]
-    partial class CreatingDataBaseModels
+    [Migration("20240226020350_CinemaExperienceInitialMigration")]
+    partial class CinemaExperienceInitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,9 +46,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MovieId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -56,8 +53,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                         .HasComment("The name of the actor");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
 
                     b.ToTable("Actors");
                 });
@@ -450,13 +445,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("CinemaExperience.Infrastructure.Data.Models.Actor", b =>
-                {
-                    b.HasOne("CinemaExperience.Infrastructure.Data.Models.Movie", null)
-                        .WithMany("Actors")
-                        .HasForeignKey("MovieId");
-                });
-
             modelBuilder.Entity("CinemaExperience.Infrastructure.Data.Models.Movie", b =>
                 {
                     b.HasOne("CinemaExperience.Infrastructure.Data.Models.Director", "Director")
@@ -477,7 +465,7 @@ namespace CinemaExperience.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("CinemaExperience.Infrastructure.Data.Models.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("Actors")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

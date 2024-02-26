@@ -34,6 +34,6 @@ public class Movie
     public string ImageUrl { get; set; } = null!;
 
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
-    public ICollection<Actor> Actors { get; set; } = new List<Actor>();
+    public ICollection<MovieActor> Actors { get; set; } = new List<MovieActor>();
     public ICollection<MovieGenre> MovieGenres { get; set; } = new List<MovieGenre>();
 }
