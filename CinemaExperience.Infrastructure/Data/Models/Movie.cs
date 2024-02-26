@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Movie;
@@ -29,6 +31,23 @@ public class Movie
     [Required]
     [Comment("The duration of the movie in minutes")]
     public int Duration { get; set; }
+
+    [Required]
+    [MaxLength(DescriptionMaxLength)]
+    [Comment("The description of the movie")]
+    public string Description { get; set; } = null!;
+
+    [Required]
+    [Comment(comment: "The rating of the movie by critics")]
+    [Range(MinCriticRating, MaxCriticRating)]
+    [DefaultValue(DefaultRating)]
+    public int CriticsRating { get; set; }
+
+    [Required]
+    [Comment("The rating of the movie by users")]
+    [Range(MinUserRating, MaxUserRating)]
+    [DefaultValue(DefaultRating)]
+    public int UserRating { get; set; }
 
     [Required]
     public string ImageUrl { get; set; } = null!;

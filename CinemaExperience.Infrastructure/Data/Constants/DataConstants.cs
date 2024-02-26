@@ -6,6 +6,21 @@ public static class DataConstants
         //Name
         public const int TitleMaxLength = 50;
         public const int TitleMinLength = 3;
+
+        //Description
+        public const int DescriptionMaxLength = 1000;
+        public const int DescriptionMinLength = 10;
+
+        //Ratings
+        public const int DefaultRating = 1;
+
+        //CriticsRating
+        public const int MaxCriticRating = 10;
+        public const int MinCriticRating = 1;
+
+        //UserRating
+        public const int MaxUserRating = 5;
+        public const int MinUserRating = 1;
     }
 
     public static class Genre
