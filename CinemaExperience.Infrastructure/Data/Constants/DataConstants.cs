@@ -19,7 +19,7 @@ public static class DataConstants
         public const int MinCriticRating = 1;
 
         //UserRating
-        public const int MaxUserRating = 5;
+        public const int MaxUserRating = 10;
         public const int MinUserRating = 1;
     }
 
