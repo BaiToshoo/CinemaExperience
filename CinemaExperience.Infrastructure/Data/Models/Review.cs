@@ -30,8 +30,4 @@ public class Review
     [Range(MinRating, MaxRating)]
     [Comment("The rating of the review in pattern 1-10")]
     public int Rating { get; set; }
-
-    [Comment("Distinguishes between regular user and critic review")]
-    [Required]
-    public bool IsCriticReview { get; set; }
 }
