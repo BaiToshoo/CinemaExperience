@@ -63,7 +63,7 @@ public static class DataConstants
         public const int MinRating = 1;
     }
 
-    public static class ApplicationUser
+    public static class ApplicationUserConstants
     {
         //FirstName
         public const int FirstNameMaxLength = 30;

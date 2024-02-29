@@ -1,7 +1,7 @@
 ﻿using CinemaExperience.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.ApplicationUser;
+using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.ApplicationUserConstants;
 
 namespace CinemaExperience.Infrastructure.Identity;
 public class ApplicationUser : IdentityUser
