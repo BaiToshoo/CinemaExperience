@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -53,6 +52,6 @@ public class Movie
     public string ImageUrl { get; set; } = null!;
 
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
-    public ICollection<MovieActor> Actors { get; set; } = new List<MovieActor>();
+    public ICollection<MovieActor> MovieActors { get; set; } = new List<MovieActor>();
     public ICollection<MovieGenre> MovieGenres { get; set; } = new List<MovieGenre>();
 }
