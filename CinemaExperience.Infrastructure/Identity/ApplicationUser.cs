@@ -21,5 +21,8 @@ public class ApplicationUser : IdentityUser
 
 
     //Distinguishes between regular user and critic
-    public bool IsCritic { get; set; }
+    public bool IsCritic { get; set; } = false;
+
+    //Distinguishes between regular user or critic and admin
+    public bool IsAdmin { get; set; } = false;
 }

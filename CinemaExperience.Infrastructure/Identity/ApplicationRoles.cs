@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CinemaExperience.Infrastructure.Identity;
+﻿namespace CinemaExperience.Infrastructure.Identity;
 public static class ApplicationRoles
 {
     public const string Critic = "Critic";

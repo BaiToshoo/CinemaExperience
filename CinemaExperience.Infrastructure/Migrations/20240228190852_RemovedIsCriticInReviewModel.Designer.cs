@@ -4,6 +4,7 @@ using CinemaExperience.infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaExperience.Infrastructure.Migrations
 {
     [DbContext(typeof(CinemaExperienceDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240228190852_RemovedIsCriticInReviewModel")]
+    partial class RemovedIsCriticInReviewModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,88 +55,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Actors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Biography = "Christian Charles Philip Bale is an English actor. Known for his versatility and intensive method acting, he is the recipient of many awards, including an Academy Award and two Golden Globe Awards. Time magazine included him on its list of the 100 most influential people in the world in 2011. Born in Haverfordwest, Wales, to English parents, Bale had his first starring role at age 13 in Steven Spielberg's war film Empire of the Sun (1987).",
-                            BirthDate = new DateTime(1974, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://commons.wikimedia.org/wiki/Category:Christian_Bale#/media/File:Christian_Bale_2014.jpg",
-                            Name = "Christian Bale"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Biography = "Heath Andrew Ledger was an Australian actor and music video director. After performing roles in several Australian television and film productions during the 1990s, Ledger left for the United States in 1998 to further develop his film career. His work comprised nineteen films, including 10 Things I Hate About You (1999), The Patriot (2000), A Knight's Tale (2001), Monster's Ball (2001), Lords of Dogtown (2005), Brokeback Mountain (2005), Candy (2006), I'm Not There (2007), The Dark Knight (2008), and The Imaginarium of Doctor Parnassus (2009).",
-                            BirthDate = new DateTime(1979, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://en.wikipedia.org/wiki/Heath_Ledger#/media/File:Heath_Ledger_(2).jpg",
-                            Name = "Heath Ledger"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Biography = "Sir Michael Caine CBE is an English actor. Known for his distinctive Cockney accent, he has appeared in more than 130 films during a career spanning over 70 years, and is considered a British film icon. As of February 2017, the films in which Caine has appeared have grossed over $7.8 billion worldwide. Often playing a Cockney, Caine made his breakthrough in the 1960s with starring roles in British films, including Zulu (1964), The Ipcress File (1965), Alfie (1966), for which he was nominated for an Academy Award, The Italian Job (1969), and Battle of Britain (1969).",
-                            BirthDate = new DateTime(1933, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://en.wikipedia.org/wiki/Michael_Caine#/media/File:Michael_Caine_-_Viennale_2012_a_(cropped).jpg",
-                            Name = "Michael Caine"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Biography = "Aaron Edward Eckhart is an American actor. Born in Cupertino, California, Eckhart moved to England at age 13, when his father relocated the family. Several years later, he began his acting career by performing in school plays, before moving to Sydney, Australia, for his high school senior year. He left high school without graduating, but earned a diploma through an adult education course, and graduated from Brigham Young University (BYU) in 1994 with a Bachelor of Fine Arts degree in film.",
-                            BirthDate = new DateTime(1968, 3, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://en.wikipedia.org/wiki/Aaron_Eckhart#/media/File:Aaron_Eckhart_(29830286295)_(cropped).jpg",
-                            Name = "Aaron Eckhart"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Biography = "Margalit Ruth Gyllenhaal is an American actress and film producer. Part of the Gyllenhaal family, she is the daughter of filmmakers Stephen Gyllenhaal and Naomi Achs, and the older sister of actor Jake Gyllenhaal. She began her career as a teenager with small roles in several of her father's films, and appeared with her brother in the cult favorite Donnie Darko (2001). She received critical acclaim for her leading roles in the independent films Secretary (2002) and Sherrybaby (2006), earning a Golden Globe Award for the latter.",
-                            BirthDate = new DateTime(1977, 11, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://en.wikipedia.org/wiki/Maggie_Gyllenhaal#/media/File:Maggie_Gyllenhaal_2021.jpg",
-                            Name = "Maggie Gyllenhaal"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Biography = "Leonardo Wilhelm DiCaprio is an American actor, film producer, and environmentalist. Known for his work in biopics and period films, DiCaprio is the recipient of numerous accolades, including an Academy Award, a British Academy Film Award, and three Golden Globe Awards. As of 2019, his films have grossed over $7.2 billion worldwide, and he has been placed eight times in annual rankings of the world's highest-paid actors.",
-                            BirthDate = new DateTime(1974, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://www.britannica.com/biography/Leonardo-DiCaprio#/media/1/711242/259309",
-                            Name = "Leonardo DiCaprio"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Biography = "Joseph Leonard Gordon-Levitt is an American actor, filmmaker, singer, and entrepreneur. As a child, Gordon-Levitt appeared in the films A River Runs Through It, Angels in the Outfield, Holy Matrimony and 10 Things I Hate About You, and as Tommy Solomon in the TV series 3rd Rock from the Sun. He took a break from acting to study at Columbia University, but dropped out in 2004 to pursue acting again. He has since starred in (500) Days of Summer, Inception, Hesher, 50/50, Premium Rush, The Night Before, and Snowden.",
-                            BirthDate = new DateTime(1981, 2, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://commons.wikimedia.org/wiki/File:Joseph_Gordon-Levitt_TechCrunch_Disrupt_San_Francisco_2019_-_Day_1_(cropped).jpeg#/media/File:Joseph_Gordon-Levitt_TechCrunch_Disrupt_San_Francisco_2019_-_Day_1_(cropped).jpeg",
-                            Name = "Joseph Gordon-Levitt"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Biography = "Elliot Page is a Canadian actor and producer. He first became known for his role in the film and television series Pit Pony (1997–2000), for which he won a Young Artist Award, and for recurring roles in Trailer",
-                            BirthDate = new DateTime(1987, 2, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://commons.wikimedia.org/wiki/File:Elliot_Page_8126099_(cropped).jpg#/media/File:Elliot_Page_8126099_(cropped).jpg",
-                            Name = "Elliot Page"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Biography = "Edward Thomas Hardy CBE is an English actor and producer. After studying acting at the Drama Centre London, he made his film debut in Ridley Scott's Black Hawk Down (2001) and has since appeared in such films as Star Trek: Nemesis (2002), RocknRolla (2008), Bronson (2008), Warrior (2011), Tinker Tailor Soldier Spy (2011), Lawless (2012), Locke (2013), The Drop (2014), and The Revenant (2015), for which he received a nomination for the Academy Award for Best Supporting Actor.",
-                            BirthDate = new DateTime(1977, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://commons.wikimedia.org/wiki/File:Tom_Hardy_by_Gage_Skidmore.jpg#/media/File:Tom_Hardy_by_Gage_Skidmore.jpg",
-                            Name = "Tom Hardy"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Biography = "Ken Watanabe is a Japanese actor. To English-speaking audiences, he is known for playing tragic hero characters, such as General Tadamichi Kuribayashi in Letters from Iwo Jima and Lord Katsumoto Moritsugu in The Last Samurai, for which he was nominated for the Academy Award for Best Supporting Actor. Among other awards, he has won the Japan Academy Film Prize for Best Actor twice, in 2007 for Memories of Tomorrow and in 2010 for Shizumanu Taiyō. He is also known for his roles in Christopher Nolan's Batman Begins and The Dark Knight (as Ra's al Ghul), Inception, and Godzilla.",
-                            BirthDate = new DateTime(1959, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://commons.wikimedia.org/wiki/File:Ken_Watanabe_2007_(cropped).jpg#/media/File:Ken_Watanabe_2007_(cropped).jpg",
-                            Name = "Ken Watanabe"
-                        });
                 });
 
             modelBuilder.Entity("CinemaExperience.Infrastructure.Data.Models.Director", b =>
@@ -168,16 +88,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Directors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Biography = "Christopher Edward Nolan CBE is a British-American film director, producer, and screenwriter. His films have grossed over US$5 billion worldwide, and he is one of the highest-grossing directors in history. Having made his directorial debut with Following (1998), Nolan gained considerable attention for his second feature, Memento (2000), for which he received a nomination for the Academy Award for Best Original Screenplay. The acclaim garnered by his independent films gave Nolan the opportunity to make the big-budget thriller Insomnia (2002), and the mystery drama The Prestige (2006). He found further popular and critical success with The Dark Knight Trilogy (2005–2012), Inception (2010), Interstellar (2014), Dunkirk (2017), and Tenet (2020).",
-                            BirthDate = new DateTime(1970, 7, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ImageUrl = "https://commons.wikimedia.org/wiki/Category:Christopher_Nolan#/media/File:Christopher_Nolan_Cannes_2018.jpg",
-                            Name = "Christopher Nolan"
-                        });
                 });
 
             modelBuilder.Entity("CinemaExperience.Infrastructure.Data.Models.Genre", b =>
@@ -198,48 +108,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Action"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Science"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Drama"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Thriller"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Crime"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Sci-Fi"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Mystery"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Adventure"
-                        });
                 });
 
             modelBuilder.Entity("CinemaExperience.Infrastructure.Data.Models.Movie", b =>
@@ -292,32 +160,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                     b.HasIndex("DirectorId");
 
                     b.ToTable("Movies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            CriticsRating = 0,
-                            Description = "The Dark Knight is a 2008 superhero film directed, produced, and co-written by Christopher Nolan. Based on the DC Comics character Batman, the film is the second installment of Nolan's The Dark Knight Trilogy and a sequel to 2005's Batman Begins, starring Christian Bale and supported by Michael Caine, Heath Ledger, Gary Oldman, Aaron Eckhart, Maggie Gyllenhaal, and Morgan Freeman. In the film, Bruce Wayne / Batman (Bale), Police Lieutenant James Gordon (Oldman) and District Attorney Harvey Dent (Eckhart) form an alliance to dismantle organized crime in Gotham City, but are menaced by an anarchistic mastermind known as the Joker (Ledger), who seeks to undermine Batman's influence and throw the city into anarchy.",
-                            DirectorId = 1,
-                            Duration = 152,
-                            ImageUrl = "https://en.wikipedia.org/wiki/The_Dark_Knight#/media/File:The_Dark_Knight_(2008_film).jpg",
-                            ReleaseDate = new DateTime(2008, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "The Dark Knight",
-                            UserRating = 0
-                        },
-                        new
-                        {
-                            Id = 1,
-                            CriticsRating = 0,
-                            Description = "Inception is a 2010 science fiction action film written and directed by Christopher Nolan, who also produced the film with Emma Thomas, his wife. The film stars Leonardo DiCaprio as a professional thief who steals information by infiltrating the subconscious of his targets. He is offered a chance to have his criminal history erased as payment for the implantation of another person's idea into a target's subconscious. The ensemble cast includes Ken Watanabe, Joseph Gordon-Levitt, Marion Cotillard, Elliot Page, Tom Hardy, Dileep Rao, Cillian Murphy, Tom Berenger, and Michael Caine.",
-                            DirectorId = 1,
-                            Duration = 148,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/2/2e/Inception_%282010%29_theatrical_poster.jpg",
-                            ReleaseDate = new DateTime(2010, 7, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Inception",
-                            UserRating = 0
-                        });
                 });
 
             modelBuilder.Entity("CinemaExperience.Infrastructure.Data.Models.MovieActor", b =>
@@ -333,58 +175,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                     b.HasIndex("ActorId");
 
                     b.ToTable("MovieActors");
-
-                    b.HasData(
-                        new
-                        {
-                            MovieId = 2,
-                            ActorId = 1
-                        },
-                        new
-                        {
-                            MovieId = 2,
-                            ActorId = 2
-                        },
-                        new
-                        {
-                            MovieId = 2,
-                            ActorId = 4
-                        },
-                        new
-                        {
-                            MovieId = 2,
-                            ActorId = 3
-                        },
-                        new
-                        {
-                            MovieId = 2,
-                            ActorId = 5
-                        },
-                        new
-                        {
-                            MovieId = 1,
-                            ActorId = 6
-                        },
-                        new
-                        {
-                            MovieId = 1,
-                            ActorId = 7
-                        },
-                        new
-                        {
-                            MovieId = 1,
-                            ActorId = 8
-                        },
-                        new
-                        {
-                            MovieId = 1,
-                            ActorId = 9
-                        },
-                        new
-                        {
-                            MovieId = 1,
-                            ActorId = 10
-                        });
                 });
 
             modelBuilder.Entity("CinemaExperience.Infrastructure.Data.Models.MovieGenre", b =>
@@ -400,33 +190,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("MovieGenres");
-
-                    b.HasData(
-                        new
-                        {
-                            MovieId = 2,
-                            GenreId = 1
-                        },
-                        new
-                        {
-                            MovieId = 2,
-                            GenreId = 8
-                        },
-                        new
-                        {
-                            MovieId = 1,
-                            GenreId = 6
-                        },
-                        new
-                        {
-                            MovieId = 1,
-                            GenreId = 7
-                        },
-                        new
-                        {
-                            MovieId = 1,
-                            GenreId = 4
-                        });
                 });
 
             modelBuilder.Entity("CinemaExperience.Infrastructure.Data.Models.Review", b =>
@@ -462,40 +225,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Content = "It is, simply put, a cerebral masterpiece from Christopher Nolan.",
-                            MovieId = 1,
-                            Rating = 10,
-                            UserId = "cd5cc46a-ef03-4222-ad12-71572e2c61ba"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Content = "The famous masked vigilante has never looked or felt more intense.",
-                            MovieId = 2,
-                            Rating = 7,
-                            UserId = "cd5cc46a-ef03-4222-ad12-71572e2c61ba"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Content = "Mind-blowing, amazing, smart, thrilling. That's all",
-                            MovieId = 1,
-                            Rating = 10,
-                            UserId = "9ddac0c8-5b4a-4ac9-9346-08f6dc133ca5"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Content = "Revolutionized the superhero genre. Must see.",
-                            MovieId = 2,
-                            Rating = 8,
-                            UserId = "9ddac0c8-5b4a-4ac9-9346-08f6dc133ca5"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -727,68 +456,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "2a54cf13-1fde-4537-a977-e1d0c85c3fb0",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "99a20b3f-26da-430b-aa4a-01305a238bde",
-                            Email = "admins04@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "admins04@gmail.com",
-                            NormalizedUserName = "Admins04@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMMBdSbjbQJToZsLRx8evYhz0D9aLtiT7dZLXUhBNjDTEhPkk3vPD4YvKEPli6xewA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "c85081b2-e3ad-4eb2-8755-536e27823def",
-                            TwoFactorEnabled = false,
-                            UserName = "admins04@gmail.com",
-                            FirstName = "Admin",
-                            IsAdmin = true,
-                            IsCritic = false,
-                            LastName = "Admin"
-                        },
-                        new
-                        {
-                            Id = "cd5cc46a-ef03-4222-ad12-71572e2c61ba",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "da38ecc8-65ad-4f92-b66d-a03273f354ca",
-                            Email = "toshetos04@gmail.bg",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "toshetos04@gmail.bg",
-                            NormalizedUserName = "toshetos04@gmail.bg",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI8yDxGwKm2P0zsAadJMOSo4mvyzfvWw09BNokDxNg72M2y5s902aJppTsWoD5rSFg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "2b0dc8e3-bd97-4a63-83e5-ccfc441f3c87",
-                            TwoFactorEnabled = false,
-                            UserName = "toshetos04@gmail.bg",
-                            FirstName = "Teodora",
-                            IsAdmin = false,
-                            IsCritic = true,
-                            LastName = "Kuzmanova"
-                        },
-                        new
-                        {
-                            Id = "9ddac0c8-5b4a-4ac9-9346-08f6dc133ca5",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "4f023fe5-68fe-4b41-b08c-21ebfe0f35fc",
-                            Email = "toshetos04@abv.bg",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "toshetos04@abv.bg",
-                            NormalizedUserName = "toshetos04@abv.bg",
-                            PasswordHash = "AQAAAAEAACcQAAAAELuWlZn9qwG9Vj6+TSXVC2fhz8n4Ifc9vxx0TtTHUcmIJMkm4BXm54hggML1zADKFQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "14aa7c87-3329-4f8a-8d41-2eeb1bdd7158",
-                            TwoFactorEnabled = false,
-                            UserName = "toshetos04@abv.bg",
-                            FirstName = "Todor",
-                            IsAdmin = false,
-                            IsCritic = false,
-                            LastName = "Kuzmanov"
-                        });
                 });
 
             modelBuilder.Entity("CinemaExperience.Infrastructure.Data.Models.Movie", b =>
@@ -811,7 +478,7 @@ namespace CinemaExperience.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("CinemaExperience.Infrastructure.Data.Models.Movie", "Movie")
-                        .WithMany("MovieActors")
+                        .WithMany("Actors")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -927,7 +594,7 @@ namespace CinemaExperience.Infrastructure.Migrations
 
             modelBuilder.Entity("CinemaExperience.Infrastructure.Data.Models.Movie", b =>
                 {
-                    b.Navigation("MovieActors");
+                    b.Navigation("Actors");
 
                     b.Navigation("MovieGenres");
 
