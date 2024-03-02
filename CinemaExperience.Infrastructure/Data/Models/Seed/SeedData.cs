@@ -106,10 +106,10 @@ internal class SeedData
             FirstName = "Admin",
             LastName = "Admin",
             Id = "2a54cf13-1fde-4537-a977-e1d0c85c3fb0",
-            UserName = "admins@admin.com",
-            NormalizedUserName = "admins@admin.com",
-            Email = "admins@admin.com",
-            NormalizedEmail = "admins@admin.com",
+            UserName = "admin@admin.com",
+            NormalizedUserName = "admin@admin.com",
+            Email = "admin@admin.com",
+            NormalizedEmail = "admin@admin.com",
             IsAdmin = true
         };
 
