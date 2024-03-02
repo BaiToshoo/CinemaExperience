@@ -44,7 +44,7 @@ Follow these steps to get your application up and running:
         dotnet ef database update
         ```
 
-4. **3. Seeding sample data
+4. **Seeding sample data
 would happen once you run the application, including Test Accounts:
 
 User: user@user.com / password: guest123456
