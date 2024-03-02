@@ -77,10 +77,10 @@ internal class SeedData
             FirstName = "Todor",
             LastName = "Kuzmanov",
             Id = "9ddac0c8-5b4a-4ac9-9346-08f6dc133ca5",
-            UserName = "user@user.com",
-            NormalizedUserName = "user@user.com",
-            Email = "user@user.com",
-            NormalizedEmail = "user@user.com",
+            UserName = "guest@guest.com",
+            NormalizedUserName = "guest@guest.com",
+            Email = "guest@guest.com",
+            NormalizedEmail = "guest@guest.com",
         };
 
         GuestUser.PasswordHash =
