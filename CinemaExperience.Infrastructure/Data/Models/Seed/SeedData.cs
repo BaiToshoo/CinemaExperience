@@ -77,44 +77,44 @@ internal class SeedData
             FirstName = "Todor",
             LastName = "Kuzmanov",
             Id = "9ddac0c8-5b4a-4ac9-9346-08f6dc133ca5",
-            UserName = "toshetos04@abv.bg",
-            NormalizedUserName = "toshetos04@abv.bg",
-            Email = "toshetos04@abv.bg",
-            NormalizedEmail = "toshetos04@abv.bg",
+            UserName = "user@user.com",
+            NormalizedUserName = "user@user.com",
+            Email = "user@user.com",
+            NormalizedEmail = "user@user.com",
         };
 
         GuestUser.PasswordHash =
-            hasher.HashPassword(GuestUser, "guest123");
+            hasher.HashPassword(GuestUser, "guest123456");
 
         CriticUser = new ApplicationUser()
         {
             FirstName = "Teodora",
             LastName = "Kuzmanova",
             Id = "cd5cc46a-ef03-4222-ad12-71572e2c61ba",
-            UserName = "toshetos04@gmail.bg",
-            NormalizedUserName = "toshetos04@gmail.bg",
-            Email = "toshetos04@gmail.bg",
-            NormalizedEmail = "toshetos04@gmail.bg",
+            UserName = "critic@critic.com",
+            NormalizedUserName = "critic@critic.com",
+            Email = "critic@critic.com",
+            NormalizedEmail = "critic@critic.com",
             IsCritic = true
         };
 
         CriticUser.PasswordHash =
-            hasher.HashPassword(CriticUser, "critic123");
+            hasher.HashPassword(CriticUser, "critic123456");
 
         AdminUser = new ApplicationUser()
         {
             FirstName = "Admin",
             LastName = "Admin",
             Id = "2a54cf13-1fde-4537-a977-e1d0c85c3fb0",
-            UserName = "admins04@gmail.com",
-            NormalizedUserName = "Admins04@gmail.com",
-            Email = "admins04@gmail.com",
-            NormalizedEmail = "admins04@gmail.com",
+            UserName = "admins@admin.com",
+            NormalizedUserName = "admins@admin.com",
+            Email = "admins@admin.com",
+            NormalizedEmail = "admins@admin.com",
             IsAdmin = true
         };
 
         AdminUser.PasswordHash =
-            hasher.HashPassword(AdminUser, "admin123");
+            hasher.HashPassword(AdminUser, "admin123456");
     }
 
     private void SeedMovies()
