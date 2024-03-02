@@ -1,4 +1,5 @@
-﻿using CinemaExperience.Core.ViewModels.Movie;
+﻿using CinemaExperience.Core.Contracts.Movie;
+using CinemaExperience.Core.ViewModels.Movie;
 using CinemaExperience.infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,32 +10,19 @@ namespace CinemaExperience.Controllers;
 [Authorize]
 public class MovieController : Controller
 {
-    private readonly CinemaExperienceDbContext context;
+    private readonly IMovieService movieService;
 
-    public MovieController(CinemaExperienceDbContext dbContext)
+    public MovieController(IMovieService _movieService)
     {
-        context = dbContext;
+        movieService = _movieService;
     }
 
     [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> All()
     {
-        //Getting all of the movies from the database
-        var allMovies = await context.Movies
-            .AsNoTracking()
-            .Select(m => new AllMoviesViewModel()
-            {
-
-                Id = m.Id,
-                Title = m.Title,
-                Director = m.Director.Name,
-                ImageUrl = m.ImageUrl
-            })
-            .ToListAsync();
-
-        //Return all of the movies to the view
-        return View(allMovies);
+        var model = await movieService.GetAllMovies();
+        return View(model);
     }
 
 }

@@ -1,4 +1,7 @@
-﻿using CinemaExperience.infrastructure.Data;
+﻿using CinemaExperience.Core.Contracts.Movie;
+using CinemaExperience.Core.Services.Movie;
+using CinemaExperience.infrastructure.Data;
+using CinemaExperience.Infrastructure.Data.Common;
 using CinemaExperience.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +11,8 @@ public static class ServiceCollectionExtension
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        services.AddScoped<IMovieService, MovieService>();
+
         return services;
     }
     public static IServiceCollection AddApplicationDbContext(this IServiceCollection services, IConfiguration config)
@@ -15,6 +20,8 @@ public static class ServiceCollectionExtension
         var connectionString = config.GetConnectionString("DefaultConnection");
         services.AddDbContext<CinemaExperienceDbContext>(options =>
             options.UseSqlServer(connectionString));
+
+        services.AddScoped<IRepository, Repository>();
 
         services.AddDatabaseDeveloperPageExceptionFilter();
 
