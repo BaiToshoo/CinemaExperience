@@ -44,12 +44,12 @@ Follow these steps to get your application up and running:
         dotnet ef database update
         ```
 
-4. **Seeding sample data
+4. **Seeding sample data**:
 would happen once you run the application, including Test Accounts:
 
-User: user@user.com / password: guest123456
-Critic: critic@critic.com / password: critic123456
-Admin: admin@admin.com / password: admin123456
+- User: user@user.com / password: guest123456
+- Critic: critic@critic.com / password: critic123456
+- Admin: admin@admin.com / password: admin123456
 
 5. **Run the application**:
     - Via Visual Studio: Use the IIS Express button.
