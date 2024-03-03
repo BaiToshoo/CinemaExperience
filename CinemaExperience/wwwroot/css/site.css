@@ -16,3 +16,82 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.movie-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.movie-meta {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.movie-poster {
+    max-width: 200px;
+    margin-right: 20px;
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-scores {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.score {
+    display: flex;
+    align-items: center;
+}
+
+.score label {
+        margin-right: 10px;
+}
+
+progress {
+    margin-right: 10px;
+    width: 150px;
+    height: 20px;
+}
+
+.movie-cast {
+    width: 100%; /* take up full width */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center children vertically */
+}
+
+.cast-list {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.cast-member {
+    flex: 0 0 auto;
+    margin-right: 15px;
+    text-align: center;
+}
+
+.actor-image {
+    display: flex;
+    width: 100px;
+    height: 150px;
+    object-fit: cover; 
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.actor-name {
+    font-size: 0.9em;
+    color: #333;
+}
+
+

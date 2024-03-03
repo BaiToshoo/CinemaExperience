@@ -25,4 +25,12 @@ public class MovieController : Controller
         return View(model);
     }
 
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var model = await movieService.GetMovieDetailsAsync(id);
+        return View(model);
+    }
+
 }
