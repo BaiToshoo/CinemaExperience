@@ -1,5 +1,6 @@
 ﻿using CinemaExperience.Core.Contracts.Movie;
 using CinemaExperience.Core.ViewModels.Movie;
+using CinemaExperience.Core.ViewModels.Review;
 using CinemaExperience.Infrastructure.Data.Common;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,25 @@ public class MovieService : IMovieService
             })
             .ToListAsync();
 
+    }
+
+    public async Task<IEnumerable<ReviewViewModel>> GetLatestReviewsAsync(int movieId)
+    {
+        var latestReviews = repository.AllReadOnly<Infrastructure.Data.Models.Review>()
+            .Where(r => r.MovieId == movieId)
+            .OrderByDescending(r => r.PostedOn)
+            .Take(2)
+            .Select(r => new ReviewViewModel
+            {
+                Author = r.User.FirstName + " " + r.User.LastName,
+                Content = r.Content,
+                PostedOn = r.PostedOn,
+                Rating = r.Rating,
+                IsCriticsReview = r.User.IsCritic
+            })
+            .ToListAsync();
+
+        return await latestReviews;
     }
 
     public async Task<MovieDetailsViewModel> GetMovieDetailsAsync(int movieId)

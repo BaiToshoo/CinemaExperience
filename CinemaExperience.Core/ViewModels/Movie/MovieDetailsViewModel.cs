@@ -1,4 +1,5 @@
-﻿using CinemaExperience.Infrastructure.Data.Models;
+﻿using CinemaExperience.Core.ViewModels.Review;
+using CinemaExperience.Infrastructure.Data.Models;
 
 namespace CinemaExperience.Core.ViewModels.Movie;
 public class MovieDetailsViewModel
@@ -14,5 +15,6 @@ public class MovieDetailsViewModel
     public string ImageUrl { set; get; }
     public IEnumerable<Genre> Genres { set; get; }
     public IEnumerable<Actor> Actors { set; get; }
+    public IEnumerable<ReviewViewModel> LatestReviews { set; get; }
 
 }

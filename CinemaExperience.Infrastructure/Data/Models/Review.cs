@@ -30,4 +30,8 @@ public class Review
     [Range(MinRating, MaxRating)]
     [Comment("The rating of the review in pattern 1-10")]
     public int Rating { get; set; }
+
+    [Required]
+    [Comment("The date when the review was posted")]
+    public DateTime PostedOn { get; set; }
 }

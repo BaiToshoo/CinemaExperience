@@ -17,6 +17,7 @@ body {
   margin-bottom: 60px;
 }
 
+/*Movie details css*/
 .movie-details-container {
     display: flex;
     flex-direction: column;
@@ -61,11 +62,12 @@ progress {
     height: 20px;
 }
 
+/*Cast css*/
 .movie-cast {
-    width: 100%; /* take up full width */
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* center children vertically */
+    align-items: center;
 }
 
 .cast-list {
@@ -93,5 +95,81 @@ progress {
     font-size: 0.9em;
     color: #333;
 }
+
+/*Reviews css*/
+.reviews-section {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.review-card {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.critic-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.review-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-author {
+    font-weight: bold;
+}
+
+.review-rating {
+    color: #007bff;
+}
+
+.review-content {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.full-review {
+    text-decoration: none;
+    color: #007bff;
+    display: inline-block;
+    margin-top: 10px;
+}
+.review-role {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.critic-role {
+    color: red;
+}
+
+.audience-role {
+    color: blue;
+}
+
+
+
 
 

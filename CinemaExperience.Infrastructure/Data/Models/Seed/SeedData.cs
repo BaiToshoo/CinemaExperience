@@ -293,6 +293,7 @@ internal class SeedData
             Content = "It is, simply put, a cerebral masterpiece from Christopher Nolan.",
             Rating = 10,
             MovieId = Inception.Id,
+            PostedOn = new DateTime(2021, 7, 16)
         };
         Review2 = new Review()
         {
@@ -301,6 +302,7 @@ internal class SeedData
             Content = "The famous masked vigilante has never looked or felt more intense.",
             Rating = 7,
             MovieId = TheDarkKnight.Id,
+            PostedOn = new DateTime(2021, 7, 18)
         };
         Review3 = new Review()
         {
@@ -309,6 +311,7 @@ internal class SeedData
             Content = "Mind-blowing, amazing, smart, thrilling. That's all",
             Rating = 10,
             MovieId = Inception.Id,
+            PostedOn = new DateTime(2021, 7, 16)
         };
         Review4 = new Review()
         {
@@ -317,6 +320,7 @@ internal class SeedData
             Content = "Revolutionized the superhero genre. Must see.",
             Rating = 8,
             MovieId = TheDarkKnight.Id,
+            PostedOn = new DateTime(2021, 7, 18)
         };
     }
     private void SeedMovieGenres()

@@ -22,6 +22,13 @@ public class MovieController : Controller
     public async Task<IActionResult> All()
     {
         var model = await movieService.GetAllMovies();
+
+        if (model == null)
+        {
+            return NotFound();
+
+        }
+
         return View(model);
     }
 
@@ -30,6 +37,13 @@ public class MovieController : Controller
     public async Task<IActionResult> Details(int id)
     {
         var model = await movieService.GetMovieDetailsAsync(id);
+        model.LatestReviews = await movieService.GetLatestReviewsAsync(id);
+
+        if (model.LatestReviews == null)
+        {
+            return NotFound();
+        }
+
         return View(model);
     }
 
