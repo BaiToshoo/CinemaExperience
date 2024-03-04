@@ -2,7 +2,36 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="home-container">
+    <div class="home-banner">
+        <h1 class="display-4">Welcome to Cinema Experience</h1>
+        <p class="lead">Your one-stop destination for honest movie reviews and ratings!</p>
+    </div>
+
+    <div class="home-about">
+        <h2>About Us</h2>
+        <p>
+            Dive into a vast sea of movie critiques and community reviews. Whether you're a cinephile or a casual weekend watcher,
+            Cinema Experience brings the world of movies to your fingertips.
+        </p>
+    </div>
+
+    <div class="home-features">
+        <h2>Features</h2>
+        <ul>
+            <li>Explore a wide range of movies from classics to the latest blockbusters.</li>
+            <li>Read professional critic reviews and user-generated content.</li>
+            <li>Join discussions, rate movies, and share your opinions.</li>
+            <li>Create your own watchlist and track movies to see.</li>
+        </ul>
+    </div>
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="home-join">
+            <h2>Join Our Community</h2>
+            <p>Sign up today and be a part of the conversation. Your voice matters here!</p>
+            <a href="/register" class="btn btn-primary">Sign Up</a>
+        </div>
+    }
 </div>

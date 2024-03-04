@@ -1,4 +1,6 @@
-﻿using CinemaExperience.Core.Contracts.Movie;
+﻿using CinemaExperience.Core.Contracts.Actor;
+using CinemaExperience.Core.Contracts.Movie;
+using CinemaExperience.Core.Services.Actor;
 using CinemaExperience.Core.Services.Movie;
 using CinemaExperience.infrastructure.Data;
 using CinemaExperience.Infrastructure.Data.Common;
@@ -12,6 +14,7 @@ public static class ServiceCollectionExtension
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddScoped<IMovieService, MovieService>();
+        services.AddScoped<IActorService, ActorService>();
 
         return services;
     }
