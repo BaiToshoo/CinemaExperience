@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-namespace CinemaExperience.Extensions;
+﻿namespace System.Security.Claims;
 
 public static class ClaimsPrincipalExtensions
 {
