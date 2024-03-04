@@ -1,9 +1,6 @@
 ﻿using CinemaExperience.Core.Contracts.Movie;
-using CinemaExperience.Core.ViewModels.Movie;
-using CinemaExperience.infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CinemaExperience.Controllers;
 
@@ -21,7 +18,7 @@ public class MovieController : Controller
     [HttpGet]
     public async Task<IActionResult> All()
     {
-        var model = await movieService.GetAllMovies();
+        var model = await movieService.GetAllMoviesAsync();
 
         if (model == null)
         {

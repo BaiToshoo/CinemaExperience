@@ -14,15 +14,15 @@ public class MovieService : IMovieService
         repository = _repository;
     }
 
-    public async Task<IEnumerable<AllMoviesViewModel>> GetAllMovies()
+    public async Task<IEnumerable<AllMoviesViewModel>> GetAllMoviesAsync()
     {
         return await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
             .Select(m => new AllMoviesViewModel
             {
-               Id = m.Id,
-               Director = m.Director.Name,
-               Title = m.Title,
-               ImageUrl = m.ImageUrl    
+                Id = m.Id,
+                Director = m.Director.Name,
+                Title = m.Title,
+                ImageUrl = m.ImageUrl
             })
             .ToListAsync();
 

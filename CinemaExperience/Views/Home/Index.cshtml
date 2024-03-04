@@ -26,7 +26,7 @@
         </ul>
     </div>
 
-    @if (!User.Identity.IsAuthenticated)
+    @if (!User?.Identity?.IsAuthenticated ?? false)
     {
         <div class="home-join">
             <h2>Join Our Community</h2>
