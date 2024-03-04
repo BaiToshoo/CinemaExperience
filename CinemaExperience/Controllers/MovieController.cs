@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaExperience.Controllers;
 
-[Authorize]
-public class MovieController : Controller
+public class MovieController : BaseController
 {
     private readonly IMovieService movieService;
 
@@ -14,7 +13,6 @@ public class MovieController : Controller
         movieService = _movieService;
     }
 
-    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> All()
     {
@@ -29,7 +27,6 @@ public class MovieController : Controller
         return View(model);
     }
 
-    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Details(int id)
     {

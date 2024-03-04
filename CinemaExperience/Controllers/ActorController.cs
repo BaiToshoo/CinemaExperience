@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaExperience.Controllers;
 
-[Authorize]
-public class ActorController : Controller
+public class ActorController : BaseController
 {
     private readonly IActorService actorService;
 
@@ -14,7 +13,6 @@ public class ActorController : Controller
         actorService = _actorService;
     }
 
-    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> All()
     {
