@@ -26,4 +26,17 @@ public class ActorController : BaseController
         return View(model);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var model = await actorService.GetActorDetailsAsync(id);
+
+        if (model == null)
+        {
+            return NotFound();
+        }
+
+        return View(model);
+    }
+
 }
