@@ -1,6 +1,6 @@
 ﻿using CinemaExperience.Core.ViewModels.Actor;
 
-namespace CinemaExperience.Core.Contracts.Actor;
+namespace CinemaExperience.Core.Contracts;
 public interface IActorService
 {
     Task<IEnumerable<AllActorsViewModel>> GetAllActorsAsync();

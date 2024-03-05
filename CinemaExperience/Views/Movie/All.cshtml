@@ -1,15 +1,18 @@
-﻿@using Microsoft.AspNetCore.Identity
-@model IEnumerable<AllMoviesViewModel>
-
-@inject UserManager<ApplicationUser> userManager;
-@inject IHttpContextAccessor _context;
+﻿@model IEnumerable<AllMoviesViewModel>
 
 @{
 	ViewBag.Title = "All Movies";
-    var user = await userManager.GetUserAsync(_context.HttpContext.User);
 }
 
-<h2 class="text-center">All Movies</h2>
+<div class="container my-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">All Movies</h2>
+        @*@if (User.IsInRole("Adminstrator"))
+        {
+            <a href="@Url.Action("Create", "Movie")" class="btn btn-primary">Add Movie</a>
+        }*@
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
@@ -24,10 +27,10 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a href="@Url.Action("Details", "Movie", new { id = movie.Id })" class="btn btn-sm btn-outline-secondary">Details</a>
-                                @if (user.IsAdmin == true)
+                                @*@if (User.IsInRole("Adminstrator"))
                                 {
                                     <a href="@Url.Action("Edit", "Movie", new { id = movie.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                }
+                                }*@
                             </div>
                         </div>
                     </div>

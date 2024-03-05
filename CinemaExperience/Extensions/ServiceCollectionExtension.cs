@@ -1,7 +1,5 @@
-﻿using CinemaExperience.Core.Contracts.Actor;
-using CinemaExperience.Core.Contracts.Movie;
-using CinemaExperience.Core.Services.Actor;
-using CinemaExperience.Core.Services.Movie;
+﻿using CinemaExperience.Core.Contracts;
+using CinemaExperience.Core.Services;
 using CinemaExperience.infrastructure.Data;
 using CinemaExperience.Infrastructure.Data.Common;
 using CinemaExperience.Infrastructure.Identity;
