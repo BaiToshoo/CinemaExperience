@@ -1,6 +1,9 @@
 ﻿namespace CinemaExperience.Infrastructure.Data.Constants;
 public static class DataConstants
 {
+    public const string Dateformat = "dd/MM/yyyy";
+    public const string LengthErrorMessage = "{0} must be between {2} and {1} characters long!";
+    public const string RangeErrorMessage = "{0} must be a number between {1} and {2}!";
     public static class Movie
     {
         //Name
@@ -14,6 +17,10 @@ public static class DataConstants
         //Ratings
         public const int DefaultRating = 1;
 
+        //Duration
+        public const int MaxDuration = 1000;
+        public const int MinDuration = 20;
+
         //CriticsRating
         public const int MaxCriticRating = 10;
         public const int MinCriticRating = 1;
@@ -21,6 +28,10 @@ public static class DataConstants
         //UserRating
         public const int MaxUserRating = 10;
         public const int MinUserRating = 1;
+
+        //ImageUrl
+        public const int BookImageUrlMinLength = 5;
+        public const int MovieImageUrlMaxLength = 200;
     }
 
     public static class Genre

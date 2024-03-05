@@ -49,6 +49,7 @@ public class Movie
     public int UserRating { get; set; }
 
     [Required]
+    [MaxLength(MovieImageUrlMaxLength)]
     public string ImageUrl { get; set; } = null!;
 
     public ICollection<Review> Reviews { get; set; } = new List<Review>();

@@ -13,7 +13,7 @@ public class MovieDetailsViewModel
     public double CriticsRating { set; get; }
     public double UserRating { set; get; }
     public string ImageUrl { set; get; }
-    public IEnumerable<Genre> Genres { set; get; } = new List<Genre>();
+    public IEnumerable<Infrastructure.Data.Models.Genre> Genres { set; get; } = new List<Infrastructure.Data.Models.Genre>();
     public IEnumerable<Infrastructure.Data.Models.Actor> Actors { set; get; } = new List<Infrastructure.Data.Models.Actor>();
     public IEnumerable<ReviewViewModel> LatestReviews { set; get; } = new List<ReviewViewModel>();
 

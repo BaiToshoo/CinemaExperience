@@ -1,5 +1,4 @@
-﻿@using System.Globalization
-@model MovieDetailsViewModel
+﻿@model MovieDetailsViewModel
 
 @{
     ViewData["Title"] = Model.Title;
@@ -57,7 +56,7 @@
                             <div class="review-role @(review.IsCriticsReview ? "critic-role" : "audience-role")">
                                 @(review.IsCriticsReview ? "Critic" : "Audience")
                             </div>
-                            <div class="review-date">@review.PostedOn.ToString("MMMM dd, yyyy", new CultureInfo("en-US"))</div>
+                            <div class="review-date">@review.PostedOn.ToString(Dateformat, new CultureInfo("en-US"))</div>
                             <div class="review-rating">@review.Rating</div>
                         </div>
                     </div>

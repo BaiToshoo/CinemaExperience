@@ -194,10 +194,10 @@ progress {
     margin-bottom: 8px;
 }
 .actor-item .actor-name {
-    text-align: center; /* center the actor's name */
-    font-size: 1rem; /* adjust font size as needed */
-    color: #333; /* font color */
-    line-height: 1.2; /* adjust line height to handle longer names on small widths */
+    text-align: center;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.2;
 }
 
 /*Home css*/
