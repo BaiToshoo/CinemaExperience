@@ -1,5 +1,5 @@
-﻿using CinemaExperience.Core.Contracts.Movie;
-using Microsoft.AspNetCore.Authorization;
+﻿using CinemaExperience.Core.Contracts;
+using CinemaExperience.Core.ViewModels.Movie;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaExperience.Controllers;
@@ -39,6 +39,40 @@ public class MovieController : BaseController
         }
 
         return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Add()
+    {
+        var model = new MovieAddViewModel
+        {
+            Directors = await movieService.GetDirectorsAsync(),
+            Genres = await movieService.GetGenresAsync()
+        };
+
+        return View(model);
+    }
+    [HttpPost]
+    public async Task<IActionResult> Add(MovieAddViewModel movieForm)
+    {
+        if(await movieService.DirectorExistsAsync(movieForm.DirectorId) == false)
+        {
+            ModelState.AddModelError(nameof(movieForm.DirectorId), "Director does not exist.");
+        }
+        else if(await movieService.GenreExistsAsync(movieForm.GenreIds) == false)
+        {
+            ModelState.AddModelError(nameof(movieForm.GenreIds), "Genre does not exist.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            movieForm.Directors = await movieService.GetDirectorsAsync();
+            movieForm.Genres = await movieService.GetGenresAsync();
+            return View(movieForm);
+        }
+
+        int movieId = await movieService.AddMovieAsync(movieForm);
+        return RedirectToAction(nameof(All));
     }
 
 }

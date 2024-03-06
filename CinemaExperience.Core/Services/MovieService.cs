@@ -1,5 +1,4 @@
-﻿using CinemaExperience.Core.Contracts.Movie;
-using CinemaExperience.Core.ViewModels.Director;
+﻿using CinemaExperience.Core.ViewModels.Director;
 using CinemaExperience.Core.ViewModels.Genre;
 using CinemaExperience.Core.ViewModels.Movie;
 using CinemaExperience.Core.ViewModels.Review;
@@ -7,8 +6,9 @@ using CinemaExperience.Infrastructure.Data.Common;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using CinemaExperience.Core.Contracts;
 
-namespace CinemaExperience.Core.Services.Movie;
+namespace CinemaExperience.Core.Services;
 public class MovieService : IMovieService
 {
     private readonly IRepository repository;
@@ -21,7 +21,7 @@ public class MovieService : IMovieService
     public async Task<int> AddMovieAsync(MovieAddViewModel movieForm)
     {
         DateTime releaseDate = DateTime.Now;
-        if (!DateTime.TryParseExact(movieForm.ReleaseDate,Dateformat,CultureInfo.InvariantCulture,DateTimeStyles.None,out releaseDate))
+        if (!DateTime.TryParseExact(movieForm.ReleaseDate, Dateformat, CultureInfo.InvariantCulture, DateTimeStyles.None, out releaseDate))
         {
             return 0;
         }
@@ -34,9 +34,9 @@ public class MovieService : IMovieService
             Duration = movieForm.Duration,
             Description = movieForm.Description,
             ImageUrl = movieForm.ImageUrl,
-            MovieGenres = movieForm.Genres.Select(g => new Infrastructure.Data.Models.MovieGenre
+            MovieGenres = movieForm.GenreIds.Select(g => new Infrastructure.Data.Models.MovieGenre
             {
-                GenreId = g.Id
+                GenreId = g
             }).ToList()
         };
         await repository.AddAsync(movie);
@@ -51,10 +51,10 @@ public class MovieService : IMovieService
             .AnyAsync(d => d.Id == coverTypeId);
     }
 
-    public async Task<bool> GenreExistsAsync(int genreId)
+    public async Task<bool> GenreExistsAsync(IEnumerable<int> genreId)
     {
         return await repository.AllReadOnly<Infrastructure.Data.Models.Genre>()
-            .AnyAsync(g => g.Id == genreId);
+            .AnyAsync(g => genreId.Contains(g.Id));
     }
 
     public async Task<IEnumerable<AllMoviesViewModel>> GetAllMoviesAsync()
@@ -72,13 +72,13 @@ public class MovieService : IMovieService
 
     public async Task<IEnumerable<DirectorViewModel>> GetDirectorsAsync()
     {
-       return await repository.AllReadOnly<Infrastructure.Data.Models.Director>()
-            .Select(d => new DirectorViewModel
-            {
-                Id = d.Id,
-                Name = d.Name
-            })
-            .ToListAsync();
+        return await repository.AllReadOnly<Infrastructure.Data.Models.Director>()
+             .Select(d => new DirectorViewModel
+             {
+                 Id = d.Id,
+                 Name = d.Name
+             })
+             .ToListAsync();
     }
 
     public async Task<IEnumerable<GenreViewModel>> GetGenresAsync()

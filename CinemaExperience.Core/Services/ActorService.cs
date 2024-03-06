@@ -1,10 +1,10 @@
-﻿using CinemaExperience.Core.Contracts.Actor;
+﻿using CinemaExperience.Core.Contracts;
 using CinemaExperience.Core.ViewModels.Actor;
 using CinemaExperience.Core.ViewModels.Movie;
 using CinemaExperience.Infrastructure.Data.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaExperience.Core.Services.Actor;
+namespace CinemaExperience.Core.Services;
 public class ActorService : IActorService
 {
     private readonly IRepository repository;
@@ -17,7 +17,7 @@ public class ActorService : IActorService
     public async Task<ActorDetailsViewModel> GetActorDetailsAsync(int actorId)
     {
 
-        var movieDetails =  repository.AllReadOnly<Infrastructure.Data.Models.Actor>()
+        var movieDetails = repository.AllReadOnly<Infrastructure.Data.Models.Actor>()
             .Where(a => a.Id == actorId)
             .Select(a => new ActorDetailsViewModel
             {
