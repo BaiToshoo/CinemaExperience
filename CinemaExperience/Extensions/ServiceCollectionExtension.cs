@@ -13,6 +13,7 @@ public static class ServiceCollectionExtension
     {
         services.AddScoped<IMovieService, MovieService>();
         services.AddScoped<IActorService, ActorService>();
+        services.AddScoped<IDirectorService, DirectorService>();
 
         return services;
     }

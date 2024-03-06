@@ -148,7 +148,7 @@ internal class SeedData
         {
             Id = 1,
             Name = "Christopher Nolan",
-            ImageUrl = "https://commons.wikimedia.org/wiki/Category:Christopher_Nolan#/media/File:Christopher_Nolan_Cannes_2018.jpg",
+            ImageUrl = "/images/directors/Christopher_Nolan.jpg",
             BirthDate = new DateTime(1970, 7, 30),
             Biography = "Christopher Edward Nolan CBE is a British-American film director, producer, and screenwriter. His films have grossed over US$5 billion worldwide, and he is one of the highest-grossing directors in history. Having made his directorial debut with Following (1998), Nolan gained considerable attention for his second feature, Memento (2000), for which he received a nomination for the Academy Award for Best Original Screenplay. The acclaim garnered by his independent films gave Nolan the opportunity to make the big-budget thriller Insomnia (2002), and the mystery drama The Prestige (2006). He found further popular and critical success with The Dark Knight Trilogy (2005–2012), Inception (2010), Interstellar (2014), Dunkirk (2017), and Tenet (2020)."
         };
