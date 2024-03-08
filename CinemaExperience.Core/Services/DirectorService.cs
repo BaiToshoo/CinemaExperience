@@ -15,6 +15,21 @@ public class DirectorService : IDirectorService
         repository = _repository;
     }
 
+    public async Task<int> AddDirectorAsync(AddDirectorViewModel directorForm)
+    {
+        var director = new Director
+        {
+            Name = directorForm.Name,
+            BirthDate = directorForm.BirthDate,
+            ImageUrl = directorForm.ImageUrl,
+            Biography = directorForm.Biography
+        };
+        await repository.AddAsync(director);
+        await repository.SaveChangesAsync();
+
+        return director.Id;
+    }
+
     public async Task<bool> DirectorExistsAsync(int directorId)
     {
         return await repository.AllReadOnly<Director>()
