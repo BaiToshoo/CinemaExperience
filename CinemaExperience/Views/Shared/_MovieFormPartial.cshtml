@@ -1,4 +1,4 @@
-﻿@model MovieAddViewModel;
+﻿@model AddMovieViewModel;
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
@@ -36,7 +36,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="@Model.ReleaseDate" class="form-label-add-edit"><bold>Release Date</bold></label>
-                <input asp-for="@Model.ReleaseDate" class="form-control" aria-required="true" />
+                <input asp-for="@Model.ReleaseDate" class="form-control" aria-required="true"/>
                 <span asp-validation-for="@Model.ReleaseDate" class="text-danger"></span>
             </div>
             <div class="mb-3">
@@ -50,7 +50,7 @@
                 <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Create" />
+                <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Add" />
             </div>
         </form>
     </div>

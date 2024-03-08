@@ -4,6 +4,12 @@ public static class DataConstants
     public const string Dateformat = "dd/MM/yyyy";
     public const string LengthErrorMessage = "{0} must be between {2} and {1} characters long!";
     public const string RangeErrorMessage = "{0} must be a number between {1} and {2}!";
+    public const string BirthDateErrorMessage = "Birth date cannot be in the future.";
+    public const string DirectorErrorMessage = "Director does not exist.";
+    public const string GenreNoExistErrorMessage = "Genre does not exist.";
+    public const string AtLeastOneGenreErrorMessage = "At least one genre is required.";
+    public const int ImageUrlMinLength = 5;
+    public const int ImageUrlMaxLength = 200;
     public static class Movie
     {
         //Name
@@ -28,10 +34,6 @@ public static class DataConstants
         //UserRating
         public const int MaxUserRating = 10;
         public const int MinUserRating = 1;
-
-        //ImageUrl
-        public const int BookImageUrlMinLength = 5;
-        public const int MovieImageUrlMaxLength = 200;
     }
 
     public static class Genre

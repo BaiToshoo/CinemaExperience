@@ -12,8 +12,6 @@ internal class SeedData
 
     //Movies
     public Movie Inception { get; set; }
-    public Movie TheMatrix { get; set; }
-    public Movie Interstellar { get; set; }
     public Movie TheDarkKnight { get; set; }
 
     //Directors

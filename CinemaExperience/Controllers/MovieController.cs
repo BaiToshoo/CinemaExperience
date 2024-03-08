@@ -1,6 +1,7 @@
 ﻿using CinemaExperience.Core.Contracts;
 using CinemaExperience.Core.ViewModels.Movie;
 using Microsoft.AspNetCore.Mvc;
+using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
 
 namespace CinemaExperience.Controllers;
 
@@ -9,7 +10,7 @@ public class MovieController : BaseController
     private readonly IMovieService movieService;
     private readonly IDirectorService directorService;
 
-    public MovieController(IMovieService _movieService, 
+    public MovieController(IMovieService _movieService,
         IDirectorService _directorService)
     {
         movieService = _movieService;
@@ -47,7 +48,7 @@ public class MovieController : BaseController
     [HttpGet]
     public async Task<IActionResult> Add()
     {
-        var model = new MovieAddViewModel
+        var model = new AddMovieViewModel
         {
             Directors = await movieService.GetDirectorsAsync(),
             Genres = await movieService.GetGenresAsync()
@@ -56,15 +57,22 @@ public class MovieController : BaseController
         return View(model);
     }
     [HttpPost]
-    public async Task<IActionResult> Add(MovieAddViewModel movieForm)
+    public async Task<IActionResult> Add(AddMovieViewModel movieForm)
     {
-        if(await directorService.DirectorExistsAsync(movieForm.DirectorId) == false)
+        if (await directorService.DirectorExistsAsync(movieForm.DirectorId) == false)
         {
-            ModelState.AddModelError(nameof(movieForm.DirectorId), "Director does not exist.");
+            ModelState.AddModelError(nameof(movieForm.DirectorId), DirectorErrorMessage);
         }
-        else if(await movieService.GenreExistsAsync(movieForm.GenreIds) == false)
+        if (await movieService.GenreExistsAsync(movieForm.GenreIds) == false)
         {
-            ModelState.AddModelError(nameof(movieForm.GenreIds), "Genre does not exist.");
+            ModelState.AddModelError(nameof(movieForm.GenreIds), GenreNoExistErrorMessage);
+        }
+        if (movieForm.Genres != null)
+        {
+            if (movieForm.GenreIds.Count() < 1)
+            {
+                ModelState.AddModelError(nameof(movieForm.GenreIds), AtLeastOneGenreErrorMessage);
+            }
         }
 
         if (!ModelState.IsValid)

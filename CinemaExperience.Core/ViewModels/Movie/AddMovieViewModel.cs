@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Movie;
 namespace CinemaExperience.Core.ViewModels.Movie;
-public class MovieAddViewModel
+public class AddMovieViewModel
 {
     [Required]
     [StringLength(TitleMaxLength, MinimumLength = TitleMinLength, ErrorMessage = LengthErrorMessage)]
@@ -23,7 +23,7 @@ public class MovieAddViewModel
     [Required]
     [DisplayFormat(DataFormatString = Dateformat)]
     [Display(Name = "Release Date")]
-    public string ReleaseDate { get; set; } = null!;
+    public DateTime ReleaseDate { get; set; }
 
     [Required]
     [Range(MinDuration, MaxDuration, ErrorMessage = RangeErrorMessage)]
@@ -34,8 +34,8 @@ public class MovieAddViewModel
     public string Description { get; set; } = null!;
 
     [Required]
-    [StringLength(MovieImageUrlMaxLength, MinimumLength = BookImageUrlMinLength, ErrorMessage = LengthErrorMessage)]
+    [StringLength(ImageUrlMaxLength, MinimumLength = ImageUrlMinLength, ErrorMessage = LengthErrorMessage)]
     [Display(Name = "Image URL")]
-    public string ImageUrl { get; set; } = null!;
+    public string ImageUrl { get; set; } = "/images/movies/";
 
 }

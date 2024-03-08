@@ -1,12 +1,10 @@
-﻿using CinemaExperience.Core.ViewModels.Director;
+﻿using CinemaExperience.Core.Contracts;
+using CinemaExperience.Core.ViewModels.Director;
 using CinemaExperience.Core.ViewModels.Genre;
 using CinemaExperience.Core.ViewModels.Movie;
 using CinemaExperience.Core.ViewModels.Review;
 using CinemaExperience.Infrastructure.Data.Common;
-using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
-using CinemaExperience.Core.Contracts;
 
 namespace CinemaExperience.Core.Services;
 public class MovieService : IMovieService
@@ -18,19 +16,14 @@ public class MovieService : IMovieService
         repository = _repository;
     }
 
-    public async Task<int> AddMovieAsync(MovieAddViewModel movieForm)
+    public async Task<int> AddMovieAsync(AddMovieViewModel movieForm)
     {
-        DateTime releaseDate = DateTime.Now;
-        if (!DateTime.TryParseExact(movieForm.ReleaseDate, Dateformat, CultureInfo.InvariantCulture, DateTimeStyles.None, out releaseDate))
-        {
-            return 0;
-        }
 
         var movie = new Infrastructure.Data.Models.Movie
         {
             Title = movieForm.Title,
             DirectorId = movieForm.DirectorId,
-            ReleaseDate = releaseDate,
+            ReleaseDate = movieForm.ReleaseDate,
             Duration = movieForm.Duration,
             Description = movieForm.Description,
             ImageUrl = movieForm.ImageUrl,
