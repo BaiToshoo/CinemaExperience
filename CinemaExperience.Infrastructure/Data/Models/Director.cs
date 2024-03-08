@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Director;
+using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
 
 namespace CinemaExperience.Infrastructure.Data.Models;
 
@@ -24,6 +25,7 @@ public class Director
     public string Biography { get; set; } = null!;
 
     [Required]
+    [MaxLength(ImageUrlMaxLength)]
     public string ImageUrl { get; set; } = null!;
 
     public ICollection<Movie> Movies { get; set; } = new List<Movie>();

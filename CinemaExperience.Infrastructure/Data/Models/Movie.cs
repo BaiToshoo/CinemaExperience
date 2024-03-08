@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Movie;
+using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
 
 namespace CinemaExperience.Infrastructure.Data.Models;
 public class Movie
@@ -49,7 +50,7 @@ public class Movie
     public int UserRating { get; set; }
 
     [Required]
-    [MaxLength(MovieImageUrlMaxLength)]
+    [MaxLength(ImageUrlMaxLength)]
     public string ImageUrl { get; set; } = null!;
 
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
