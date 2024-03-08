@@ -2,6 +2,12 @@
 
 <h1 class="text-center">Directors</h1>
 
+@*@if (User.IsInRole("Adminstrator"))
+{
+    <a href="@Url.Action("Add", "Director")" class="btn btn-primary">Add Director</a>
+}*@
+
+
 <div class="directors-list">
     @foreach (var director in Model)
     {
