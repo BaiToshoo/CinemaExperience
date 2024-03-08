@@ -1,0 +1,74 @@
+﻿@model MovieDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="movie-details-container">
+    <h1>@Model.Title</h1>
+
+    <div class="movie-meta">
+        <img src="@Model.ImageUrl" alt="Poster for @Model.Title" class="movie-poster" />
+        <div class="movie-info">
+            <p><strong>Director:</strong> @Model.Director</p>
+            <p> <strong>Genres:</strong> @string.Join("/", Model.Genres.Select(g => g.Name)) </p>
+            <p><strong>Release Date:</strong> @Model.ReleaseDate.ToShortDateString()</p>
+            <p><strong>Duration:</strong> @Model.Duration mins</p>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+
+    <div class="movie-scores">
+        <div class="score critic-score">
+            <label>Critic Score</label>
+            <progress value="@Model.CriticsRating" max="100"></progress>
+            <span>@Model.CriticsRating %</span>
+        </div>
+        <div class="score audience-score">
+            <label>Audience Score</label>
+            <progress value="@Model.UserRating" max="100"></progress>
+            <span>@Model.UserRating %</span>
+        </div>
+    </div>
+
+    <div class="movie-cast">
+        <h3>Cast</h3>
+        <div class="cast-list">
+            @foreach (var actor in Model.Actors)
+            {
+                <div class="cast-member">
+                    <img src="@actor.ImageUrl" alt="@actor.Name" class="actor-image" />
+                    <span class="actor-name">@actor.Name</span>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="reviews-section">
+        <h2>Reviews</h2>
+        <div class="reviews-container">
+            @foreach (var review in Model.LatestReviews)
+            {
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-meta">
+                            <div class="review-author">@review.Author</div>
+                            <div class="review-role @(review.IsCriticsReview ? "critic-role" : "audience-role")">
+                                @(review.IsCriticsReview ? "Critic" : "Audience")
+                            </div>
+                            <div class="review-date">@review.PostedOn.ToString(Dateformat, new CultureInfo("en-US"))</div>
+                            <div class="review-rating">@review.Rating</div>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        @review.Content
+                    </div>
+                    <a href="#" class="full-review">Full Review...</a>
+                </div>
+            }
+        </div>
+        <a href="@Url.Action("Create", "Review", new { movieId = Model.Id })" class="btn btn-primary">Add Review</a>
+    </div>
+
+
+</div>

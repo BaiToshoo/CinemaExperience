@@ -1,0 +1,57 @@
+﻿@model AddMovieViewModel;
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Add" method="post">
+            <div class="mb-3">
+                <label asp-for="@Model.Title" class="form-label-add-edit"><bold>Title</bold></label>
+                <input asp-for="@Model.Title" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.DirectorId" class="form-label-add-edit"><bold>Director</bold></label>
+                <select asp-for="@Model.DirectorId" class="form-control" aria-required="true">
+                    <option disabled selected value="">Choose Director</option>
+                    @foreach (var director in Model.Directors)
+                    {
+                        <option value="@director.Id">@director.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.DirectorId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+            <label for="@Model.GenreIds" class="form-label-add-edit"><bold>Genres</bold></label>
+                <select id="GenreIds" name="GenreIds" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" title="Choose Genres...">
+                @foreach (var ganre in Model.Genres)
+                {
+                    <option value="@ganre.Id">@ganre.Name</option>
+                }
+            </select>
+                <span asp-validation-for="@Model.GenreIds" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Description" class="form-label-add-edit"><bold>Description</bold></label>
+                <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5"></textarea>
+                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.ReleaseDate" class="form-label-add-edit"><bold>Release Date</bold></label>
+                <input asp-for="@Model.ReleaseDate" class="form-control" aria-required="true"/>
+                <span asp-validation-for="@Model.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.Duration" class="form-label-add-edit"><bold>Duration(minutes)</bold></label>
+                <input asp-for="@Model.Duration" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.Duration" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="@Model.ImageUrl" class="form-label-add-edit"><bold>Poster (Path to photo)</bold></label>
+                <input asp-for="@Model.ImageUrl" class="form-control" aria-required="true" />
+                <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-warning mb-2 w-100 p-3 fw-bold" type="submit" value="Add" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<AllActorsViewModel>
+
+<h1 class="text-center">Actors</h1>
+
+<div class="actors-list">
+    @foreach (var actor in Model)
+    {
+        <div class="actor-item">
+            <a href="@Url.Action("Details", "Actor", new { id = actor.Id })">
+                <img src="@actor.ImageUrl" alt="@actor.Name" class="actor-image" />
+                <span class="actor-name">@actor.Name</span>
+            </a>
+        </div>
+    }
+</div>

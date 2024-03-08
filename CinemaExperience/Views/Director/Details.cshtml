@@ -1,0 +1,28 @@
+﻿@model DirectorDetailsViewModel
+
+<div class="actor-details">
+    @*@if (User.isInRole("Administrator"))
+    {
+        <a href="@Url.Action("Edit", "Director")" class="btn btn-primary">Edit Director</a>
+    }*@
+    <div class="media">
+        <img src="@Model.ImageUrl" alt="@Model.Name" class="mr-3 actor-image" style="width:200px;height:auto;">
+        <div class="media-body">
+            <h2 class="mt-0">@Model.Name</h2>
+            <p>@Model.Biography</p>
+        </div>
+    </div>
+
+    <h3>Movies</h3>
+    <div class="movies-list">
+        @foreach (var movie in Model.Movies)
+        {
+            <a href="@Url.Action("Details", "Movie", new { id = movie.Id })" class="list-group-item list-group-item-action">
+                <div class="movie-card">
+                    <img src="@movie.ImageUrl" alt="@movie.Title" />
+                    <div class="movie-title">@movie.Title</div>
+                </div>
+            </a>
+        }
+    </div>
+</div>
