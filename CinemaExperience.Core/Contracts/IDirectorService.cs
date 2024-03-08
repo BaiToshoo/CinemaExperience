@@ -1,9 +1,9 @@
-﻿using CinemaExperience.Core.ViewModels.Actor;
-using CinemaExperience.Core.ViewModels.Director;
+﻿using CinemaExperience.Core.ViewModels.Director;
 
 namespace CinemaExperience.Core.Contracts;
 public interface IDirectorService
 {
     Task<IEnumerable<AllDirectorsViewModel>> GetAllDirectosAsync();
-    Task<AllDirectorsViewModel> GetDirectorDetailsAsync(int actorId);
+    Task<DirectorDetailsViewModel> GetDirectorDetailsAsync(int actorId);
+    Task<bool> DirectorExistsAsync(int directorId);
 }

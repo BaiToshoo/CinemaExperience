@@ -7,10 +7,13 @@ namespace CinemaExperience.Controllers;
 public class MovieController : BaseController
 {
     private readonly IMovieService movieService;
+    private readonly IDirectorService directorService;
 
-    public MovieController(IMovieService _movieService)
+    public MovieController(IMovieService _movieService, 
+        IDirectorService _directorService)
     {
         movieService = _movieService;
+        directorService = _directorService;
     }
 
     [HttpGet]
@@ -55,7 +58,7 @@ public class MovieController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add(MovieAddViewModel movieForm)
     {
-        if(await movieService.DirectorExistsAsync(movieForm.DirectorId) == false)
+        if(await directorService.DirectorExistsAsync(movieForm.DirectorId) == false)
         {
             ModelState.AddModelError(nameof(movieForm.DirectorId), "Director does not exist.");
         }

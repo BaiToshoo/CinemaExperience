@@ -45,12 +45,6 @@ public class MovieService : IMovieService
         return movie.Id;
     }
 
-    public async Task<bool> DirectorExistsAsync(int coverTypeId)
-    {
-        return await repository.AllReadOnly<Infrastructure.Data.Models.Director>()
-            .AnyAsync(d => d.Id == coverTypeId);
-    }
-
     public async Task<bool> GenreExistsAsync(IEnumerable<int> genreId)
     {
         return await repository.AllReadOnly<Infrastructure.Data.Models.Genre>()
