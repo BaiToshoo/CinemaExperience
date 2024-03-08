@@ -56,6 +56,7 @@ public class MovieController : BaseController
 
         return View(model);
     }
+
     [HttpPost]
     public async Task<IActionResult> Add(AddMovieViewModel movieForm)
     {

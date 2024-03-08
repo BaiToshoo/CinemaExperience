@@ -38,18 +38,6 @@ public class Movie
     public string Description { get; set; } = null!;
 
     [Required]
-    [Comment(comment: "The rating of the movie by critics")]
-    [Range(MinCriticRating, MaxCriticRating)]
-    [DefaultValue(DefaultRating)]
-    public int CriticsRating { get; set; }
-
-    [Required]
-    [Comment("The rating of the movie by users")]
-    [Range(MinUserRating, MaxUserRating)]
-    [DefaultValue(DefaultRating)]
-    public int UserRating { get; set; }
-
-    [Required]
     [MaxLength(ImageUrlMaxLength)]
     public string ImageUrl { get; set; } = null!;
 
