@@ -22,12 +22,6 @@ public class MovieController : BaseController
 	{
 		var model = await movieService.GetAllMoviesAsync();
 
-		if (model == null)
-		{
-			return NotFound();
-
-		}
-
 		return View(model);
 	}
 
@@ -36,16 +30,11 @@ public class MovieController : BaseController
 	{
 		if (!await movieService.MovieExistsAsync(id))
 		{
-			return NotFound();
+			return BadRequest();
 		}
 
 		var model = await movieService.GetMovieDetailsAsync(id);
 		model.LatestReviews = await movieService.GetLatestReviewsAsync(id);
-
-		if (model.LatestReviews == null)
-		{
-			return NotFound();
-		}
 
 		return View(model);
 	}

@@ -107,11 +107,6 @@ public class MovieService : IMovieService
             .Include(m => m.Reviews).ThenInclude(r => r.User)
             .FirstOrDefaultAsync(m => m.Id == movieId);
 
-        if (movie == null)
-        {
-            return null;
-        }
-
         var criticReviews = movie.Reviews.Where(r => r.User != null && r.User.IsCritic);
         var audianceReviews = movie.Reviews.Where(r => r.User != null && !r.User.IsCritic);
 
