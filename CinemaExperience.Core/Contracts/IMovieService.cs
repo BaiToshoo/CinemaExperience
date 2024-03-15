@@ -15,4 +15,6 @@ public interface IMovieService
     Task<IEnumerable<GenreViewModel>> GetGenresAsync();
     Task<int> AddMovieAsync(AddMovieViewModel movieForm);
     Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input);
+    Task<MovieDeleteViewModel> DeleteAsync(int movieId);
+    Task<int> DeleteConfirmedAsync(int movieId);
 }

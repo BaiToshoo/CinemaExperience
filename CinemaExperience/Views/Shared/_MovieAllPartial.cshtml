@@ -29,6 +29,7 @@
                                 @*@if (User.IsInRole("Adminstrator"))
                             {
                             <a href="@Url.Action("Edit", "Movie", new { id = movie.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a href="@Url.Action("Delete", "Movie", new { id = movie.Id })" class="btn btn-sm btn btn-danger">Delete</a>
                             }*@
                             </div>
                         </div>

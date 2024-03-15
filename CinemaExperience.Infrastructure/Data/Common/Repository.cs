@@ -33,4 +33,14 @@ public class Repository : IRepository
     {
         return await context.SaveChangesAsync();
     }
+
+    public async Task DeleteAsync<T>(T entity) where T : class
+    {
+        DbSet<T>().Remove(entity);
+    }
+
+    public async Task DeleteRangeAsync<T>(IEnumerable<T> entities) where T : class
+    {
+        DbSet<T>().RemoveRange(entities);
+    }
 }

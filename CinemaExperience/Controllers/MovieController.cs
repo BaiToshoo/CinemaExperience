@@ -96,5 +96,32 @@ public class MovieController : BaseController
 		return View(searchedMovie);
 	}
 
+	[HttpGet]
+	public async Task<IActionResult> Delete(int id)
+	{
+        if (!await movieService.MovieExistsAsync(id))
+		{
+            return BadRequest();
+        }
+
+        var movieToDelete = await movieService.DeleteAsync(id);
+
+        return View(movieToDelete);
+    }
+
+	[HttpPost]
+	public async Task<IActionResult> DeleteConfirmed(int id)
+	{
+        if (!await movieService.MovieExistsAsync(id))
+		{
+            return BadRequest();
+        }
+
+        await movieService.DeleteConfirmedAsync(id);
+
+        return RedirectToAction(nameof(All));
+    }
+
+
 
 }

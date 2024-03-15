@@ -38,6 +38,42 @@ public class MovieService : IMovieService
         return movie.Id;
     }
 
+    public async Task<MovieDeleteViewModel> DeleteAsync(int movieId)
+    {
+        var movie = await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+            .Include(m => m.Director)
+            .Include(m => m.Reviews)
+            .FirstOrDefaultAsync(m => m.Id == movieId);
+
+        var deleteForm = new MovieDeleteViewModel
+        {
+            Id = movie.Id,
+            Title = movie.Title,
+            Director = movie.Director.Name,
+            ImageUrl = movie.ImageUrl
+        };
+
+        return deleteForm;
+    }
+
+    public async Task<int> DeleteConfirmedAsync(int movieId)
+    {
+        var movie = await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+            .Include(m => m.Reviews)
+            .Include(m =>m.Director)
+            .FirstOrDefaultAsync(m => m.Id == movieId);
+
+        if (movie.Reviews != null && movie.Reviews.Any())
+        {
+            await repository.DeleteRangeAsync(movie.Reviews);
+        }
+
+        await repository.DeleteAsync(movie);
+        await repository.SaveChangesAsync();
+
+        return movie.Id;
+    }
+
     public async Task<bool> GenreExistsAsync(IEnumerable<int> genreId)
     {
         return await repository.AllReadOnly<Infrastructure.Data.Models.Genre>()
@@ -135,13 +171,13 @@ public class MovieService : IMovieService
         return movieDetails;
     }
 
-	public Task<bool> MovieExistsAsync(int movieId)
-	{
+    public Task<bool> MovieExistsAsync(int movieId)
+    {
         return repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
-			.AnyAsync(m => m.Id == movieId);
-	}
+            .AnyAsync(m => m.Id == movieId);
+    }
 
-	public async Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input)
+    public async Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input)
     {
         var searchedMovies = await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
             .Where(m => input.ToLower().Contains(m.Title.ToLower())
