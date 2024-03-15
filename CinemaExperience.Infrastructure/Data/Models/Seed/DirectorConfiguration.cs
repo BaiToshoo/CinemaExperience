@@ -8,6 +8,6 @@ internal class DirectorConfiguration : IEntityTypeConfiguration<Director>
     {
         var data = new SeedData();
 
-        builder.HasData(new Director[] { data.ChristopherNolan });
+        builder.HasData(new Director[] { data.ChristopherNolan, data.DenisVilleneuve });
     }
 }

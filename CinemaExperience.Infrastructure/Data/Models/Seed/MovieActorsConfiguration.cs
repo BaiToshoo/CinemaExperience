@@ -9,6 +9,7 @@ internal class MovieActorConfiguration : IEntityTypeConfiguration<MovieActor>
 
         builder.HasData(data.TheDarkKnightMovieActors.ToArray());
         builder.HasData(data.InceptionMovieActors.ToArray());
+        builder.HasData(data.DunePartTwoMovieActors.ToArray());
 
     }
 }

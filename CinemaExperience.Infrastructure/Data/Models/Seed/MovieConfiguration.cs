@@ -8,6 +8,6 @@ internal class MovieConfiguration : IEntityTypeConfiguration<Movie>
     {
         var data = new SeedData();
 
-        builder.HasData(new Movie[] { data.TheDarkKnight, data.Inception });
+        builder.HasData(new Movie[] { data.TheDarkKnight, data.Inception, data.DunePartTwo });
     }
 }

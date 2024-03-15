@@ -13,9 +13,11 @@ internal class SeedData
     //Movies
     public Movie Inception { get; set; }
     public Movie TheDarkKnight { get; set; }
+    public Movie DunePartTwo { get; set; }
 
     //Directors
     public Director ChristopherNolan { get; set; }
+    public Director DenisVilleneuve { get; set; }
 
     //Actors
     public Actor ChristianBale { get; set; }
@@ -28,6 +30,13 @@ internal class SeedData
     public Actor ElliotPage { get; set; }
     public Actor TomHardy { get; set; }
     public Actor KenWatanabe { get; set; }
+    public Actor TimotheeChalamet { get; set; }
+    public Actor Zendaya { get; set; }
+    public Actor RebeccaFerguson { get; set; }
+    public Actor JavierBardem { get; set; }
+    public Actor AustinButler { get; set; }
+
+
 
     //Reviews
     public Review Review1 { get; set; }
@@ -48,10 +57,12 @@ internal class SeedData
     //MovieGenres
     public List<MovieGenre> InceptionMovieGenres { get; set; }
     public List<MovieGenre> TheDarkKnightMovieGenres { get; set; }
+    public List<MovieGenre> DunePartTwoMovieGenres { get; set; }
 
     //MovieActors
     public List<MovieActor> InceptionMovieActors { get; set; }
     public List<MovieActor> TheDarkKnightMovieActors { get; set; }
+    public List<MovieActor> DunePartTwoMovieActors { get; set; }
 
     public SeedData()
     {
@@ -138,6 +149,17 @@ internal class SeedData
             ReleaseDate = new DateTime(2008, 7, 18),
             DirectorId = ChristopherNolan.Id
         };
+
+        DunePartTwo = new Movie()
+        {
+            Id = 3,
+            Title = "Dune: Part Two",
+            Description = "Dune: Part Two is an upcoming American epic science fiction film directed by Denis Villeneuve and written by Jon Spaihts, Villeneuve, and Eric Roth. It is the second of a planned two-part adaptation of the 1965 novel of the same name by Frank Herbert, and will cover the second half of the book. The film stars an ensemble cast including Timothée Chalamet, Rebecca Ferguson, Oscar Isaac, Josh Brolin, Stellan Skarsgård, Dave Bautista, Stephen McKinley Henderson, Zendaya, David Dastmalchian, Chang Chen, Sharon Duncan-Brewster, Charlotte Rampling, Jason Momoa, and Javier Bardem.",
+            Duration = 166,
+            ImageUrl = "/images/movies/Dune_Part_Two.jpg",
+            ReleaseDate = new DateTime(2023, 10, 20),
+            DirectorId = DenisVilleneuve.Id
+        };
     }
 
     private void SeedDirectors()
@@ -151,7 +173,14 @@ internal class SeedData
             Biography = "Christopher Edward Nolan CBE is a British-American film director, producer, and screenwriter. His films have grossed over US$5 billion worldwide, and he is one of the highest-grossing directors in history. Having made his directorial debut with Following (1998), Nolan gained considerable attention for his second feature, Memento (2000), for which he received a nomination for the Academy Award for Best Original Screenplay. The acclaim garnered by his independent films gave Nolan the opportunity to make the big-budget thriller Insomnia (2002), and the mystery drama The Prestige (2006). He found further popular and critical success with The Dark Knight Trilogy (2005–2012), Inception (2010), Interstellar (2014), Dunkirk (2017), and Tenet (2020)."
         };
 
-
+        DenisVilleneuve = new Director()
+        {
+            Id = 2,
+            Name = "Denis Villeneuve",
+            ImageUrl = "/images/directors/Denis_Villeneuve.jpg",
+            BirthDate = new DateTime(1967, 10, 3),
+            Biography = "Denis Villeneuve is a Canadian film director, writer, and producer. He is a four-time recipient of the Canadian Screen Award for Best Direction, for Maelström in 2001, Polytechnique in 2009, Incendies in 2011, and Enemy in 2013. The first three of these films also won the Canadian Screen Award for Best Motion Picture, while the latter was awarded the prize for best Canadian film of the year by the Toronto Film Critics Association. The first feature film he directed is Un 32 août sur terre, which was selected as the Canadian entry for the Best Foreign Language Film at the 68th Academy Awards, but was not accepted as a nominee. He was later nominated three times for the Academy Award for Best Director, for the films Arrival (2016), Blade Runner 2049 (2017), and Dune (2021)."
+        };
     }
 
     private void SeedActors()
@@ -235,6 +264,46 @@ internal class SeedData
             ImageUrl = "/images/actors/Ken_Watanabe.jpg",
             BirthDate = new DateTime(1959, 10, 21),
             Biography = "Ken Watanabe is a Japanese actor. To English-speaking audiences, he is known for playing tragic hero characters, such as General Tadamichi Kuribayashi in Letters from Iwo Jima and Lord Katsumoto Moritsugu in The Last Samurai, for which he was nominated for the Academy Award for Best Supporting Actor. Among other awards, he has won the Japan Academy Film Prize for Best Actor twice, in 2007 for Memories of Tomorrow and in 2010 for Shizumanu Taiyō. He is also known for his roles in Christopher Nolan's Batman Begins and The Dark Knight (as Ra's al Ghul), Inception, and Godzilla.",
+        };
+        TimotheeChalamet = new Actor()
+        {
+            Id = 11,
+            Name = "Timothee Chalamet",
+            ImageUrl = "/images/actors/Timothee_Chalamet.jpg",
+            BirthDate = new DateTime(1995, 12, 27),
+            Biography = "Timothee Hal Chalamet is an American actor. He began his acting career in short films, before appearing in the television drama series Homeland in 2012. Two years later, he made his feature film debut in the drama"
+        };
+        Zendaya = new Actor()
+        {
+            Id = 12,
+            Name = "Zendaya",
+            ImageUrl = "/images/actors/Zendaya.jpg",
+            BirthDate = new DateTime(1996, 9, 1),
+            Biography = "Zendaya Maree Stoermer Coleman is an American actress and singer. She began her career as a child model and backup dancer, before gaining prominence for her role as Rocky Blue on the Disney Channel sitcom Shake It Up (2010–2013). In 2013, Zendaya was a contestant on the sixteenth season of the competition series Dancing with the Stars. From 2015 to 2018, she produced and starred as the titular spy, K.C. Cooper, in the sitcom K.C. Undercover, and in 2019, she began playing the lead role in the HBO drama series Euphoria."
+        };
+        RebeccaFerguson = new Actor()
+        {
+            Id = 13,
+            Name = "Rebecca Ferguson",
+            ImageUrl = "/images/actors/Rebecca_Ferguson.jpg",
+            BirthDate = new DateTime(1983, 10, 19),
+            Biography = "Rebecca Louisa Ferguson Sundström is a Swedish actress. She began her acting career with the Swedish soap opera Nya tider (1999–2000) and went on to star in the slasher film Drowning Ghost (2004). She came to international prominence with her portrayal of Elizabeth Woodville in the British television miniseries The White Queen (2013), for which she was nominated for a Golden Globe for Best Actress in a Miniseries or Television Film."
+        };
+        JavierBardem = new Actor()
+        {
+            Id = 14,
+            Name = "Javier Bardem",
+            ImageUrl = "/images/actors/Javier_Bardem.jpg",
+            BirthDate = new DateTime(1969, 3, 1),
+            Biography = "Javier Ángel Encinas Bardem is a Spanish actor. Bardem won the Academy Award for Best Supporting Actor for his role as the psychopathic assassin Anton Chigurh in the 2007 Coen Brothers film"
+        };
+        AustinButler = new Actor()
+        {
+            Id = 15,
+            Name = "Austin Butler",
+            ImageUrl = "/images/actors/Austin_Butler.jpg",
+            BirthDate = new DateTime(1991, 8, 17),
+            Biography = "Austin Robert Butler is an American actor and singer. He is known for his roles as James Wilke Wilkerson in Switched at Birth, Jordan Gallagher on Ruby & The Rockits, Sebastian Kydd in The Carrie Diaries, Wil Ohmsford in The Shannara Chronicles, and Elvis Presley in the biographical musical drama film Elvis."
         };
     }
 
@@ -354,6 +423,19 @@ internal class SeedData
                 GenreId = Adventure.Id
             }
         };
+        DunePartTwoMovieGenres = new List<MovieGenre>()
+        {
+            new MovieGenre()
+            {
+                MovieId = DunePartTwo.Id,
+                GenreId = SciFi.Id
+            },
+            new MovieGenre()
+            {
+                MovieId = DunePartTwo.Id,
+                GenreId = Adventure.Id
+            }
+        };
     }
     private void SeedMovieActors()
     {
@@ -415,6 +497,35 @@ internal class SeedData
                ActorId = MaggieGyllenhaal.Id
            }
 
+        };
+
+        DunePartTwoMovieActors = new List<MovieActor>()
+        {
+            new MovieActor()
+            {
+                MovieId = DunePartTwo.Id,
+                ActorId = TimotheeChalamet.Id
+            },
+            new MovieActor()
+            {
+                MovieId = DunePartTwo.Id,
+                ActorId = Zendaya.Id
+            },
+            new MovieActor()
+            {
+                MovieId = DunePartTwo.Id,
+                ActorId = RebeccaFerguson.Id
+            },
+            new MovieActor()
+            {
+                MovieId = DunePartTwo.Id,
+                ActorId = JavierBardem.Id
+            },
+            new MovieActor()
+            {
+                MovieId = DunePartTwo.Id,
+                ActorId = AustinButler.Id
+            }
         };
     }
 }
