@@ -36,10 +36,12 @@
         <div class="cast-list">
             @foreach (var actor in Model.Actors)
             {
-                <div class="cast-member">
+                <a href="@Url.Action("Details", "Actor", new { id = actor.Id })">
+                    <div class="cast-member">
                     <img src="@actor.ImageUrl" alt="@actor.Name" class="actor-image" />
                     <span class="actor-name">@actor.Name</span>
-                </div>
+                    </div>
+                </a>
             }
         </div>
     </div>
