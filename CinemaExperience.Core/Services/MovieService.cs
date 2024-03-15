@@ -140,7 +140,13 @@ public class MovieService : IMovieService
         return movieDetails;
     }
 
-    public async Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input)
+	public Task<bool> MovieExistsAsync(int movieId)
+	{
+        return repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+			.AnyAsync(m => m.Id == movieId);
+	}
+
+	public async Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input)
     {
         var searchedMovies = await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
             .Where(m => input.ToLower().Contains(m.Title.ToLower())

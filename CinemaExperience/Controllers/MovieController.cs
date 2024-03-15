@@ -7,103 +7,105 @@ namespace CinemaExperience.Controllers;
 
 public class MovieController : BaseController
 {
-    private readonly IMovieService movieService;
-    private readonly IDirectorService directorService;
+	private readonly IMovieService movieService;
+	private readonly IDirectorService directorService;
 
-    public MovieController(IMovieService _movieService,
-        IDirectorService _directorService)
-    {
-        movieService = _movieService;
-        directorService = _directorService;
-    }
+	public MovieController(IMovieService _movieService,
+		IDirectorService _directorService)
+	{
+		movieService = _movieService;
+		directorService = _directorService;
+	}
 
-    [HttpGet]
-    public async Task<IActionResult> All()
-    {
-        var model = await movieService.GetAllMoviesAsync();
+	[HttpGet]
+	public async Task<IActionResult> All()
+	{
+		var model = await movieService.GetAllMoviesAsync();
 
-        if (model == null)
-        {
-            return NotFound();
+		if (model == null)
+		{
+			return NotFound();
 
-        }
+		}
 
-        return View(model);
-    }
+		return View(model);
+	}
 
-    [HttpGet]
-    public async Task<IActionResult> Details(int id)
-    {
-        var model = await movieService.GetMovieDetailsAsync(id);
-        model.LatestReviews = await movieService.GetLatestReviewsAsync(id);
+	[HttpGet]
+	public async Task<IActionResult> Details(int id)
+	{
+		if (!await movieService.MovieExistsAsync(id))
+		{
+			return NotFound();
+		}
 
-        if (model.LatestReviews == null)
-        {
-            return NotFound();
-        }
+		var model = await movieService.GetMovieDetailsAsync(id);
+		model.LatestReviews = await movieService.GetLatestReviewsAsync(id);
 
-        return View(model);
-    }
+		if (model.LatestReviews == null)
+		{
+			return NotFound();
+		}
 
-    [HttpGet]
-    public async Task<IActionResult> Add()
-    {
-        var model = new AddMovieViewModel
-        {
-            Directors = await movieService.GetDirectorsAsync(),
-            Genres = await movieService.GetGenresAsync()
-        };
+		return View(model);
+	}
 
-        return View(model);
-    }
+	[HttpGet]
+	public async Task<IActionResult> Add()
+	{
+		var model = new AddMovieViewModel
+		{
+			Directors = await movieService.GetDirectorsAsync(),
+			Genres = await movieService.GetGenresAsync()
+		};
 
-    [HttpPost]
-    public async Task<IActionResult> Add(AddMovieViewModel movieForm)
-    {
-        if (await directorService.DirectorExistsAsync(movieForm.DirectorId) == false)
-        {
-            ModelState.AddModelError(nameof(movieForm.DirectorId), DirectorErrorMessage);
-        }
-        if (await movieService.GenreExistsAsync(movieForm.GenreIds) == false)
-        {
-            ModelState.AddModelError(nameof(movieForm.GenreIds), GenreNoExistErrorMessage);
-        }
-        if (movieForm.Genres != null)
-        {
-            if (movieForm.GenreIds.Count() < 1)
-            {
-                ModelState.AddModelError(nameof(movieForm.GenreIds), AtLeastOneGenreErrorMessage);
-            }
-        }
+		return View(model);
+	}
 
-        if (!ModelState.IsValid)
-        {
-            movieForm.Directors = await movieService.GetDirectorsAsync();
-            movieForm.Genres = await movieService.GetGenresAsync();
-            return View(movieForm);
-        }
+	[HttpPost]
+	public async Task<IActionResult> Add(AddMovieViewModel movieForm)
+	{
+		if (await directorService.DirectorExistsAsync(movieForm.DirectorId) == false)
+		{
+			ModelState.AddModelError(nameof(movieForm.DirectorId), DirectorErrorMessage);
+		}
+		if (await movieService.GenreExistsAsync(movieForm.GenreIds) == false)
+		{
+			ModelState.AddModelError(nameof(movieForm.GenreIds), GenreNoExistErrorMessage);
+		}
+		if (movieForm.GenreIds.Count() < 1)
+		{
+			ModelState.AddModelError(nameof(movieForm.GenreIds), AtLeastOneGenreErrorMessage);
+		}
 
-        int movieId = await movieService.AddMovieAsync(movieForm);
-        return RedirectToAction(nameof(All));
-    }
+		if (!ModelState.IsValid)
+		{
+			movieForm.Directors = await movieService.GetDirectorsAsync();
+			movieForm.Genres = await movieService.GetGenresAsync();
+			return View(movieForm);
+		}
 
-    [HttpGet]
-    public async Task<IActionResult> Search(string input)
-    {
-        if (input == null)
-        {
-            return RedirectToAction(nameof(All));
-        }
+		int movieId = await movieService.AddMovieAsync(movieForm);
+		return RedirectToAction(nameof(All));
+	}
 
-        var searchedMovie = await movieService.SearchAsync(input);
+	[HttpGet]
+	public async Task<IActionResult> Search(string input)
+	{
+		if (input == null)
+		{
+			return RedirectToAction(nameof(All));
+		}
 
-        if (searchedMovie == null)
-        {
-            return RedirectToAction(nameof(All));
-        }
+		var searchedMovie = await movieService.SearchAsync(input);
 
-        return View(searchedMovie);
-    }
+		if (searchedMovie == null)
+		{
+			return RedirectToAction(nameof(All));
+		}
+
+		return View(searchedMovie);
+	}
 
 
 }
