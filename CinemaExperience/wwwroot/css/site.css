@@ -354,6 +354,26 @@ progress {
     line-height: 1.2;
 }
 
+/*Search bar for Movies*/
+.input-group {
+    width: 100%;
+}
+
+.input-group-append {
+    display: flex;
+    align-items: stretch;
+}
+
+.input-group-append .btn {
+    border-radius: 0;
+}
+
+.input-group-append .btn:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+
 
 
 

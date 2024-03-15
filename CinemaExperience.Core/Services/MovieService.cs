@@ -81,7 +81,7 @@ public class MovieService : IMovieService
 
     public async Task<IEnumerable<ReviewViewModel>> GetLatestReviewsAsync(int movieId)
     {
-        var latestReviews = repository.AllReadOnly<Infrastructure.Data.Models.Review>()
+        var latestReviews = await repository.AllReadOnly<Infrastructure.Data.Models.Review>()
             .Where(r => r.MovieId == movieId)
             .OrderByDescending(r => r.PostedOn)
             .Take(2)
@@ -95,7 +95,7 @@ public class MovieService : IMovieService
             })
             .ToListAsync();
 
-        return await latestReviews;
+        return latestReviews;
     }
 
     public async Task<MovieDetailsViewModel> GetMovieDetailsAsync(int movieId)
@@ -138,5 +138,22 @@ public class MovieService : IMovieService
         };
 
         return movieDetails;
+    }
+
+    public async Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input)
+    {
+        var searchedMovies = await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+            .Where(m => input.ToLower().Contains(m.Title.ToLower())
+            || m.Title.ToLower().Contains(input.ToLower()))
+            .Select(m => new AllMoviesViewModel
+            {
+                Id = m.Id,
+                Director = m.Director.Name,
+                Title = m.Title,
+                ImageUrl = m.ImageUrl
+            })
+            .ToListAsync();
+
+        return searchedMovies;
     }
 }

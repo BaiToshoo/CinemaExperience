@@ -1,0 +1,40 @@
+﻿@model IEnumerable<AllMoviesViewModel>
+
+<div class="container">
+	<partial name="_MovieSearchFormPartial"/>
+
+    <div class="container">
+        <div class="row">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var movie in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <img class="bd-placeholder-img card-img-top" width="100%" src="@movie.ImageUrl" alt="@movie.Title">
+                            <div class="card-body">
+                                <p class="card-text">@movie.Title</p>
+                                <p class="card-text"><small class="text-muted">@movie.Director</small></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="@Url.Action("Details", "Movie", new { id = movie.Id })" class="btn btn-sm btn-outline-secondary">Details</a>
+                                        @*@if (User.IsInRole("Adminstrator"))
+                                {
+                                <a href="@Url.Action("Edit", "Movie", new { id = movie.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                }*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-md-12">
+                    <h2 class="text-center">No movies found</h2>
+                </div>
+            }
+        </div>
+    </div>
+</div>

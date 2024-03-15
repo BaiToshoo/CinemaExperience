@@ -87,4 +87,23 @@ public class MovieController : BaseController
         return RedirectToAction(nameof(All));
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Search(string input)
+    {
+        if (input == null)
+        {
+            return RedirectToAction(nameof(All));
+        }
+
+        var searchedMovie = await movieService.SearchAsync(input);
+
+        if (searchedMovie == null)
+        {
+            return RedirectToAction(nameof(All));
+        }
+
+        return View(searchedMovie);
+    }
+
+
 }

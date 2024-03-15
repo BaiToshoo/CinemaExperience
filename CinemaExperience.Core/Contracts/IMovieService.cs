@@ -13,4 +13,5 @@ public interface IMovieService
     Task<IEnumerable<DirectorViewModel>> GetDirectorsAsync();
     Task<IEnumerable<GenreViewModel>> GetGenresAsync();
     Task<int> AddMovieAsync(AddMovieViewModel movieForm);
+    Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input);
 }

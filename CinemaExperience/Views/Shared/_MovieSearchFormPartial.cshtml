@@ -1,0 +1,13 @@
+﻿<div class="text-center mb-4">
+    <form asp-controller="Movie" asp-action="Search" method="get" class="row">
+        <div class="col-md-11">
+            <div class="input-group">
+                <input type="text" name="input" class="form-control" placeholder="Search" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-warning">Search</button>
+                    <a asp-controller="Movie" asp-action="All" class="btn btn-secondary">Clear</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
