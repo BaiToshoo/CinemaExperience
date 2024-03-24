@@ -1,5 +1,4 @@
 ﻿using CinemaExperience.Core.Contracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaExperience.Controllers;

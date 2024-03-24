@@ -51,10 +51,10 @@
         <div class="reviews-container">
             @foreach (var review in Model.LatestReviews)
             {
-                <div class="review-card">
+                <div class="review-card" id="@($"review-{review.Id}")">
                     <div class="review-header">
                         <div class="review-meta">
-                            <div class="review-author">@review.Author</div>
+                            <div class="review-author">@review.AuthorName</div>
                             <div class="review-role @(review.IsCriticsReview ? "critic-role" : "audience-role")">
                                 @(review.IsCriticsReview ? "Critic" : "Audience")
                             </div>
@@ -63,14 +63,13 @@
                         </div>
                     </div>
                     <div class="review-content">
-                        @review.Content
+                        @(review.Content.Length <= 70 ? review.Content : review.Content.Substring(0, 70) + (review.Content.Length > 70 ? "...": ""))
                     </div>
-                    <a href="#" class="full-review">Full Review...</a>
                 </div>
             }
         </div>
         <a href="@Url.Action("Create", "Review", new { movieId = Model.Id })" class="btn btn-primary">Add Review</a>
+        <a href="@Url.Action("All", "Review", new { movieId = Model.Id })" class="btn btn-primary">View All Reviews</a>
     </div>
-
 
 </div>

@@ -4,6 +4,8 @@ using CinemaExperience.Core.ViewModels.Genre;
 using CinemaExperience.Core.ViewModels.Movie;
 using CinemaExperience.Core.ViewModels.Review;
 using CinemaExperience.Infrastructure.Data.Common;
+using CinemaExperience.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaExperience.Core.Services;
@@ -123,7 +125,8 @@ public class MovieService : IMovieService
             .Take(2)
             .Select(r => new ReviewViewModel
             {
-                Author = r.User.FirstName + " " + r.User.LastName,
+                Id = r.Id,
+                AuthorName = r.User.FirstName + " " + r.User.LastName,
                 Content = r.Content,
                 PostedOn = r.PostedOn,
                 Rating = r.Rating,
