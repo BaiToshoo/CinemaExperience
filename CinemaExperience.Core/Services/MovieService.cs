@@ -75,6 +75,46 @@ public class MovieService : IMovieService
         return movie.Id;
     }
 
+    public async Task<MovieViewModel> EditGetAsync(int movieId)
+    {
+        var currentmovie = await repository.AllReadOnly<Movie>()
+            .Include(m => m.MovieGenres)
+            .FirstOrDefaultAsync(m => m.Id == movieId);
+
+        var movieForm = new MovieViewModel
+        {
+            Id = currentmovie.Id,
+            Title = currentmovie.Title,
+            DirectorId = currentmovie.DirectorId,
+            ReleaseDate = currentmovie.ReleaseDate,
+            Duration = currentmovie.Duration,
+            Description = currentmovie.Description,
+            ImageUrl = currentmovie.ImageUrl,
+            GenreIds = currentmovie.MovieGenres.Select(g => g.GenreId)
+        };
+        movieForm.Genres = await GetGenresAsync();
+        movieForm.Directors = await GetDirectorsAsync();
+
+        return movieForm;
+
+    }
+
+    public async Task<int> EditPostAsync(MovieViewModel movieForm)
+    {
+        var movie = repository.GetByIdAsync<Movie>(movieForm.Id).Result;
+
+        movie.Title = movieForm.Title;
+        movie.DirectorId = movieForm.DirectorId;
+        movie.ReleaseDate = movieForm.ReleaseDate;
+        movie.Duration = movieForm.Duration;
+        movie.Description = movieForm.Description;
+        movie.ImageUrl = movieForm.ImageUrl;
+
+        await repository.SaveChangesAsync();
+
+        return movie.Id;
+    }
+
     public async Task<bool> GenreExistsAsync(IEnumerable<int> genreId)
     {
         return await repository.AllReadOnly<Genre>()

@@ -79,6 +79,52 @@ public class MovieController : BaseController
 	}
 
 	[HttpGet]
+	public async Task<IActionResult> Edit(int id)
+	{
+        if (!await movieService.MovieExistsAsync(id))
+		{
+            return BadRequest();
+        }
+
+        var model = await movieService.EditGetAsync(id);
+
+        return View(model);
+    }
+
+	[HttpPost]
+	public async Task<IActionResult> Edit(MovieViewModel movieForm)
+	{
+        if (!await movieService.MovieExistsAsync(movieForm.Id))
+		{
+            return BadRequest();
+        }
+
+        if (await directorService.DirectorExistsAsync(movieForm.DirectorId) == false)
+		{
+            ModelState.AddModelError(nameof(movieForm.DirectorId), DirectorErrorMessage);
+        }
+        if (await movieService.GenreExistsAsync(movieForm.GenreIds) == false)
+		{
+            ModelState.AddModelError(nameof(movieForm.GenreIds), GenreNoExistErrorMessage);
+        }
+        if (movieForm.GenreIds.Count() < 1)
+		{
+            ModelState.AddModelError(nameof(movieForm.GenreIds), AtLeastOneGenreErrorMessage);
+        }
+
+        if (!ModelState.IsValid)
+		{
+            movieForm.Directors = await movieService.GetDirectorsAsync();
+            movieForm.Genres = await movieService.GetGenresAsync();
+            return View(movieForm);
+        }
+
+        int movieId = await movieService.EditPostAsync(movieForm);
+
+        return RedirectToAction(nameof(All));
+    }
+
+	[HttpGet]
 	public async Task<IActionResult> Search(string input)
 	{
 		if (input == null)

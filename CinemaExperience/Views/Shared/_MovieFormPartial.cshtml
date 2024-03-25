@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <form asp-action="Add" method="post">
+        <form method="post">
             <div class="mb-3">
                 <label asp-for="@Model.Title" class="form-label-add-edit"><bold>Title</bold></label>
                 <input asp-for="@Model.Title" class="form-control" aria-required="true" />
@@ -21,10 +21,17 @@
             </div>
             <div class="mb-3">
             <label for="@Model.GenreIds" class="form-label-add-edit"><bold>Genres</bold></label>
-                <select id="GenreIds" name="GenreIds" class="selectpicker" multiple data-live-search="true" data-selected-text-format="count > 3" title="Choose Genres...">
+                <select id="GenreIds" name="GenreIds" class="form-select" multiple data-live-search="true" title="Choose Genres...">
                 @foreach (var ganre in Model.Genres)
                 {
-                    <option value="@ganre.Id">@ganre.Name</option>
+                    @if (Model.GenreIds.Contains(ganre.Id))
+					{
+						<option value="@ganre.Id" selected>@ganre.Name</option>
+					}
+					else
+					{
+						<option value="@ganre.Id">@ganre.Name</option>
+					}
                 }
             </select>
                 <span asp-validation-for="@Model.GenreIds" class="text-danger"></span>
