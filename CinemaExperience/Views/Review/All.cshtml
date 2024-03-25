@@ -25,9 +25,9 @@
                     @review.Content
                 </div>
                 <div class="btn-group">
-                    @if (User.IsInRole("Adminstrator") || UserManager.GetUserId(User) == review.AuthorId)
+                    @if (User.IsInRole("Adminstrator") || UserManager.GetUserId(User) == review.UserId)
                     {
-                        <a href="@Url.Action("Edit", "Review", new { id = review.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="@Url.Action("Edit", "Review", new { reviewId = review.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
                         <a href="@Url.Action("Delete", "Review", new { id = review.Id })" class="btn btn-sm btn btn-danger">Delete</a>
                     }
                 </div>

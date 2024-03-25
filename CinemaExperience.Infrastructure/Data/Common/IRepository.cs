@@ -12,4 +12,6 @@ public interface IRepository
     Task DeleteRangeAsync<T>(IEnumerable<T> entities) where T : class;
 
     Task<int> SaveChangesAsync();
+
+    Task<T?> GetByIdAsync<T>(object id) where T : class;
 }

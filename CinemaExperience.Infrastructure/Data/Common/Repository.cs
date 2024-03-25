@@ -43,4 +43,9 @@ public class Repository : IRepository
     {
         DbSet<T>().RemoveRange(entities);
     }
+
+    public async Task<T?> GetByIdAsync<T>(object id) where T : class
+    {
+        return await DbSet<T>().FindAsync(id);
+    }
 }
