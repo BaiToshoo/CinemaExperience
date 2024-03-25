@@ -6,34 +6,34 @@ using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Movie;
 namespace CinemaExperience.Core.ViewModels.Movie;
 public class AddMovieViewModel
 {
-    [Required]
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [StringLength(TitleMaxLength, MinimumLength = TitleMinLength, ErrorMessage = LengthErrorMessage)]
     public string Title { get; set; } = null!;
 
-    [Required]
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [Display(Name = "Director")]
     public int DirectorId { get; set; }
     public IEnumerable<DirectorViewModel> Directors { get; set; } = new HashSet<DirectorViewModel>();
 
-    [Required]
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [Display(Name = "Genre")]
     public IEnumerable<int> GenreIds { get; set; } = new HashSet<int>();
     public IEnumerable<GenreViewModel> Genres { get; set; } = new HashSet<GenreViewModel>();
 
-    [Required]
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [DisplayFormat(DataFormatString = Dateformat)]
     [Display(Name = "Release Date")]
     public DateTime ReleaseDate { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [Range(MinDuration, MaxDuration, ErrorMessage = RangeErrorMessage)]
     public int Duration { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength, ErrorMessage = LengthErrorMessage)]
     public string Description { get; set; } = null!;
 
-    [Required]
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [StringLength(ImageUrlMaxLength, MinimumLength = ImageUrlMinLength, ErrorMessage = LengthErrorMessage)]
     [Display(Name = "Image URL")]
     public string ImageUrl { get; set; } = "/images/movies/";
