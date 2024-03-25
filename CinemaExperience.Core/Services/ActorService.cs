@@ -25,7 +25,7 @@ public class ActorService : IActorService
                 Name = a.Name,
                 ImageUrl = a.ImageUrl,
                 Biography = a.Biography,
-                Movies = a.MovieActors.Select(ma => new MovieViewModel
+                Movies = a.MovieActors.Select(ma => new MovieBarViewModel
                 {
                     Id = ma.Movie.Id,
                     Title = ma.Movie.Title,

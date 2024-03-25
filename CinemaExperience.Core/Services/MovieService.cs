@@ -4,8 +4,7 @@ using CinemaExperience.Core.ViewModels.Genre;
 using CinemaExperience.Core.ViewModels.Movie;
 using CinemaExperience.Core.ViewModels.Review;
 using CinemaExperience.Infrastructure.Data.Common;
-using CinemaExperience.Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity;
+using CinemaExperience.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaExperience.Core.Services;
@@ -18,10 +17,10 @@ public class MovieService : IMovieService
         repository = _repository;
     }
 
-    public async Task<int> AddMovieAsync(AddMovieViewModel movieForm)
+    public async Task<int> AddMovieAsync(MovieViewModel movieForm)
     {
 
-        var movie = new Infrastructure.Data.Models.Movie
+        var movie = new Movie
         {
             Title = movieForm.Title,
             DirectorId = movieForm.DirectorId,
@@ -29,7 +28,7 @@ public class MovieService : IMovieService
             Duration = movieForm.Duration,
             Description = movieForm.Description,
             ImageUrl = movieForm.ImageUrl,
-            MovieGenres = movieForm.GenreIds.Select(g => new Infrastructure.Data.Models.MovieGenre
+            MovieGenres = movieForm.GenreIds.Select(g => new MovieGenre
             {
                 GenreId = g
             }).ToList()
@@ -42,7 +41,7 @@ public class MovieService : IMovieService
 
     public async Task<MovieDeleteViewModel> DeleteAsync(int movieId)
     {
-        var movie = await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+        var movie = await repository.AllReadOnly<Movie>()
             .Include(m => m.Director)
             .Include(m => m.Reviews)
             .FirstOrDefaultAsync(m => m.Id == movieId);
@@ -60,9 +59,9 @@ public class MovieService : IMovieService
 
     public async Task<int> DeleteConfirmedAsync(int movieId)
     {
-        var movie = await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+        var movie = await repository.AllReadOnly<Movie>()
             .Include(m => m.Reviews)
-            .Include(m =>m.Director)
+            .Include(m => m.Director)
             .FirstOrDefaultAsync(m => m.Id == movieId);
 
         if (movie.Reviews != null && movie.Reviews.Any())
@@ -78,13 +77,13 @@ public class MovieService : IMovieService
 
     public async Task<bool> GenreExistsAsync(IEnumerable<int> genreId)
     {
-        return await repository.AllReadOnly<Infrastructure.Data.Models.Genre>()
+        return await repository.AllReadOnly<Genre>()
             .AnyAsync(g => genreId.Contains(g.Id));
     }
 
     public async Task<IEnumerable<AllMoviesViewModel>> GetAllMoviesAsync()
     {
-        return await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+        return await repository.AllReadOnly<Movie>()
             .Select(m => new AllMoviesViewModel
             {
                 Id = m.Id,
@@ -97,7 +96,7 @@ public class MovieService : IMovieService
 
     public async Task<IEnumerable<DirectorViewModel>> GetDirectorsAsync()
     {
-        return await repository.AllReadOnly<Infrastructure.Data.Models.Director>()
+        return await repository.AllReadOnly<Director>()
              .Select(d => new DirectorViewModel
              {
                  Id = d.Id,
@@ -108,7 +107,7 @@ public class MovieService : IMovieService
 
     public async Task<IEnumerable<GenreViewModel>> GetGenresAsync()
     {
-        return await repository.AllReadOnly<Infrastructure.Data.Models.Genre>()
+        return await repository.AllReadOnly<Genre>()
             .Select(g => new GenreViewModel
             {
                 Id = g.Id,
@@ -119,7 +118,7 @@ public class MovieService : IMovieService
 
     public async Task<IEnumerable<ReviewViewModel>> GetLatestReviewsAsync(int movieId)
     {
-        var latestReviews = await repository.AllReadOnly<Infrastructure.Data.Models.Review>()
+        var latestReviews = await repository.AllReadOnly<Review>()
             .Where(r => r.MovieId == movieId)
             .OrderByDescending(r => r.PostedOn)
             .Take(2)
@@ -139,7 +138,7 @@ public class MovieService : IMovieService
 
     public async Task<MovieDetailsViewModel> GetMovieDetailsAsync(int movieId)
     {
-        var movie = await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+        var movie = await repository.AllReadOnly<Movie>()
             .Include(m => m.Director)
             .Include(m => m.MovieGenres).ThenInclude(g => g.Genre)
             .Include(m => m.MovieActors).ThenInclude(a => a.Actor)
@@ -176,13 +175,13 @@ public class MovieService : IMovieService
 
     public Task<bool> MovieExistsAsync(int movieId)
     {
-        return repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+        return repository.AllReadOnly<Movie>()
             .AnyAsync(m => m.Id == movieId);
     }
 
     public async Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input)
     {
-        var searchedMovies = await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+        var searchedMovies = await repository.AllReadOnly<Movie>()
             .Where(m => input.ToLower().Contains(m.Title.ToLower())
             || m.Title.ToLower().Contains(input.ToLower()))
             .Select(m => new AllMoviesViewModel

@@ -13,8 +13,10 @@ public interface IMovieService
     Task<bool> MovieExistsAsync(int movieId);
     Task<IEnumerable<DirectorViewModel>> GetDirectorsAsync();
     Task<IEnumerable<GenreViewModel>> GetGenresAsync();
-    Task<int> AddMovieAsync(AddMovieViewModel movieForm);
+    Task<int> AddMovieAsync(MovieViewModel movieForm);
     Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input);
     Task<MovieDeleteViewModel> DeleteAsync(int movieId);
     Task<int> DeleteConfirmedAsync(int movieId);
+    Task<MovieViewModel> EditGetAsync(int movieId);
+    Task<int> EditPostAsync(MovieViewModel movieForm);
 }

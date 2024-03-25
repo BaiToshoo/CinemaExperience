@@ -59,7 +59,7 @@ public class DirectorService : IDirectorService
                 BirthDate = d.BirthDate,
                 ImageUrl = d.ImageUrl,
                 Biography = d.Biography,
-                Movies = d.Movies.Select(m => new MovieViewModel
+                Movies = d.Movies.Select(m => new MovieBarViewModel
                 {
                     Id = m.Id,
                     Title = m.Title,

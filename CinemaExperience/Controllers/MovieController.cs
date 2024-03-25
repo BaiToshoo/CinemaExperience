@@ -42,7 +42,7 @@ public class MovieController : BaseController
 	[HttpGet]
 	public async Task<IActionResult> Add()
 	{
-		var model = new AddMovieViewModel
+		var model = new MovieViewModel
 		{
 			Directors = await movieService.GetDirectorsAsync(),
 			Genres = await movieService.GetGenresAsync()
@@ -52,7 +52,7 @@ public class MovieController : BaseController
 	}
 
 	[HttpPost]
-	public async Task<IActionResult> Add(AddMovieViewModel movieForm)
+	public async Task<IActionResult> Add(MovieViewModel movieForm)
 	{
 		if (await directorService.DirectorExistsAsync(movieForm.DirectorId) == false)
 		{

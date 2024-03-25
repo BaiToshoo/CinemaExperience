@@ -1,5 +1,4 @@
 ﻿using CinemaExperience.Core.ViewModels.Review;
-using CinemaExperience.Infrastructure.Data.Models;
 
 namespace CinemaExperience.Core.ViewModels.Movie;
 public class MovieDetailsViewModel
