@@ -16,7 +16,7 @@ public class MovieViewModel
     [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [Display(Name = "Director")]
     public int DirectorId { get; set; }
-    public IEnumerable<DirectorViewModel> Directors { get; set; } = new HashSet<DirectorViewModel>();
+    public IEnumerable<DirectorFormViewModel> Directors { get; set; } = new HashSet<DirectorFormViewModel>();
 
     [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [Display(Name = "Genre")]

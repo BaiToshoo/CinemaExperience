@@ -15,7 +15,7 @@ public class DirectorService : IDirectorService
         repository = _repository;
     }
 
-    public async Task<int> AddDirectorAsync(AddDirectorViewModel directorForm)
+    public async Task<int> AddDirectorAsync(DirectorViewModel directorForm)
     {
         var director = new Director
         {
@@ -48,10 +48,10 @@ public class DirectorService : IDirectorService
             .ToListAsync();
     }
 
-    public async Task<DirectorDetailsViewModel> GetDirectorDetailsAsync(int actorId)
+    public async Task<DirectorDetailsViewModel> GetDirectorDetailsAsync(int directorId)
     {
         var directorDetails = repository.AllReadOnly<Director>()
-            .Where(d => d.Id == actorId)
+            .Where(d => d.Id == directorId)
             .Select(d => new DirectorDetailsViewModel
             {
                 Id = d.Id,

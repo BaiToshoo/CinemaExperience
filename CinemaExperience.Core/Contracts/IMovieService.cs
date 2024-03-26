@@ -11,7 +11,7 @@ public interface IMovieService
     Task<IEnumerable<ReviewViewModel>> GetLatestReviewsAsync(int movieId);
     Task<bool> GenreExistsAsync(IEnumerable<int> genreId);
     Task<bool> MovieExistsAsync(int movieId);
-    Task<IEnumerable<DirectorViewModel>> GetDirectorsAsync();
+    Task<IEnumerable<DirectorFormViewModel>> GetDirectorsAsync();
     Task<IEnumerable<GenreViewModel>> GetGenresAsync();
     Task<int> AddMovieAsync(MovieViewModel movieForm);
     Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input);

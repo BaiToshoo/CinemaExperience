@@ -134,10 +134,10 @@ public class MovieService : IMovieService
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<DirectorViewModel>> GetDirectorsAsync()
+    public async Task<IEnumerable<DirectorFormViewModel>> GetDirectorsAsync()
     {
         return await repository.AllReadOnly<Director>()
-             .Select(d => new DirectorViewModel
+             .Select(d => new DirectorFormViewModel
              {
                  Id = d.Id,
                  Name = d.Name

@@ -15,17 +15,17 @@ public class ReviewController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> All(int movieId)
+    public async Task<IActionResult> All(int Id)
     {
-        var reviews = await reviewService.GetAllReviewsByMovieIdAsync(movieId);
+        var reviews = await reviewService.GetAllReviewsByMovieIdAsync(Id);
 
         return View(reviews);
     }
 
     [HttpGet]
-    public async Task<IActionResult> Edit(int reviewId)
+    public async Task<IActionResult> Edit(int Id)
     {
-        var reviewForm = await reviewService.EditReviewGetAsync(reviewId);
+        var reviewForm = await reviewService.EditReviewGetAsync(Id);
 
         return View(reviewForm);
     }
@@ -48,6 +48,6 @@ public class ReviewController : BaseController
 
         var reviewId = await reviewService.EditReviewPostAsync(reviewForm);
 
-        return RedirectToAction(nameof(All), new {movieid = reviewForm.MovieId});
+        return RedirectToAction(nameof(All), new {id = reviewForm.MovieId});
     }
 }

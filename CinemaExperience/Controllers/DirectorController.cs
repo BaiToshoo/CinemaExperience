@@ -42,12 +42,12 @@ public class DirectorController : BaseController
     [HttpGet]
     public async Task<IActionResult> Add()
     {
-        var model = new AddDirectorViewModel();
+        var model = new DirectorViewModel();
         return View(model);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(AddDirectorViewModel directorForm)
+    public async Task<IActionResult> Add(DirectorViewModel directorForm)
     {
         if (directorForm == null)
         {
@@ -70,6 +70,7 @@ public class DirectorController : BaseController
             return BadRequest();
         }
 
-        return RedirectToAction(nameof(Details), new { id = directorId });
+        return RedirectToAction(nameof(All));
+    }
     }
 }
