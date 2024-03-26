@@ -36,6 +36,36 @@ public class DirectorService : IDirectorService
             .AnyAsync(d => d.Id == directorId);
     }
 
+    public async Task<DirectorViewModel> EditGetAsync(int directorId)
+    {
+        var currentDirector = await repository.GetByIdAsync<Director>(directorId);
+
+        var directorForm = new DirectorViewModel
+        {
+            Id = directorId,
+            Name = currentDirector.Name,
+            BirthDate = currentDirector.BirthDate,
+            ImageUrl = currentDirector.ImageUrl,
+            Biography = currentDirector.Biography
+        };
+
+        return directorForm;
+    }
+
+    public async Task<int> EditPostAsync(DirectorViewModel directorForm)
+    {
+        var director = repository.GetByIdAsync<Director>(directorForm.Id).Result;
+
+        director.Name = directorForm.Name;
+        director.BirthDate = directorForm.BirthDate;
+        director.ImageUrl = directorForm.ImageUrl;
+        director.Biography = directorForm.Biography;
+
+        await repository.SaveChangesAsync();
+
+        return director.Id;
+    }
+
     public async Task<IEnumerable<AllDirectorsViewModel>> GetAllDirectosAsync()
     {
         return await repository.AllReadOnly<Director>()

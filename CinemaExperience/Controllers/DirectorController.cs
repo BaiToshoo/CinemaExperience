@@ -72,5 +72,40 @@ public class DirectorController : BaseController
 
         return RedirectToAction(nameof(All));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        if (!await directorService.DirectorExistsAsync(id)) 
+        { 
+            return BadRequest();
+        }
+
+        var model = await directorService.EditGetAsync(id);
+
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(DirectorViewModel directorForm)
+    {
+        if (!await directorService.DirectorExistsAsync(directorForm.Id))
+        {
+            return BadRequest();
+        }
+        DateTime currentDate = DateTime.Now;
+        if (directorForm.BirthDate > currentDate)
+        {
+            ModelState.AddModelError(nameof(directorForm.BirthDate), BirthDateErrorMessage);
+        }
+        if (!ModelState.IsValid)
+        {
+            return View(directorForm);
+        }
+
+        var directorId = await directorService.EditPostAsync(directorForm);
+
+        return RedirectToAction(nameof(All));
     }
 }
