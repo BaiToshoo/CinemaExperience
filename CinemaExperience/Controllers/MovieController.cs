@@ -121,7 +121,7 @@ public class MovieController : BaseController
 
         int movieId = await movieService.EditPostAsync(movieForm);
 
-        return RedirectToAction(nameof(All));
+        return RedirectToAction(nameof(Details), new {id = movieForm.Id});
     }
 
 	[HttpGet]

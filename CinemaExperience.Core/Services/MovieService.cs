@@ -43,7 +43,6 @@ public class MovieService : IMovieService
     {
         var movie = await repository.AllReadOnly<Movie>()
             .Include(m => m.Director)
-            .Include(m => m.Reviews)
             .FirstOrDefaultAsync(m => m.Id == movieId);
 
         var deleteForm = new MovieDeleteViewModel
@@ -61,7 +60,6 @@ public class MovieService : IMovieService
     {
         var movie = await repository.AllReadOnly<Movie>()
             .Include(m => m.Reviews)
-            .Include(m => m.Director)
             .FirstOrDefaultAsync(m => m.Id == movieId);
 
         if (movie.Reviews != null && movie.Reviews.Any())
@@ -101,7 +99,9 @@ public class MovieService : IMovieService
 
     public async Task<int> EditPostAsync(MovieViewModel movieForm)
     {
-        var movie = repository.GetByIdAsync<Movie>(movieForm.Id).Result;
+        var movie = await repository.All<Movie>()
+            .Include(m => m.MovieGenres)
+            .FirstOrDefaultAsync(m => m.Id == movieForm.Id);
 
         movie.Title = movieForm.Title;
         movie.DirectorId = movieForm.DirectorId;
@@ -109,6 +109,23 @@ public class MovieService : IMovieService
         movie.Duration = movieForm.Duration;
         movie.Description = movieForm.Description;
         movie.ImageUrl = movieForm.ImageUrl;
+
+        var currentGenreIds = movie.MovieGenres.Select(g => g.GenreId).ToList();
+
+        var genreIdsToAdd = movieForm.GenreIds.Except(currentGenreIds).ToList();
+        var genreIdsToRemove = currentGenreIds.Except(movieForm.GenreIds).ToList();
+
+        foreach (var genreId in genreIdsToAdd)
+        {
+            movie.MovieGenres.Add(new MovieGenre { GenreId = genreId });
+        }
+
+        var movieGenresToRemove = movie.MovieGenres
+            .Where(g => genreIdsToRemove.Contains(g.GenreId))
+            .ToList();
+
+
+        await repository.DeleteRangeAsync(movieGenresToRemove);
 
         await repository.SaveChangesAsync();
 
