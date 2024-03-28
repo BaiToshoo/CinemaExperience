@@ -53,7 +53,7 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actors");
+                    b.ToTable("Actors", (string)null);
 
                     b.HasData(
                         new
@@ -209,7 +209,7 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Directors");
+                    b.ToTable("Directors", (string)null);
 
                     b.HasData(
                         new
@@ -247,7 +247,7 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
 
                     b.HasData(
                         new
@@ -334,7 +334,7 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.HasIndex("DirectorId");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
 
                     b.HasData(
                         new
@@ -381,7 +381,7 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.HasIndex("ActorId");
 
-                    b.ToTable("MovieActors");
+                    b.ToTable("MovieActors", (string)null);
 
                     b.HasData(
                         new
@@ -473,7 +473,7 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("MovieGenres");
+                    b.ToTable("MovieGenres", (string)null);
 
                     b.HasData(
                         new
@@ -539,7 +539,7 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
 
                     b.HasData(
                         new
