@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .error-message {
+            background-color: #f8f9fa;
+            color: black;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ERROR</h1>
+    <div class="error-message">
+        <p>Sorry, please check the URL. Page wasn't found.</p>
+        <img src="/images/errors/404_Error.jpg" alt="Unauthorized" style="width : 500px" />
+        <p>Please return to <a asp-controller="Home" asp-action="Index">Homepage</a>.</p>
+    </div>
+</body>
+</html>

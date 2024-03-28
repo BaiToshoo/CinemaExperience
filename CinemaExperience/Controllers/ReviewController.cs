@@ -27,6 +27,19 @@ public class ReviewController : BaseController
     {
         var reviewForm = await reviewService.EditReviewGetAsync(Id);
 
+        if (reviewForm == null)
+        {
+            return BadRequest();
+        }
+        if (User.Id() != reviewForm.UserId && !User.IsInRole("Administrator"))
+        {
+            return Unauthorized();
+        }
+        if (!ModelState.IsValid)
+        {
+            return View(reviewForm);
+        }
+
         return View(reviewForm);
     }
 
