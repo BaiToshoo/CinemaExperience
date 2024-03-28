@@ -9,4 +9,7 @@ public interface IDirectorService
     Task<int> AddDirectorAsync(DirectorViewModel directorForm);
     Task<DirectorViewModel> EditGetAsync(int directorId);
     Task<int> EditPostAsync(DirectorViewModel directorForm);
+    Task<DirectorDeleteViewModel> DeleteAsync(int directorId);
+    Task<int> DeleteConfirmedAsync(int directorId);
+    Task<IEnumerable<DirectorFormViewModel>> GetDirectorsForFormAsync();
 }

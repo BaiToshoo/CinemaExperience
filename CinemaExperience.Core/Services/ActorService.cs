@@ -39,6 +39,17 @@ public class ActorService : IActorService
 
     }
 
+    public async Task<IEnumerable<ActorFormViewModel>> GetActorsForFormAsync()
+    {
+        return await repository.AllReadOnly<Infrastructure.Data.Models.Actor>()
+            .Select(a => new ActorFormViewModel
+            {
+                Id = a.Id,
+                Name = a.Name
+            })
+            .ToListAsync();
+    }
+
     public async Task<IEnumerable<AllActorsViewModel>> GetAllActorsAsync()
     {
         return await repository.AllReadOnly<Infrastructure.Data.Models.Actor>()

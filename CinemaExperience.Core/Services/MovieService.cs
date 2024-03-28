@@ -11,10 +11,16 @@ namespace CinemaExperience.Core.Services;
 public class MovieService : IMovieService
 {
     private readonly IRepository repository;
+    private readonly IDirectorService directorService;
+    private readonly IActorService actorService;
 
-    public MovieService(IRepository _repository)
+    public MovieService(IRepository _repository,
+        IDirectorService _directorService,
+        IActorService _actorService)
     {
         repository = _repository;
+        directorService = _directorService;
+        actorService = _actorService;
     }
 
     public async Task<int> AddMovieAsync(MovieViewModel movieForm)
@@ -28,6 +34,10 @@ public class MovieService : IMovieService
             Duration = movieForm.Duration,
             Description = movieForm.Description,
             ImageUrl = movieForm.ImageUrl,
+            MovieActors = movieForm.ActorIds.Select(a => new MovieActor
+            {
+                ActorId = a
+            }).ToList(),
             MovieGenres = movieForm.GenreIds.Select(g => new MovieGenre
             {
                 GenreId = g
@@ -77,6 +87,7 @@ public class MovieService : IMovieService
     {
         var currentmovie = await repository.AllReadOnly<Movie>()
             .Include(m => m.MovieGenres)
+            .Include(m => m.MovieActors)
             .FirstOrDefaultAsync(m => m.Id == movieId);
 
         var movieForm = new MovieViewModel
@@ -88,10 +99,12 @@ public class MovieService : IMovieService
             Duration = currentmovie.Duration,
             Description = currentmovie.Description,
             ImageUrl = currentmovie.ImageUrl,
+            ActorIds = currentmovie.MovieActors.Select(a => a.ActorId),
             GenreIds = currentmovie.MovieGenres.Select(g => g.GenreId)
         };
-        movieForm.Genres = await GetGenresAsync();
-        movieForm.Directors = await GetDirectorsAsync();
+        movieForm.Genres = await GetGenresForFormAsync();
+        movieForm.Directors = await directorService.GetDirectorsForFormAsync();
+        movieForm.Actors = await actorService.GetActorsForFormAsync();
 
         return movieForm;
 
@@ -101,6 +114,7 @@ public class MovieService : IMovieService
     {
         var movie = await repository.All<Movie>()
             .Include(m => m.MovieGenres)
+            .Include(m => m.MovieActors)
             .FirstOrDefaultAsync(m => m.Id == movieForm.Id);
 
         movie.Title = movieForm.Title;
@@ -111,20 +125,34 @@ public class MovieService : IMovieService
         movie.ImageUrl = movieForm.ImageUrl;
 
         var currentGenreIds = movie.MovieGenres.Select(g => g.GenreId).ToList();
+        var currentActorIds = movie.MovieActors.Select(a => a.ActorId).ToList();
 
         var genreIdsToAdd = movieForm.GenreIds.Except(currentGenreIds).ToList();
         var genreIdsToRemove = currentGenreIds.Except(movieForm.GenreIds).ToList();
+
+        var actorIdsToAdd = movieForm.ActorIds.Except(currentActorIds).ToList();
+        var actorIdsToRemove = currentActorIds.Except(movieForm.ActorIds).ToList();
 
         foreach (var genreId in genreIdsToAdd)
         {
             movie.MovieGenres.Add(new MovieGenre { GenreId = genreId });
         }
 
+        foreach (var actorId in actorIdsToAdd)
+        {
+            movie.MovieActors.Add(new MovieActor { ActorId = actorId });
+        }
+
         var movieGenresToRemove = movie.MovieGenres
             .Where(g => genreIdsToRemove.Contains(g.GenreId))
             .ToList();
 
+        var movieActorsToRemove = movie.MovieActors
+            .Where(a => actorIdsToRemove.Contains(a.ActorId))
+            .ToList();
 
+
+        await repository.DeleteRangeAsync(movieActorsToRemove);
         await repository.DeleteRangeAsync(movieGenresToRemove);
 
         await repository.SaveChangesAsync();
@@ -151,18 +179,7 @@ public class MovieService : IMovieService
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<DirectorFormViewModel>> GetDirectorsAsync()
-    {
-        return await repository.AllReadOnly<Director>()
-             .Select(d => new DirectorFormViewModel
-             {
-                 Id = d.Id,
-                 Name = d.Name
-             })
-             .ToListAsync();
-    }
-
-    public async Task<IEnumerable<GenreViewModel>> GetGenresAsync()
+    public async Task<IEnumerable<GenreViewModel>> GetGenresForFormAsync()
     {
         return await repository.AllReadOnly<Genre>()
             .Select(g => new GenreViewModel

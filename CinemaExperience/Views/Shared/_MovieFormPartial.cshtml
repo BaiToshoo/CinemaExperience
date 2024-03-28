@@ -37,6 +37,23 @@
                 <span asp-validation-for="@Model.GenreIds" class="text-danger"></span>
             </div>
             <div class="mb-3">
+                <label for="@Model.ActorIds" class="form-label-add-edit"><bold>Actors</bold></label>
+                <select id="ActorIds" name="ActorIds" class="form-select" multiple data-live-search="true" title="Choose Actors...">
+                    @foreach (var actor in Model.Actors)
+                    {
+                        @if (Model.ActorIds.Contains(actor.Id))
+                        {
+                            <option value="@actor.Id" selected>@actor.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@actor.Id">@actor.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="@Model.ActorIds" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
                 <label asp-for="@Model.Description" class="form-label-add-edit"><bold>Description</bold></label>
                 <textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5"></textarea>
                 <span asp-validation-for="@Model.Description" class="text-danger"></span>

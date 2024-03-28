@@ -34,14 +34,23 @@
     <div class="movie-cast">
         <h3>Cast</h3>
         <div class="cast-list">
-            @foreach (var actor in Model.Actors)
+            @if (Model.Actors.Any())
             {
-                <a href="@Url.Action("Details", "Actor", new { id = actor.Id })">
-                    <div class="cast-member">
-                    <img src="@actor.ImageUrl" alt="@actor.Name" class="actor-image" />
-                    <span class="actor-name">@actor.Name</span>
-                    </div>
-                </a>
+                @foreach (var actor in Model.Actors)
+                {
+                    <a href="@Url.Action("Details", "Actor", new { id = actor.Id })">
+                        <div class="cast-member">
+                            <img src="@actor.ImageUrl" alt="@actor.Name" class="actor-image" />
+                            <span class="actor-name">@actor.Name</span>
+                        </div>
+                    </a>
+                }
+            }
+            else
+            {
+                <div class="col-md-12">
+                    <h2 class="text-center">No Cast yet</h2>
+                </div>
             }
         </div>
     </div>

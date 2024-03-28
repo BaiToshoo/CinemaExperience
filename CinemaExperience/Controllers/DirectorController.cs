@@ -108,4 +108,30 @@ public class DirectorController : BaseController
 
         return RedirectToAction(nameof(All));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        if (!await directorService.DirectorExistsAsync(id))
+        {
+            return BadRequest();
+        }
+
+        var model = await directorService.DeleteAsync(id);
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        if (!await directorService.DirectorExistsAsync(id))
+        {
+            return BadRequest();
+        }
+
+        var directorId = await directorService.DeleteConfirmedAsync(id);
+
+        return RedirectToAction(nameof(All));
+    }
 }

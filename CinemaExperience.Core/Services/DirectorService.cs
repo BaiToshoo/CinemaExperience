@@ -30,6 +30,31 @@ public class DirectorService : IDirectorService
         return director.Id;
     }
 
+    public async Task<DirectorDeleteViewModel> DeleteAsync(int directorId)
+    {
+        var director = await repository.AllReadOnly<Director>()
+            .Where(d => d.Id == directorId)
+            .Select(d => new DirectorDeleteViewModel
+            {
+                Id = d.Id,
+                Name = d.Name,
+                ImageUrl = d.ImageUrl
+            })
+            .FirstOrDefaultAsync();
+
+        return director;
+    }
+
+    public async Task<int> DeleteConfirmedAsync(int directorId)
+    {
+        var director = await repository.GetByIdAsync<Director>(directorId);
+
+        await repository.DeleteAsync(director);
+        await repository.SaveChangesAsync();
+
+        return director.Id;
+    }
+
     public async Task<bool> DirectorExistsAsync(int directorId)
     {
         return await repository.AllReadOnly<Director>()
@@ -99,5 +124,16 @@ public class DirectorService : IDirectorService
             .FirstOrDefaultAsync();
 
         return await directorDetails;
+    }
+
+    public async Task<IEnumerable<DirectorFormViewModel>> GetDirectorsForFormAsync()
+    {
+        return await repository.AllReadOnly<Director>()
+             .Select(d => new DirectorFormViewModel
+             {
+                 Id = d.Id,
+                 Name = d.Name
+             })
+             .ToListAsync();
     }
 }

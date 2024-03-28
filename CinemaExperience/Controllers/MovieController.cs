@@ -9,12 +9,15 @@ public class MovieController : BaseController
 {
 	private readonly IMovieService movieService;
 	private readonly IDirectorService directorService;
+	private readonly IActorService actorService;
 
 	public MovieController(IMovieService _movieService,
-		IDirectorService _directorService)
+		IDirectorService _directorService,
+		IActorService _actorService)
 	{
 		movieService = _movieService;
 		directorService = _directorService;
+		actorService = _actorService;
 	}
 
 	[HttpGet]
@@ -42,10 +45,12 @@ public class MovieController : BaseController
 	[HttpGet]
 	public async Task<IActionResult> Add()
 	{
-		var model = new MovieViewModel
+		var model = new MovieViewModel()
 		{
-			Directors = await movieService.GetDirectorsAsync(),
-			Genres = await movieService.GetGenresAsync()
+			Directors = await directorService.GetDirectorsForFormAsync(),
+			Genres = await movieService.GetGenresForFormAsync(),
+			Actors = await actorService.GetActorsForFormAsync(),
+
 		};
 
 		return View(model);
@@ -69,8 +74,9 @@ public class MovieController : BaseController
 
 		if (!ModelState.IsValid)
 		{
-			movieForm.Directors = await movieService.GetDirectorsAsync();
-			movieForm.Genres = await movieService.GetGenresAsync();
+			movieForm.Directors = await directorService.GetDirectorsForFormAsync();
+			movieForm.Genres = await movieService.GetGenresForFormAsync();
+			movieForm.Actors = await actorService.GetActorsForFormAsync();
 			return View(movieForm);
 		}
 
@@ -114,8 +120,8 @@ public class MovieController : BaseController
 
         if (!ModelState.IsValid)
 		{
-            movieForm.Directors = await movieService.GetDirectorsAsync();
-            movieForm.Genres = await movieService.GetGenresAsync();
+            movieForm.Directors = await directorService.GetDirectorsForFormAsync();
+            movieForm.Genres = await movieService.GetGenresForFormAsync();
             return View(movieForm);
         }
 

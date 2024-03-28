@@ -1,4 +1,5 @@
-﻿using CinemaExperience.Core.ViewModels.Director;
+﻿using CinemaExperience.Core.ViewModels.Actor;
+using CinemaExperience.Core.ViewModels.Director;
 using CinemaExperience.Core.ViewModels.Genre;
 using CinemaExperience.Infrastructure.Data.Models;
 using System.ComponentModel.DataAnnotations;
@@ -16,12 +17,16 @@ public class MovieViewModel
     [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [Display(Name = "Director")]
     public int DirectorId { get; set; }
-    public IEnumerable<DirectorFormViewModel> Directors { get; set; } = new HashSet<DirectorFormViewModel>();
+    public IEnumerable<DirectorFormViewModel> Directors { get; set; } = new List<DirectorFormViewModel>();
 
     [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [Display(Name = "Genre")]
-    public IEnumerable<int> GenreIds { get; set; } = new HashSet<int>();
-    public IEnumerable<GenreViewModel> Genres { get; set; } = new HashSet<GenreViewModel>();
+    public IEnumerable<int> GenreIds { get; set; } = new List<int>();
+    public IEnumerable<GenreViewModel> Genres { get; set; } = new List<GenreViewModel>();
+
+    [Display(Name = "Actors")]
+    public IEnumerable<int> ActorIds { get; set; } = new List<int>();
+    public IEnumerable<ActorFormViewModel> Actors { get; set; } = new List<ActorFormViewModel>();
 
     [Required(ErrorMessage = RequiredFieldErrorMessage)]
     [DisplayFormat(DataFormatString = Dateformat)]
