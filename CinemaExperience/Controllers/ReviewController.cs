@@ -1,6 +1,7 @@
 ﻿using CinemaExperience.Core.Contracts;
 using CinemaExperience.Core.ViewModels.Review;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace CinemaExperience.Controllers;

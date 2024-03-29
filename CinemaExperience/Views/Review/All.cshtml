@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<ReviewViewModel>
-@inject UserManager<ApplicationUser> UserManager
+@inject UserManager<ApplicationUser> userManager
 @{
 	ViewData["Title"] = $"All Reviews ";
 }
@@ -13,8 +13,8 @@
                 <div class="review-header">
                     <div class="review-meta">
                         <div class="review-author">@review.AuthorName</div>
-                        <div class="review-role @(review.IsCriticsReview ? "critic-role" : "audience-role")">
-                            @(review.IsCriticsReview ? "Critic" : "Audience")
+                        <div class="review-role @(User.IsInRole("Critic")? "critic-role" : "audience-role")">
+                            @(User.IsInRole("Critic") ? "Critic" : "Audience")
                         </div>
                         <div class="review-date">@review.PostedOn.ToString(Dateformat, new CultureInfo("en-US"))</div>
                         <div class="review-rating">@review.Rating</div>
@@ -25,7 +25,7 @@
                     @review.Content
                 </div>
                 <div class="btn-group">
-                    @if (User.IsInRole("Adminstrator") || UserManager.GetUserId(User) == review.UserId)
+                    @if (User.IsInRole("Adminstrator") || userManager.GetUserId(User) == review.UserId)
                     {
                         <a href="@Url.Action("Edit", "Review", new { Id = review.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
                         <a href="@Url.Action("Delete", "Review", new { id = review.Id })" class="btn btn-sm btn btn-danger">Delete</a>

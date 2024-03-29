@@ -203,7 +203,7 @@ public class MovieService : IMovieService
                 Content = r.Content,
                 PostedOn = r.PostedOn,
                 Rating = r.Rating,
-                IsCriticsReview = r.User.IsCritic
+                UserId = r.UserId
             })
             .ToListAsync();
 

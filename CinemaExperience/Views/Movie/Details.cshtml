@@ -1,4 +1,5 @@
 ﻿@model MovieDetailsViewModel
+@inject UserManager<ApplicationUser> userManager
 
 @{
     ViewData["Title"] = Model.Title;
@@ -64,15 +65,22 @@
                     <div class="review-header">
                         <div class="review-meta">
                             <div class="review-author">@review.AuthorName</div>
-                            <div class="review-role @(review.IsCriticsReview ? "critic-role" : "audience-role")">
-                                @(review.IsCriticsReview ? "Critic" : "Audience")
+                            <div class="review-role @(User.IsInRole("Critic") ? "critic-role" : "audience-role")">
+                                @(User.IsInRole("Critic") ? "Critic" : "Audience")
                             </div>
                             <div class="review-date">@review.PostedOn.ToString(Dateformat, new CultureInfo("en-US"))</div>
                             <div class="review-rating">@review.Rating</div>
                         </div>
                     </div>
                     <div class="review-content">
-                        @(review.Content.Length <= 70 ? review.Content : review.Content.Substring(0, 70) + (review.Content.Length > 70 ? "...": ""))
+                        <div class="less" >
+                            @(review.Content.Length <= 55 ? review.Content : review.Content.Substring(0, 55) + (review.Content.Length > 55 ? "...": ""))
+                        </div>
+                        @if (review.Content.Length > 55)
+                        {
+                            <div class="more" style="display: none;">@review.Content</div>
+                            <div><a href="#" class="load-more">Read more...</a></div>
+                        }
                     </div>
                 </div>
             }
@@ -82,3 +90,17 @@
     </div>
 
 </div>
+
+@section Scripts{
+	<script>
+		$(document).ready(function () {
+			$(".load-more").on("click", function (e) {
+				e.preventDefault();
+				var $this = $(this);
+                $this.parent().prevAll('.more, .less').toggle();
+				$this.text($this.text() === "Read more..." ? "Read less..." : "Read more...");
+			});
+		});
+	</script>
+}
+```
