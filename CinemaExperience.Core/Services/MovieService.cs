@@ -5,6 +5,8 @@ using CinemaExperience.Core.ViewModels.Movie;
 using CinemaExperience.Core.ViewModels.Review;
 using CinemaExperience.Infrastructure.Data.Common;
 using CinemaExperience.Infrastructure.Data.Models;
+using CinemaExperience.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaExperience.Core.Services;
@@ -13,14 +15,17 @@ public class MovieService : IMovieService
     private readonly IRepository repository;
     private readonly IDirectorService directorService;
     private readonly IActorService actorService;
+    private readonly UserManager<ApplicationUser> userManager;
 
     public MovieService(IRepository _repository,
         IDirectorService _directorService,
-        IActorService _actorService)
+        IActorService _actorService,
+        UserManager<ApplicationUser> _userManager)
     {
         repository = _repository;
         directorService = _directorService;
         actorService = _actorService;
+        userManager = _userManager;
     }
 
     public async Task<int> AddMovieAsync(MovieViewModel movieForm)
@@ -219,13 +224,26 @@ public class MovieService : IMovieService
             .Include(m => m.Reviews).ThenInclude(r => r.User)
             .FirstOrDefaultAsync(m => m.Id == movieId);
 
-        var criticReviews = movie.Reviews.Where(r => r.User != null && r.User.IsCritic);
-        var audianceReviews = movie.Reviews.Where(r => r.User != null && !r.User.IsCritic);
+        var criticReviews = new List<Review>();
+        var audienceReviews = new List<Review>();
+
+
+        //foreach (var review in movie.Reviews)
+        //{
+        //    if (await userManager.IsInRoleAsync(review.User, "Critic"))
+        //    {
+        //        criticReviews.Add(review);
+        //    }
+        //    else if (await userManager.IsInRoleAsync(review.User, "Guest"))
+        //    {
+        //        audienceReviews.Add(review);
+        //    }
+        //}
 
         var criticScore = criticReviews.Any()
             ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
 
-        var audienceScore = audianceReviews.Any()
+        var audienceScore = audienceReviews.Any()
             ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
 
         var movieDetails = new MovieDetailsViewModel()
