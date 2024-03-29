@@ -1,4 +1,5 @@
 using CinemaExperience.ModelBinders;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews(options =>
 {
 	options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 });
 
 
@@ -18,6 +20,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
 	app.UseMigrationsEndPoint();
 }
 else
