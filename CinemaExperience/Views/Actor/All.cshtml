@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<AllActorsViewModel>
 
-<h1 class="text-center">Actors</h1>
+@{
+    ViewBag.Title = "Actors";
+}
+<h2 class="text-center mt-4 mb-3">@ViewBag.Title</h2>
+<hr />
 
 @*@if (User.IsInRole("Adminstrator"))
 {
