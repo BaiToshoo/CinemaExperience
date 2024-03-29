@@ -1,7 +1,8 @@
-﻿using CinemaExperience.Core.ViewModels.Review;
+﻿using CinemaExperience.Core.Contracts;
+using CinemaExperience.Core.ViewModels.Review;
 
 namespace CinemaExperience.Core.ViewModels.Movie;
-public class MovieDetailsViewModel
+public class MovieDetailsViewModel : IMovieModel
 {
     public int Id { set; get; }
     public string Title { set; get; }

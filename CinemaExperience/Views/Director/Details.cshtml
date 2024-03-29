@@ -18,7 +18,7 @@
     <div class="movies-list">
         @foreach (var movie in Model.Movies)
         {
-            <a href="@Url.Action("Details", "Movie", new { id = movie.Id })" class="list-group-item list-group-item-action">
+            <a href="@Url.Action("Details", "Movie", new { id = movie.Id ,information = movie.GetMovieInformation() })" class="list-group-item list-group-item-action">
                 <div class="movie-card">
                     <img src="@movie.ImageUrl" alt="@movie.Title" />
                     <div class="movie-title">@movie.Title</div>

@@ -9,7 +9,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllersWithViews(options =>
 {
-	options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 });
 
@@ -21,7 +21,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-	app.UseMigrationsEndPoint();
+    app.UseMigrationsEndPoint();
 }
 else
 {
@@ -38,8 +38,26 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapDefaultControllerRoute();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "Movie Details",
+        pattern: "/Movie/Details/{id}/{information}",
+        defaults: new { Controller = "Movie", Action = "Details" }
+        );
+    endpoints.MapControllerRoute(
+        name: "Movie Edit",
+        pattern: "/Movie/Edit/{id}/{information}",
+        defaults: new { Controller = "Movie", Action = "Edit" }
+        );
+    endpoints.MapControllerRoute(
+        name: "Movie Delete",
+        pattern: "/Movie/Delete/{id}/{information}",
+        defaults: new { Controller = "Movie", Action = "Delete" }
+        );
 
-app.MapRazorPages();
+    endpoints.MapDefaultControllerRoute();
+    endpoints.MapRazorPages();
+});
 
 await app.RunAsync();

@@ -1,4 +1,5 @@
 ﻿using CinemaExperience.Core.Contracts;
+using CinemaExperience.Core.Extensions;
 using CinemaExperience.Core.ViewModels.Movie;
 using Microsoft.AspNetCore.Mvc;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
@@ -29,7 +30,7 @@ public class MovieController : BaseController
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> Details(int id)
+	public async Task<IActionResult> Details(int id, string information)
 	{
 		if (!await movieService.MovieExistsAsync(id))
 		{
@@ -37,6 +38,11 @@ public class MovieController : BaseController
 		}
 
 		var model = await movieService.GetMovieDetailsAsync(id);
+
+		if (information != model.GetMovieInformation())
+		{
+			return BadRequest();
+		}
 		model.LatestReviews = await movieService.GetLatestReviewsAsync(id);
 
 		return View(model);
@@ -85,50 +91,56 @@ public class MovieController : BaseController
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> Edit(int id)
+	public async Task<IActionResult> Edit(int id, string information)
 	{
-        if (!await movieService.MovieExistsAsync(id))
+		if (!await movieService.MovieExistsAsync(id))
 		{
-            return BadRequest();
-        }
+			return BadRequest();
+		}
 
-        var model = await movieService.EditGetAsync(id);
+		var model = await movieService.EditGetAsync(id);
 
-        return View(model);
-    }
+		if(model.GetMovieInformation() != information)
+		{
+			return BadRequest();
+		}
+
+		return View(model);
+	}
 
 	[HttpPost]
 	public async Task<IActionResult> Edit(MovieViewModel movieForm)
 	{
-        if (!await movieService.MovieExistsAsync(movieForm.Id))
+		if (!await movieService.MovieExistsAsync(movieForm.Id))
 		{
-            return BadRequest();
-        }
+			return BadRequest();
+		}
 
-        if (await directorService.DirectorExistsAsync(movieForm.DirectorId) == false)
+		if (await directorService.DirectorExistsAsync(movieForm.DirectorId) == false)
 		{
-            ModelState.AddModelError(nameof(movieForm.DirectorId), DirectorErrorMessage);
-        }
-        if (await movieService.GenreExistsAsync(movieForm.GenreIds) == false)
+			ModelState.AddModelError(nameof(movieForm.DirectorId), DirectorErrorMessage);
+		}
+		if (await movieService.GenreExistsAsync(movieForm.GenreIds) == false)
 		{
-            ModelState.AddModelError(nameof(movieForm.GenreIds), GenreNoExistErrorMessage);
-        }
-        if (movieForm.GenreIds.Count() < 1)
+			ModelState.AddModelError(nameof(movieForm.GenreIds), GenreNoExistErrorMessage);
+		}
+		if (movieForm.GenreIds.Count() < 1)
 		{
-            ModelState.AddModelError(nameof(movieForm.GenreIds), AtLeastOneGenreErrorMessage);
-        }
+			ModelState.AddModelError(nameof(movieForm.GenreIds), AtLeastOneGenreErrorMessage);
+		}
 
-        if (!ModelState.IsValid)
+		if (!ModelState.IsValid)
 		{
-            movieForm.Directors = await directorService.GetDirectorsForFormAsync();
-            movieForm.Genres = await movieService.GetGenresForFormAsync();
-            return View(movieForm);
-        }
+			movieForm.Directors = await directorService.GetDirectorsForFormAsync();
+			movieForm.Genres = await movieService.GetGenresForFormAsync();
+			movieForm.Actors = await actorService.GetActorsForFormAsync();
+			return View(movieForm);
+		}
 
-        int movieId = await movieService.EditPostAsync(movieForm);
+		int movieId = await movieService.EditPostAsync(movieForm);
 
-        return RedirectToAction(nameof(Details), new {id = movieForm.Id});
-    }
+		return RedirectToAction(nameof(Details), new { id = movieForm.Id, information = movieForm.GetMovieInformation() });
+	}
 
 	[HttpGet]
 	public async Task<IActionResult> Search(string input)
@@ -149,30 +161,35 @@ public class MovieController : BaseController
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> Delete(int id)
+	public async Task<IActionResult> Delete(int id, string information)
 	{
-        if (!await movieService.MovieExistsAsync(id))
+		if (!await movieService.MovieExistsAsync(id))
+		{
+			return BadRequest();
+		}
+
+		var movieToDelete = await movieService.DeleteAsync(id);
+
+		if (movieToDelete.GetMovieInformation() != information)
 		{
             return BadRequest();
         }
 
-        var movieToDelete = await movieService.DeleteAsync(id);
-
-        return View(movieToDelete);
-    }
+		return View(movieToDelete);
+	}
 
 	[HttpPost]
 	public async Task<IActionResult> DeleteConfirmed(int id)
 	{
-        if (!await movieService.MovieExistsAsync(id))
+		if (!await movieService.MovieExistsAsync(id))
 		{
-            return BadRequest();
-        }
+			return BadRequest();
+		}
 
-        await movieService.DeleteConfirmedAsync(id);
+		await movieService.DeleteConfirmedAsync(id);
 
-        return RedirectToAction(nameof(All));
-    }
+		return RedirectToAction(nameof(All));
+	}
 
 
 

@@ -1,5 +1,7 @@
-﻿namespace CinemaExperience.Core.ViewModels.Movie;
-public class MovieBarViewModel
+﻿using CinemaExperience.Core.Contracts;
+
+namespace CinemaExperience.Core.ViewModels.Movie;
+public class MovieBarViewModel : IMovieModel
 {
     public int Id { get; set; }
     public string Title { get; set; }

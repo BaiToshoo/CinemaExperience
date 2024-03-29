@@ -1,4 +1,5 @@
-﻿using CinemaExperience.Core.ViewModels.Actor;
+﻿using CinemaExperience.Core.Contracts;
+using CinemaExperience.Core.ViewModels.Actor;
 using CinemaExperience.Core.ViewModels.Director;
 using CinemaExperience.Core.ViewModels.Genre;
 using CinemaExperience.Infrastructure.Data.Models;
@@ -6,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Movie;
 namespace CinemaExperience.Core.ViewModels.Movie;
-public class MovieViewModel
+public class MovieViewModel: IMovieModel
 {
     public int Id { get; set; }
 
