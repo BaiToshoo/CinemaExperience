@@ -9,6 +9,23 @@
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
             </div>
             <div class="mb-3">
+                <label for="@Model.MovieIds" class="form-label-add-edit"><bold>Movies</bold></label>
+                <select id="MovieIds" name="MovieIds" class="form-select" multiple data-live-search="true" title="Choose Movies...">
+                    @foreach (var movie in Model.Movies)
+                    {
+                        @if (Model.MovieIds.Contains(movie.Id))
+                        {
+                            <option value="@movie.Id" selected>@movie.Title</option>
+                        }
+                        else
+                        {
+                            <option value="@movie.Id">@movie.Title</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="@Model.MovieIds" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
                 <label asp-for="@Model.Biography" class="form-label-add-edit"><bold>Biography</bold></label>
                 <textarea asp-for="@Model.Biography" class="form-control" aria-required="true" rows="5"></textarea>
                 <span asp-validation-for="@Model.Biography" class="text-danger"></span>
@@ -29,7 +46,3 @@
         </form>
     </div>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

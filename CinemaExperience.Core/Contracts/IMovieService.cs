@@ -17,4 +17,5 @@ public interface IMovieService
     Task<int> DeleteConfirmedAsync(int movieId);
     Task<MovieViewModel> EditGetAsync(int movieId);
     Task<int> EditPostAsync(MovieViewModel movieForm);
+    Task<IEnumerable<MovieFormViewModel>> GetMoviesForFormAsync();
 }

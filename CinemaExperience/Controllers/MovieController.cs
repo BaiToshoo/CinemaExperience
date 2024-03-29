@@ -99,8 +99,10 @@ public class MovieController : BaseController
 		}
 
 		var model = await movieService.EditGetAsync(id);
+        model.Directors = await directorService.GetDirectorsForFormAsync();
+        model.Actors = await actorService.GetActorsForFormAsync();
 
-		if(model.GetMovieInformation() != information)
+        if (model.GetMovieInformation() != information)
 		{
 			return BadRequest();
 		}

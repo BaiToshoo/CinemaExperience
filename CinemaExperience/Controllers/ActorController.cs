@@ -1,4 +1,5 @@
 ﻿using CinemaExperience.Core.Contracts;
+using CinemaExperience.Core.Services;
 using CinemaExperience.Core.ViewModels.Actor;
 using Microsoft.AspNetCore.Mvc;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
@@ -8,10 +9,13 @@ namespace CinemaExperience.Controllers;
 public class ActorController : BaseController
 {
     private readonly IActorService actorService;
+    private readonly IMovieService movieService;
 
-    public ActorController(IActorService _actorService)
+    public ActorController(IActorService _actorService,
+        IMovieService _movieService)
     {
         actorService = _actorService;
+        movieService = _movieService;
     }
 
     [HttpGet]
@@ -27,33 +31,33 @@ public class ActorController : BaseController
         return View(model);
     }
 
-
-
-
-
-
     [HttpGet]
-    public async Task<IActionResult> Edit(int id)
+    public async Task<IActionResult> Details(int id)
     {
-        if (!await actorService.ActorExistsAsync(id))
-        {
-            return BadRequest();
-        }
+        var model = await actorService.GetActorDetailsAsync(id);
 
-        var model = await actorService.EditGetAsync(id);
+        if (model == null)
+        {
+            return NotFound();
+        }
 
         return View(model);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Add()
+    {
+        var model = new ActorViewModel()
+        {
+            Movies = await movieService.GetMoviesForFormAsync()
+        };
+        return View(model);
+    }
+
     [HttpPost]
-    public async Task<IActionResult> Edit(ActorViewModel actorForm)
+    public async Task<IActionResult> Add(ActorViewModel actorForm)
     {
         if (actorForm == null)
-        {
-            return BadRequest();
-        }
-
-        if (!await actorService.ActorExistsAsync(actorForm.Id))
         {
             return BadRequest();
         }
@@ -69,7 +73,7 @@ public class ActorController : BaseController
             return View(actorForm);
         }
 
-        var actorId = await actorService.EditPostAsync(actorForm);
+        var actorId = await actorService.AddActorAsync(actorForm);
 
         if (actorId == 0)
         {
@@ -80,16 +84,47 @@ public class ActorController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> Details(int id)
+    public async Task<IActionResult> Edit(int id)
     {
-        var model = await actorService.GetActorDetailsAsync(id);
-
-        if (model == null)
+        if (!await actorService.ActorExistsAsync(id))
         {
-            return NotFound();
+            return BadRequest();
         }
+
+        var model = await actorService.EditGetAsync(id);
+        model.Movies = await movieService.GetMoviesForFormAsync();
 
         return View(model);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Edit(ActorViewModel actorForm)
+    {
+
+        if (!await actorService.ActorExistsAsync(actorForm.Id))
+        {
+            return BadRequest();
+        }
+
+        DateTime currentDate = DateTime.Now;
+        if (actorForm.BirthDate > currentDate)
+        {
+            ModelState.AddModelError(nameof(actorForm.BirthDate), BirthDateErrorMessage);
+        }
+
+        if (!ModelState.IsValid)
+        {
+            actorForm.Movies = await movieService.GetMoviesForFormAsync();
+            return View(actorForm);
+        }
+
+        var actorId = await actorService.EditPostAsync(actorForm);
+
+        if (actorId == 0)
+        {
+            return BadRequest();
+        }
+
+        return RedirectToAction(nameof(Details), new {id = actorForm.Id});
+    }
 }

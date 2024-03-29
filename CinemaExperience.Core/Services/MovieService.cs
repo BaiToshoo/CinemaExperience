@@ -1,5 +1,4 @@
 ﻿using CinemaExperience.Core.Contracts;
-using CinemaExperience.Core.ViewModels.Director;
 using CinemaExperience.Core.ViewModels.Genre;
 using CinemaExperience.Core.ViewModels.Movie;
 using CinemaExperience.Core.ViewModels.Review;
@@ -13,18 +12,12 @@ namespace CinemaExperience.Core.Services;
 public class MovieService : IMovieService
 {
     private readonly IRepository repository;
-    private readonly IDirectorService directorService;
-    private readonly IActorService actorService;
     private readonly UserManager<ApplicationUser> userManager;
 
     public MovieService(IRepository _repository,
-        IDirectorService _directorService,
-        IActorService _actorService,
         UserManager<ApplicationUser> _userManager)
     {
         repository = _repository;
-        directorService = _directorService;
-        actorService = _actorService;
         userManager = _userManager;
     }
 
@@ -108,8 +101,6 @@ public class MovieService : IMovieService
             GenreIds = currentmovie.MovieGenres.Select(g => g.GenreId)
         };
         movieForm.Genres = await GetGenresForFormAsync();
-        movieForm.Directors = await directorService.GetDirectorsForFormAsync();
-        movieForm.Actors = await actorService.GetActorsForFormAsync();
 
         return movieForm;
 
@@ -263,6 +254,17 @@ public class MovieService : IMovieService
         };
 
         return movieDetails;
+    }
+
+    public async Task<IEnumerable<MovieFormViewModel>> GetMoviesForFormAsync()
+    {
+        return await repository.AllReadOnly<Movie>()
+            .Select(m => new MovieFormViewModel
+            {
+                Id = m.Id,
+                Title = m.Title
+            })
+            .ToListAsync();
     }
 
     public Task<bool> MovieExistsAsync(int movieId)

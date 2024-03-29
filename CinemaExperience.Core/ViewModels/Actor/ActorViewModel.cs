@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CinemaExperience.Core.ViewModels.Movie;
+using System.ComponentModel.DataAnnotations;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Actor;
 
@@ -10,6 +11,10 @@ public class ActorViewModel
     [Required]
     [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = LengthErrorMessage)]
     public string Name { get; set; } = null!;
+
+    [Display(Name = "Movies")]
+    public IEnumerable<int> MovieIds { get; set; } = new List<int>();
+    public IEnumerable<MovieFormViewModel> Movies { get; set; } = new List<MovieFormViewModel>();
 
     [Required]
     [DataType(DataType.Date)]
