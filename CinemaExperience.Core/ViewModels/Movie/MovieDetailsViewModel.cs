@@ -15,6 +15,6 @@ public class MovieDetailsViewModel : IMovieModel
     public string ImageUrl { set; get; }
     public IEnumerable<Infrastructure.Data.Models.Genre> Genres { set; get; } = new List<Infrastructure.Data.Models.Genre>();
     public IEnumerable<Infrastructure.Data.Models.Actor> Actors { set; get; } = new List<Infrastructure.Data.Models.Actor>();
-    public IEnumerable<ReviewViewModel> LatestReviews { set; get; } = new List<ReviewViewModel>();
+    public IEnumerable<ReviewFormViewModel> LatestReviews { set; get; } = new List<ReviewFormViewModel>();
 
 }

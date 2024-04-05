@@ -24,6 +24,35 @@ public class ReviewController : BaseController
     }
 
     [HttpGet]
+    public IActionResult Add(int Id)
+    {
+        var reviewForm = new ReviewViewModel
+        {
+            MovieId = Id,
+            UserId = User.Id()
+        };
+
+        return View(reviewForm);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Add(ReviewViewModel reviewForm)
+    {
+        if (reviewForm == null)
+        {
+            return BadRequest();
+        }
+        if (!ModelState.IsValid)
+        {
+            return View(reviewForm);
+        }
+
+        var reviewId = await reviewService.AddReviewAsync(reviewForm);
+
+        return RedirectToAction(nameof(All), new {id = reviewForm.MovieId});
+    }
+
+    [HttpGet]
     public async Task<IActionResult> Edit(int Id)
     {
         var reviewForm = await reviewService.EditReviewGetAsync(Id);
@@ -45,7 +74,7 @@ public class ReviewController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(ReviewEditViewModel reviewForm)
+    public async Task<IActionResult> Edit(ReviewViewModel reviewForm)
     {
         if (reviewForm == null)
         {

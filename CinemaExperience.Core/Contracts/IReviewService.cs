@@ -4,9 +4,10 @@ using CinemaExperience.Infrastructure.Data.Models;
 namespace CinemaExperience.Core.Contracts;
 public interface IReviewService
 {
-    Task<IEnumerable<ReviewViewModel>> GetAllReviewsByMovieIdAsync(int movieId);
+    Task<IEnumerable<ReviewFormViewModel>> GetAllReviewsByMovieIdAsync(int movieId);
     Task <bool> ReviewExistsAsync(int reviewId);
-    Task<ReviewEditViewModel> EditReviewGetAsync(int reviewId);
-    Task<int> EditReviewPostAsync(ReviewEditViewModel reviewForm);
+    Task<ReviewViewModel> EditReviewGetAsync(int reviewId);
+    Task<int> EditReviewPostAsync(ReviewViewModel reviewForm);
+    Task<int> AddReviewAsync(ReviewViewModel reviewForm);
 
 }

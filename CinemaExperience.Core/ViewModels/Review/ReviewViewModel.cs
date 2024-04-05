@@ -1,11 +1,21 @@
-﻿namespace CinemaExperience.Core.ViewModels.Review;
+﻿using System.ComponentModel.DataAnnotations;
+using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Review;
+using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
+
+namespace CinemaExperience.Core.ViewModels.Review;
 public class ReviewViewModel
 {
-    public int Id { set; get; }
-    public int MovieId { set; get; }
-    public string UserId { set; get; } = null!;
-    public string AuthorName { set; get; } = null!;
-    public string Content { set; get; } = null!;
-    public int Rating { set; get; }
-    public DateTime PostedOn { set; get; }
+    public int Id { get; set; }
+
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
+    [StringLength(ContentMaxLength, MinimumLength = ContentMinLength, ErrorMessage = LengthErrorMessage)]
+    public string Content { get; set; } = null!;
+
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
+    [Range(MinRating, MaxRating, ErrorMessage = RangeErrorMessage)]
+    public int Rating { get; set; }
+
+    public int MovieId { get; set; }
+
+    public string UserId { get; set; } = null!;
 }

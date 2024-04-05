@@ -186,13 +186,13 @@ public class MovieService : IMovieService
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<ReviewViewModel>> GetLatestReviewsAsync(int movieId)
+    public async Task<IEnumerable<ReviewFormViewModel>> GetLatestReviewsAsync(int movieId)
     {
         var latestReviews = await repository.AllReadOnly<Review>()
             .Where(r => r.MovieId == movieId)
             .OrderByDescending(r => r.PostedOn)
             .Take(2)
-            .Select(r => new ReviewViewModel
+            .Select(r => new ReviewFormViewModel
             {
                 Id = r.Id,
                 AuthorName = r.User.FirstName + " " + r.User.LastName,

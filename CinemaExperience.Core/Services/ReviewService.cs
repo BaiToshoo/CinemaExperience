@@ -14,11 +14,29 @@ public class ReviewService : IReviewService
         repository = _repository;
     }
 
-    public async Task<ReviewEditViewModel> EditReviewGetAsync(int reviewId)
+    public async Task<int> AddReviewAsync(ReviewViewModel reviewForm)
+    {
+        var review = new Review
+        {
+            MovieId = reviewForm.MovieId,
+            UserId = reviewForm.UserId,
+            Content = reviewForm.Content,
+            Rating = reviewForm.Rating,
+            PostedOn = DateTime.UtcNow
+        };
+
+        await repository.AddAsync(review);
+        await repository.SaveChangesAsync();
+
+        return review.Id;
+
+    }
+
+    public async Task<ReviewViewModel> EditReviewGetAsync(int reviewId)
     {
         var currentReview = await repository.GetByIdAsync<Review>(reviewId);
 
-        var reviewForm = new ReviewEditViewModel()
+        var reviewForm = new ReviewViewModel()
         {
             Id = currentReview.Id,
             MovieId = currentReview.MovieId,
@@ -30,7 +48,7 @@ public class ReviewService : IReviewService
         return reviewForm;
     }
 
-    public async Task<int> EditReviewPostAsync(ReviewEditViewModel reviewForm)
+    public async Task<int> EditReviewPostAsync(ReviewViewModel reviewForm)
     {
         var currentReview = await repository.GetByIdAsync<Review>(reviewForm.Id);
 
@@ -42,12 +60,12 @@ public class ReviewService : IReviewService
         return currentReview.Id;
     }
 
-    public async Task<IEnumerable<ReviewViewModel>> GetAllReviewsByMovieIdAsync(int movieId)
+    public async Task<IEnumerable<ReviewFormViewModel>> GetAllReviewsByMovieIdAsync(int movieId)
     {
         var reviews = await repository.AllReadOnly<Review>()
             .Where(r => r.MovieId == movieId)
             .OrderByDescending(r => r.PostedOn)
-            .Select(r => new ReviewViewModel()
+            .Select(r => new ReviewFormViewModel()
             {
                 Id = r.Id,
                 MovieId = r.MovieId,
