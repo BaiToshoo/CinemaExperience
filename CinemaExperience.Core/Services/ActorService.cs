@@ -40,6 +40,31 @@ public class ActorService : IActorService
         return actor.Id;
     }
 
+    public async Task<ActorDeleteViewModel> DeleteAsync(int actorId)
+    {
+        var actor = await repository.AllReadOnly<Actor>()
+            .Where(a => a.Id == actorId)
+            .Select(a => new ActorDeleteViewModel
+            {
+                Id = a.Id,
+                Name = a.Name,
+                ImageUrl = a.ImageUrl
+            })
+            .FirstOrDefaultAsync();
+
+        return actor;
+    }
+
+    public async Task<int> DeleteConfirmedAsync(int actorId)
+    {
+        var actor = await repository.GetByIdAsync<Actor>(actorId);
+
+        await repository.DeleteAsync(actor);
+        await repository.SaveChangesAsync();
+
+        return actor.Id;
+    }
+
     public async Task<ActorViewModel> EditGetAsync(int actorId)
     {
         var currentActor = await repository.AllReadOnly<Actor>()

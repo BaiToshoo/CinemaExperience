@@ -10,4 +10,6 @@ public interface IActorService
     Task<ActorViewModel> EditGetAsync(int actorId);
     Task<int> EditPostAsync(ActorViewModel actorForm);
     Task<bool> ActorExistsAsync(int actorId);
+    Task<ActorDeleteViewModel> DeleteAsync(int actorId);
+    Task<int> DeleteConfirmedAsync(int actorId);
 }

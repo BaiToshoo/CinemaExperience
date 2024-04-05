@@ -127,4 +127,30 @@ public class ActorController : BaseController
 
         return RedirectToAction(nameof(Details), new {id = actorForm.Id});
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        if (!await actorService.ActorExistsAsync(id))
+        {
+            return BadRequest();
+        }
+
+        var model = await actorService.DeleteAsync(id);
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        if (!await actorService.ActorExistsAsync(id))
+        {
+            return BadRequest();
+        }
+
+        var directorId = await actorService.DeleteConfirmedAsync(id);
+
+        return RedirectToAction(nameof(All));
+    }
 }
