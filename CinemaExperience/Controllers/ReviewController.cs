@@ -93,4 +93,38 @@ public class ReviewController : BaseController
 
         return RedirectToAction(nameof(All), new {id = reviewForm.MovieId});
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int Id)
+    {
+        var reviewForm = await reviewService.DeleteAsync(Id);
+
+        if (!await reviewService.ReviewExistsAsync(reviewForm.Id))
+        {
+            return BadRequest();
+        }
+        if (User.Id() != reviewForm.UserId && !User.IsInRole("Administrator"))
+        {
+            return Unauthorized();
+        }
+
+        return View(reviewForm);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteConfirmed(ReviewDeleteViewModel reviewForm)
+    {
+        if (!await reviewService.ReviewExistsAsync(reviewForm.Id))
+        {
+            return BadRequest();
+        }
+        if (User.Id() != reviewForm.UserId && !User.IsInRole("Administrator"))
+        {
+            return Unauthorized();
+        }
+
+        var reviewId = await reviewService.DeleteConfirmedAsync(reviewForm.Id);
+
+        return RedirectToAction(nameof(All), new {id = reviewForm.MovieId});
+    }
 }

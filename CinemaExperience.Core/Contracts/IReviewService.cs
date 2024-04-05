@@ -1,5 +1,4 @@
 ﻿using CinemaExperience.Core.ViewModels.Review;
-using CinemaExperience.Infrastructure.Data.Models;
 
 namespace CinemaExperience.Core.Contracts;
 public interface IReviewService
@@ -9,5 +8,7 @@ public interface IReviewService
     Task<ReviewViewModel> EditReviewGetAsync(int reviewId);
     Task<int> EditReviewPostAsync(ReviewViewModel reviewForm);
     Task<int> AddReviewAsync(ReviewViewModel reviewForm);
+    Task<ReviewDeleteViewModel> DeleteAsync(int reviewId);
+    Task<int> DeleteConfirmedAsync(int reviewId);
 
 }

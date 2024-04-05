@@ -32,6 +32,38 @@ public class ReviewService : IReviewService
 
     }
 
+    public Task<ReviewDeleteViewModel> DeleteAsync(int reviewId)
+    {
+        var targetReview = repository.AllReadOnly<Review>()
+            .Where(r => r.Id == reviewId)
+            .Select(r => new ReviewDeleteViewModel()
+            {
+                Id = r.Id,
+                MovieId = r.MovieId,
+                Content = r.Content,
+                Rating = r.Rating,
+                PostedOn = r.PostedOn,
+                UserId = r.UserId,
+                UserName = r.User.FirstName + " " + r.User.LastName,
+                MovieTitle = r.Movie.Title
+            })
+            .FirstOrDefaultAsync();
+
+        return targetReview;
+    }
+
+    public async Task<int> DeleteConfirmedAsync(int reviewId)
+    {
+        var review = repository.All<Review>()
+            .Where(r => r.Id == reviewId)
+            .FirstOrDefault();
+
+        await repository.DeleteAsync(review);
+        await repository.SaveChangesAsync();
+
+        return review.Id;
+    }
+
     public async Task<ReviewViewModel> EditReviewGetAsync(int reviewId)
     {
         var currentReview = await repository.GetByIdAsync<Review>(reviewId);
