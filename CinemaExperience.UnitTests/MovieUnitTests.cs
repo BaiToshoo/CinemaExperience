@@ -8,7 +8,6 @@ using CinemaExperience.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
@@ -18,7 +17,6 @@ namespace CinemaExperience.UnitTests;
 public class MovieUnitTests
 {
     private IRepository repository;
-    private ILogger<MovieService> logger;
     private IMovieService movieService;
     private CinemaExperienceDbContext dbContext;
 
@@ -40,7 +38,6 @@ public class MovieUnitTests
 
         dbContext = new CinemaExperienceDbContext(contextOptions);
         repository = new Repository(dbContext);
-        logger = Mock.Of<ILogger<MovieService>>();
         movieService = new MovieService(repository, mockUserManager);
 
         dbContext.Database.EnsureDeleted();
@@ -48,7 +45,7 @@ public class MovieUnitTests
     }
 
     [Test]
-    public async Task Test_Movie_Edit()
+    public async Task Test_Movie_EditGetAsync_And_EditPostAsync()
     {
         var movie = await repository.All<Movie>()
             .Include(m => m.MovieGenres)
@@ -96,7 +93,7 @@ public class MovieUnitTests
     }
 
     [Test]
-    public async Task Test_Movie_Delete_And_Add()
+    public async Task Test_Movie_DeleteAsync_DeleteConfirmedAsync_And_AddMovieAsync()
     {
         var movie = new MovieViewModel
         {
@@ -115,6 +112,14 @@ public class MovieUnitTests
 
         var newMovieInDb = await repository.GetByIdAsync<Movie>(movie.Id);
         Assert.That(newMovieInDb, Is.Not.Null, "Movie was not saved to the database");
+        Assert.That(newMovieInDb.Title, Is.EqualTo(movie.Title));
+        Assert.That(newMovieInDb.ReleaseDate, Is.EqualTo(movie.ReleaseDate));
+        Assert.That(newMovieInDb.Duration, Is.EqualTo(120));
+        Assert.That(newMovieInDb.Description, Is.EqualTo(movie.Description));
+        Assert.That(newMovieInDb.ImageUrl, Is.EqualTo(movie.ImageUrl));
+        Assert.That(newMovieInDb.MovieGenres.Count, Is.EqualTo(2));
+        Assert.That(newMovieInDb.MovieActors.Count, Is.EqualTo(2));
+
 
         var deleteForm = await movieService.DeleteAsync(newMovieInDb.Id);
 
@@ -126,7 +131,7 @@ public class MovieUnitTests
         await movieService.DeleteConfirmedAsync(newMovieInDb.Id);
 
         var deletedMovie = await repository.GetByIdAsync<Movie>(newMovieInDb.Id);
-        Assert.IsNull(deletedMovie, "Movie was not deleted from the database");
+        Assert.That(deletedMovie, Is.Null, "Movie was not deleted from the database");
 
     }
 
