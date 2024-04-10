@@ -156,10 +156,9 @@ public class MovieService : IMovieService
         return movie.Id;
     }
 
-    public async Task<bool> GenreExistsAsync(IEnumerable<int> genreId)
+    public async Task<bool> GenreExistsAsync(int genreId)
     {
-        return await repository.AllReadOnly<Genre>()
-            .AnyAsync(g => genreId.Contains(g.Id));
+        return await repository.AllReadOnly<Genre>().AnyAsync(g => g.Id == genreId);
     }
 
     public async Task<IEnumerable<AllMoviesViewModel>> GetAllMoviesAsync()

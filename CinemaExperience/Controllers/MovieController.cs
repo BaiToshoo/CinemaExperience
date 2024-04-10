@@ -69,10 +69,13 @@ public class MovieController : BaseController
 		{
 			ModelState.AddModelError(nameof(movieForm.DirectorId), DirectorErrorMessage);
 		}
-		if (await movieService.GenreExistsAsync(movieForm.GenreIds) == false)
+		foreach (var genreId in movieForm.GenreIds)
 		{
-			ModelState.AddModelError(nameof(movieForm.GenreIds), GenreNoExistErrorMessage);
-		}
+            if (await movieService.GenreExistsAsync(genreId) == false)
+            {
+                ModelState.AddModelError(nameof(movieForm.GenreIds), GenreNoExistErrorMessage);
+            }
+        }
 		if (movieForm.GenreIds.Count() < 1)
 		{
 			ModelState.AddModelError(nameof(movieForm.GenreIds), AtLeastOneGenreErrorMessage);
@@ -122,11 +125,14 @@ public class MovieController : BaseController
 		{
 			ModelState.AddModelError(nameof(movieForm.DirectorId), DirectorErrorMessage);
 		}
-		if (await movieService.GenreExistsAsync(movieForm.GenreIds) == false)
-		{
-			ModelState.AddModelError(nameof(movieForm.GenreIds), GenreNoExistErrorMessage);
-		}
-		if (movieForm.GenreIds.Count() < 1)
+        foreach (var genreId in movieForm.GenreIds)
+        {
+            if (await movieService.GenreExistsAsync(genreId) == false)
+            {
+                ModelState.AddModelError(nameof(movieForm.GenreIds), GenreNoExistErrorMessage);
+            }
+        }
+        if (movieForm.GenreIds.Count() < 1)
 		{
 			ModelState.AddModelError(nameof(movieForm.GenreIds), AtLeastOneGenreErrorMessage);
 		}
