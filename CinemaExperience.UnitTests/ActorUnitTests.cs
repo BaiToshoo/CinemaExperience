@@ -103,7 +103,7 @@ public class ActorUnitTests
         Assert.That(actor, Is.Not.Null, "Actor is null");
 
         var actorForm = await actorService.EditGetAsync(actor.Id);
-        Assert.That(actorForm, Is.Not.Null, "MovieForm is null");
+        Assert.That(actorForm, Is.Not.Null, "ActorForm is null");
 
         Assert.That(actorForm.Id, Is.EqualTo(actor.Id));
         Assert.That(actorForm.Name, Is.EqualTo(actor.Name));
@@ -184,6 +184,7 @@ public class ActorUnitTests
         Assert.That(result.Count(), Is.EqualTo(expectedResult));
     }
 
+    [TearDown]
     public void TearDown()
     {
         dbContext.Dispose();

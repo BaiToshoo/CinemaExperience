@@ -17,7 +17,7 @@ public class DirectorController : BaseController
     [HttpGet]
     public async Task<IActionResult> All()
     {
-        var model = await directorService.GetAllDirectosAsync();
+        var model = await directorService.GetAllDirectorsAsync();
 
         if (model == null)
         {

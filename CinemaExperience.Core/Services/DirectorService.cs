@@ -91,7 +91,7 @@ public class DirectorService : IDirectorService
         return director.Id;
     }
 
-    public async Task<IEnumerable<AllDirectorsViewModel>> GetAllDirectosAsync()
+    public async Task<IEnumerable<AllDirectorsViewModel>> GetAllDirectorsAsync()
     {
         return await repository.AllReadOnly<Director>()
             .Select(d => new AllDirectorsViewModel
