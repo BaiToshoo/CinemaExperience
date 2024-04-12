@@ -1,5 +1,4 @@
 ﻿@model MovieDetailsViewModel
-@inject UserManager<ApplicationUser> userManager
 
 @{
     ViewData["Title"] = Model.Title;
@@ -65,8 +64,8 @@
                     <div class="review-header">
                         <div class="review-meta">
                             <div class="review-author">@review.AuthorName</div>
-                            <div class="review-role @(User.IsInRole("Critic") ? "critic-role" : "audience-role")">
-                                @(User.IsInRole("Critic") ? "Critic" : "Audience")
+                            <div class="review-role @(review.IsCriticsReview ? "critic-role" : "audience-role")">
+                                @(review.IsCriticsReview ? "Critic" : "Audience")
                             </div>
                             <div class="review-date">@review.PostedOn.ToString(Dateformat, new CultureInfo("en-US"))</div>
                             <div class="review-rating">@review.Rating</div>

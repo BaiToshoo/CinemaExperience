@@ -7,6 +7,7 @@ using CinemaExperience.Infrastructure.Data.Models;
 using CinemaExperience.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static CinemaExperience.Infrastructure.Data.Constants.RoleConstants;
 
 namespace CinemaExperience.Core.Services;
 public class MovieService : IMovieService
@@ -185,26 +186,6 @@ public class MovieService : IMovieService
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<ReviewFormViewModel>> GetLatestReviewsAsync(int movieId)
-    {
-        var latestReviews = await repository.AllReadOnly<Review>()
-            .Where(r => r.MovieId == movieId)
-            .OrderByDescending(r => r.PostedOn)
-            .Take(2)
-            .Select(r => new ReviewFormViewModel
-            {
-                Id = r.Id,
-                AuthorName = r.User.FirstName + " " + r.User.LastName,
-                Content = r.Content,
-                PostedOn = r.PostedOn,
-                Rating = r.Rating,
-                UserId = r.UserId
-            })
-            .ToListAsync();
-
-        return latestReviews;
-    }
-
     public async Task<MovieDetailsViewModel> GetMovieDetailsAsync(int movieId)
     {
         var movie = await repository.AllReadOnly<Movie>()
@@ -216,19 +197,42 @@ public class MovieService : IMovieService
 
         var criticReviews = new List<Review>();
         var audienceReviews = new List<Review>();
+        var allReviews = new List<ReviewFormViewModel>();
 
 
-        //foreach (var review in movie.Reviews)
-        //{
-        //    if (await userManager.IsInRoleAsync(review.User, "Critic"))
-        //    {
-        //        criticReviews.Add(review);
-        //    }
-        //    else if (await userManager.IsInRoleAsync(review.User, "Guest"))
-        //    {
-        //        audienceReviews.Add(review);
-        //    }
-        //}
+        foreach (var review in movie.Reviews)
+        {
+            if (await userManager.IsInRoleAsync(review.User, CriticRoleName))
+            {
+                criticReviews.Add(review);
+
+                allReviews.Add(new ReviewFormViewModel
+                {
+                    Id = review.Id,
+                    AuthorName = review.User.FirstName + " " + review.User.LastName,
+                    Content = review.Content,
+                    PostedOn = review.PostedOn,
+                    Rating = review.Rating,
+                    UserId = review.UserId,
+                    IsCriticsReview = true
+                });
+                
+            }
+            else if (await userManager.IsInRoleAsync(review.User, UserRoleName))
+            {
+                audienceReviews.Add(review);
+                allReviews.Add(new ReviewFormViewModel
+                {
+                    Id = review.Id,
+                    AuthorName = review.User.FirstName + " " + review.User.LastName,
+                    Content = review.Content,
+                    PostedOn = review.PostedOn,
+                    Rating = review.Rating,
+                    UserId = review.UserId,
+                    IsCriticsReview = false
+                });
+            }
+        }
 
         var criticScore = criticReviews.Any()
             ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
@@ -249,7 +253,8 @@ public class MovieService : IMovieService
             UserRating = audienceScore,
             ImageUrl = movie.ImageUrl,
             Genres = movie.MovieGenres.Select(g => g.Genre),
-            Actors = movie.MovieActors.Select(a => a.Actor)
+            Actors = movie.MovieActors.Select(a => a.Actor),
+            LatestReviews = allReviews.OrderByDescending(r => r.PostedOn).Take(2)
         };
 
         return movieDetails;

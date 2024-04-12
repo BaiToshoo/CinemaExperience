@@ -2,16 +2,23 @@
 using CinemaExperience.Core.ViewModels.Review;
 using CinemaExperience.Infrastructure.Data.Common;
 using CinemaExperience.Infrastructure.Data.Models;
+using static CinemaExperience.Infrastructure.Data.Constants.RoleConstants;
 using Microsoft.EntityFrameworkCore;
+using System.Security.AccessControl;
+using Microsoft.AspNetCore.Identity;
+using CinemaExperience.Infrastructure.Identity;
 
 namespace CinemaExperience.Core.Services;
 public class ReviewService : IReviewService
 {
     private readonly IRepository repository;
+    private readonly UserManager<ApplicationUser> userManager;
 
-    public ReviewService(IRepository _repository)
+    public ReviewService(IRepository _repository
+        ,UserManager<ApplicationUser> _userManager)
     {
         repository = _repository;
+        userManager = _userManager;
     }
 
     public async Task<int> AddReviewAsync(ReviewViewModel reviewForm)
@@ -97,19 +104,29 @@ public class ReviewService : IReviewService
         var reviews = await repository.AllReadOnly<Review>()
             .Where(r => r.MovieId == movieId)
             .OrderByDescending(r => r.PostedOn)
-            .Select(r => new ReviewFormViewModel()
-            {
-                Id = r.Id,
-                MovieId = r.MovieId,
-                Content = r.Content,
-                Rating = r.Rating,
-                PostedOn = r.PostedOn,
-                UserId = r.User.Id,
-                AuthorName = r.User.FirstName + " " + r.User.LastName,
-            })
             .ToListAsync();
 
-        return reviews;
+        var viewModels = new List<ReviewFormViewModel>();
+
+        foreach (var review in reviews)
+        {
+            var user = await userManager.FindByIdAsync(review.UserId);
+            var role = await userManager.GetRolesAsync(user);
+            var isCritic = role.Contains(CriticRoleName);
+
+            viewModels.Add(new ReviewFormViewModel
+            {
+                Id = review.Id,
+                Content = review.Content,
+                Rating = review.Rating,
+                PostedOn = review.PostedOn,
+                UserId = review.UserId,
+                AuthorName = user.FirstName + " " + user.LastName,
+                IsCriticsReview = isCritic,
+            });
+        }
+
+        return viewModels;
     }
 
     public Task<bool> ReviewExistsAsync(int reviewId)

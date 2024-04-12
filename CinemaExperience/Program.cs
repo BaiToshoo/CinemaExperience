@@ -1,3 +1,4 @@
+using CinemaExperience.Extensions;
 using CinemaExperience.ModelBinders;
 using Microsoft.AspNetCore.Mvc;
 
@@ -60,4 +61,5 @@ app.UseEndpoints(endpoints =>
     endpoints.MapRazorPages();
 });
 
+app.CreateRoles();
 await app.RunAsync();

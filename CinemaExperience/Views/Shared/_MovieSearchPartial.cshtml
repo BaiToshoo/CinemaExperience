@@ -18,10 +18,10 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="@Url.Action("Details", "Movie", new { id = movie.Id })" class="btn btn-sm btn-outline-secondary">Details</a>
-                                        @*@if (User.IsInRole("Adminstrator"))
-                                {
-                                <a href="@Url.Action("Edit", "Movie", new { id = movie.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                }*@
+                                        @if (User.IsInRole(AdminRoleName))
+                                        {
+                                            <a href="@Url.Action("Edit", "Movie", new { id = movie.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                        }
                                     </div>
                                 </div>
                             </div>

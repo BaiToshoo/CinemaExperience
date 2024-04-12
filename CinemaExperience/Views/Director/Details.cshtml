@@ -1,10 +1,10 @@
 ﻿@model DirectorDetailsViewModel
 
 <div class="actor-details">
-    @*@if (User.isInRole("Administrator"))
+    @if (User.IsInRole(AdminRoleName))
     {
         <a href="@Url.Action("Edit", "Director")" class="btn btn-primary">Edit Director</a>
-    }*@
+    }
     <div class="media">
         <img src="@Model.ImageUrl" alt="@Model.Name" class="mr-3 actor-image" style="width:200px;height:auto;">
         <div class="media-body">

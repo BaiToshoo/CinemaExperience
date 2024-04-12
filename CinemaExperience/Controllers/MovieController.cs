@@ -43,7 +43,6 @@ public class MovieController : BaseController
 		{
 			return BadRequest();
 		}
-		model.LatestReviews = await movieService.GetLatestReviewsAsync(id);
 
 		return View(model);
 	}

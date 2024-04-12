@@ -8,4 +8,5 @@ public class ReviewFormViewModel
     public string Content { set; get; } = null!;
     public int Rating { set; get; }
     public DateTime PostedOn { set; get; }
+    public bool IsCriticsReview { set; get; }
 }

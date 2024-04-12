@@ -7,7 +7,6 @@ public interface IMovieService
 {
     Task<IEnumerable<AllMoviesViewModel>> GetAllMoviesAsync();
     Task<MovieDetailsViewModel> GetMovieDetailsAsync(int movieId);
-    Task<IEnumerable<ReviewFormViewModel>> GetLatestReviewsAsync(int movieId);
     Task<bool> GenreExistsAsync(int genreId);
     Task<bool> MovieExistsAsync(int movieId);
     Task<IEnumerable<GenreViewModel>> GetGenresForFormAsync();

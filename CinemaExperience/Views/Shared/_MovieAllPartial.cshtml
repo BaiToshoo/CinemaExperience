@@ -2,10 +2,10 @@
 
 <div class="container my-3">
     <div class="d-flex justify-content-between align-items-center">
-        @*@if (User.IsInRole("Adminstrator"))
+        @if (User.IsInRole(AdminRoleName))
         {
         <a href="@Url.Action("Add", "Movie")" class="btn btn-primary">Add Movie</a>
-        }*@
+        }
     </div>
 </div>
 
@@ -26,11 +26,11 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a href="@Url.Action("Details", "Movie", new { id = movie.Id, information = movie.GetMovieInformation() })" class="btn btn-sm btn-outline-secondary">Details</a>
-                                @* if (User.IsInRole("Adminstrator"))
-                            { *@
-                            <a href="@Url.Action("Edit", "Movie", new { id = movie.Id, information = movie.GetMovieInformation() })" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                @if (User.IsInRole(AdminRoleName))
+                                {
+                                    <a href="@Url.Action("Edit", "Movie", new { id = movie.Id, information = movie.GetMovieInformation() })" class="btn btn-sm btn-outline-secondary">Edit</a>
                                     <a href="@Url.Action("Delete", "Movie", new { id = movie.Id, information = movie.GetMovieInformation() })" class="btn btn-sm btn btn-danger">Delete</a>
-                            @* } *@
+                                }
                             </div>
                         </div>
                     </div>

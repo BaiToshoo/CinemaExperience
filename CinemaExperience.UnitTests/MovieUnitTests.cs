@@ -260,22 +260,6 @@ public class MovieUnitTests
     }
 
     [Test]
-    public async Task Test_GetLatestReviewsAsync_ReturnsCorrectNumberOfReviews()
-    {
-        // Arrange
-        var movie = await repository.AllReadOnly<Movie>().FirstOrDefaultAsync();
-        Assert.That(movie, Is.Not.Null, "Movie is null");
-
-        var expectedResult = await repository.AllReadOnly<Review>().Where(r => r.MovieId == movie.Id).CountAsync();
-
-        // Act
-        var result = await movieService.GetLatestReviewsAsync(movie.Id);
-
-        // Assert
-        Assert.That(result.Count(), Is.EqualTo(expectedResult));
-    }
-
-    [Test]
     public async Task Test_SearchAsync_ReturnsCorrectMovies()
     {
         // Arrange
