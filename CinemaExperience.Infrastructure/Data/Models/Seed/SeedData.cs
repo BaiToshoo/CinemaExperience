@@ -104,7 +104,6 @@ internal class SeedData
             NormalizedUserName = "critic@critic.com",
             Email = "critic@critic.com",
             NormalizedEmail = "critic@critic.com",
-            IsCritic = true
         };
 
         CriticUser.PasswordHash =
@@ -119,7 +118,6 @@ internal class SeedData
             NormalizedUserName = "admin@admin.com",
             Email = "admin@admin.com",
             NormalizedEmail = "admin@admin.com",
-            IsAdmin = true
         };
 
         AdminUser.PasswordHash =
