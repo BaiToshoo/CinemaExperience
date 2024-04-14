@@ -4,13 +4,15 @@
     ViewBag.Title = "Directors";
 }
 <h2 class="text-center mt-4 mb-3">@ViewBag.Title</h2>
-<hr />
 
 @if (User.IsInRole(AdminRoleName))
 {
-    <a href="@Url.Action("Add", "Director")" class="btn btn-primary">Add Director</a>
+    <div class="text-center mb-3">
+        <a href="@Url.Action("Add", "Director")" class="btn btn-primary">Add Director</a>
+    </div>
 }
 
+<hr />
 
 <div class="directors-list">
     @foreach (var director in Model)
@@ -21,13 +23,13 @@
                 <div class="card-body d-flex flex-column">
                     <p class="card-text">@director.Name</p>
                     <div class="btn-group">
-                            <a href="@Url.Action("Details", "Director", new { id = director.Id })" class="btn btn-sm btn-outline-secondary">Details</a>
-                            @if (User.IsInRole(AdminRoleName))
+                        <a href="@Url.Action("Details", "Director", new { id = director.Id })" class="btn btn-sm btn-outline-secondary">Details</a>
+                        @if (User.IsInRole(AdminRoleName))
                         {
-                        <a href="@Url.Action("Edit", "Director", new { id = director.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
-                        <a href="@Url.Action("Delete", "Director", new { id = director.Id })" class="btn btn-sm btn btn-danger">Delete</a>
+                            <a href="@Url.Action("Edit", "Director", new { id = director.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a href="@Url.Action("Delete", "Director", new { id = director.Id })" class="btn btn-sm btn btn-danger">Delete</a>
                         }
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>

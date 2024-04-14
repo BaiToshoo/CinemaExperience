@@ -4,13 +4,15 @@
     ViewBag.Title = "Actors";
 }
 <h2 class="text-center mt-4 mb-3">@ViewBag.Title</h2>
-<hr />
 
 @if (User.IsInRole(AdminRoleName))
 {
-    <a href="@Url.Action("Add", "Actor")" class="btn btn-primary">Add Director</a>
+    <div class="text-center mb-3">
+        <a href="@Url.Action("Add", "Actor")" class="btn btn-primary">Add Director</a>
+    </div>
 }
 
+<hr />
 
 <div class="directors-list">
     @foreach (var actors in Model)
@@ -24,8 +26,8 @@
                         <a href="@Url.Action("Details", "Actor", new { id = actors.Id })" class="btn btn-sm btn-outline-secondary">Details</a>
                         @if (User.IsInRole(AdminRoleName))
                         {
-                        <a href="@Url.Action("Edit", "Actor", new { id = actors.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
-                        <a href="@Url.Action("Delete", "Actor", new { id = actors.Id })" class="btn btn-sm btn btn-danger">Delete</a>
+                            <a href="@Url.Action("Edit", "Actor", new { id = actors.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a href="@Url.Action("Delete", "Actor", new { id = actors.Id })" class="btn btn-sm btn btn-danger">Delete</a>
                         }
                     </div>
                 </div>
