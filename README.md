@@ -10,11 +10,11 @@ Welcome to the Cinema Experience repository! This MVC application is a hub for m
 
 ## 🛠 Built With
 
-- ASP.NET Core 6.0 - The web framework used
-- Microsoft SQL Server - Database service
-- Entity Framework Core - Object-relational mapping framework
-- Razor - Template engine for UI
-- ASP.NET Identity - Identity management system
+- [ASP.NET Core 6.0](https://dotnet.microsoft.com/apps/aspnet) - The web framework used.
+- [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) - Database service.
+- [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) - Object-relational mapping framework.
+- [Razor](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/razor?view=aspnetcore-6.0) - Template engine for UI.
+- [ASP.NET Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio) - Identity management system.
 
 ## 🚀 How It Works
 
@@ -32,7 +32,7 @@ Follow these steps to get your application up and running:
     ```bash
     git clone https://github.com/your-username/cinema-experience.git
     ```
-2. **Put your connection string** in the `appsettings.json` file to connect to your SQL Server instance.
+2. **Update your connection string** in the `appsettings.json` file to connect to your SQL Server instance.
 
 3. **Update your database**:
     - Using Package Manager Console:
