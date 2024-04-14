@@ -1,0 +1,14 @@
+﻿@model IEnumerable<AllMoviesViewModel>
+
+@{
+	ViewBag.Title = "Search Movies";
+}
+
+<h2 class="text-center mt-4 mb-3">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_MovieSearchPartial" model="@Model"/>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

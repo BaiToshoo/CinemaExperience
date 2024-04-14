@@ -8,5 +8,5 @@ public class DirectorDetailsViewModel
     public DateTime BirthDate { get; set; }
     public string ImageUrl { get; set; } = null!;
     public string Biography { get; set; } = null!;
-    public IEnumerable<MovieViewModel> Movies { get; set; } = new HashSet<MovieViewModel>();
+    public IEnumerable<MovieBarViewModel> Movies { get; set; } = new HashSet<MovieBarViewModel>();
 }

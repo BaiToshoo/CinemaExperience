@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Review;
+using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
 
 namespace CinemaExperience.Core.ViewModels.Review;
 public class ReviewViewModel
 {
-    public string Author { set; get; }
-    public string Content { set; get; }
-    public int Rating { set; get; }
-    public DateTime PostedOn { set; get; }
-    public bool IsCriticsReview { set; get; }
+    public int Id { get; set; }
+
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
+    [StringLength(ContentMaxLength, MinimumLength = ContentMinLength, ErrorMessage = LengthErrorMessage)]
+    public string Content { get; set; } = null!;
+
+    [Required(ErrorMessage = RequiredFieldErrorMessage)]
+    [Range(MinRating, MaxRating, ErrorMessage = RangeErrorMessage)]
+    public int Rating { get; set; }
+
+    public int MovieId { get; set; }
+
+    public string UserId { get; set; } = null!;
 }

@@ -3,6 +3,7 @@ using CinemaExperience.Core.Services;
 using CinemaExperience.infrastructure.Data;
 using CinemaExperience.Infrastructure.Data.Common;
 using CinemaExperience.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,9 @@ public static class ServiceCollectionExtension
         services.AddScoped<IMovieService, MovieService>();
         services.AddScoped<IActorService, ActorService>();
         services.AddScoped<IDirectorService, DirectorService>();
+        services.AddScoped<IReviewService, ReviewService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAdminService, AdminService>();
 
         return services;
     }
@@ -39,6 +43,7 @@ public static class ServiceCollectionExtension
                  options.Password.RequireNonAlphanumeric = false;
                  options.Password.RequireUppercase = false;
              })
+             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<CinemaExperienceDbContext>();
 
         return services;

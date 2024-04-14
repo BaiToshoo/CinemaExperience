@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ReviewFormViewModel>
+@inject UserManager<ApplicationUser> userManager
+@{
+	ViewData["Title"] = $"Reviews ";
+}
+
+<div class="reviews-section">
+    <h2>Reviews</h2>
+    <div class="reviews-container">
+        @foreach (var review in Model)
+        {
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-meta">
+                        <div class="review-author">@review.AuthorName</div>
+                        <div class="review-role @(review.IsCriticsReview? "critic-role" : "audience-role")">
+                            @(review.IsCriticsReview ? "Critic" : "Audience")
+                        </div>
+                        <div class="review-date">@review.PostedOn.ToString(Dateformat, new CultureInfo("en-US"))</div>
+                        <div class="review-rating">@review.Rating</div>
+                    </div>
+                </div>
+
+                <div class="review-content">
+                    @review.Content
+                </div>
+                <div class="btn-group">
+                    @if (User.IsInRole(AdminRoleName) || userManager.GetUserId(User) == review.UserId)
+                    {
+                        <a href="@Url.Action("Edit", "Review", new { Id = review.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="@Url.Action("Delete", "Review", new { id = review.Id })" class="btn btn-sm btn btn-danger">Delete</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

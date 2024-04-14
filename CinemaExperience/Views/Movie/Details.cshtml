@@ -34,11 +34,22 @@
     <div class="movie-cast">
         <h3>Cast</h3>
         <div class="cast-list">
-            @foreach (var actor in Model.Actors)
+            @if (Model.Actors.Any())
             {
-                <div class="cast-member">
-                    <img src="@actor.ImageUrl" alt="@actor.Name" class="actor-image" />
-                    <span class="actor-name">@actor.Name</span>
+                @foreach (var actor in Model.Actors)
+                {
+                    <a href="@Url.Action("Details", "Actor", new { id = actor.Id })">
+                        <div class="cast-member">
+                            <img src="@actor.ImageUrl" alt="@actor.Name" class="actor-image" />
+                            <span class="actor-name">@actor.Name</span>
+                        </div>
+                    </a>
+                }
+            }
+            else
+            {
+                <div class="col-md-12">
+                    <h2 class="text-center">No Cast yet</h2>
                 </div>
             }
         </div>
@@ -49,10 +60,10 @@
         <div class="reviews-container">
             @foreach (var review in Model.LatestReviews)
             {
-                <div class="review-card">
+                <div class="review-card" id="@($"review-{review.Id}")">
                     <div class="review-header">
                         <div class="review-meta">
-                            <div class="review-author">@review.Author</div>
+                            <div class="review-author">@review.AuthorName</div>
                             <div class="review-role @(review.IsCriticsReview ? "critic-role" : "audience-role")">
                                 @(review.IsCriticsReview ? "Critic" : "Audience")
                             </div>
@@ -61,14 +72,34 @@
                         </div>
                     </div>
                     <div class="review-content">
-                        @review.Content
+                        <div class="less" >
+                            @(review.Content.Length <= 55 ? review.Content : review.Content.Substring(0, 55) + (review.Content.Length > 55 ? "...": ""))
+                        </div>
+                        @if (review.Content.Length > 55)
+                        {
+                            <div class="more" style="display: none;">@review.Content</div>
+                            <div><a href="#" class="load-more">Read more...</a></div>
+                        }
                     </div>
-                    <a href="#" class="full-review">Full Review...</a>
                 </div>
             }
         </div>
-        <a href="@Url.Action("Create", "Review", new { movieId = Model.Id })" class="btn btn-primary">Add Review</a>
+        <a href="@Url.Action("Add", "Review", new { Id = Model.Id })" class="btn btn-primary">Add Review</a>
+        <a href="@Url.Action("All", "Review", new { Id = Model.Id })" class="btn btn-primary">View All Reviews</a>
     </div>
 
-
 </div>
+
+@section Scripts{
+	<script>
+		$(document).ready(function () {
+			$(".load-more").on("click", function (e) {
+				e.preventDefault();
+				var $this = $(this);
+                $this.parent().prevAll('.more, .less').toggle();
+				$this.text($this.text() === "Read more..." ? "Read less..." : "Read more...");
+			});
+		});
+	</script>
+}
+```

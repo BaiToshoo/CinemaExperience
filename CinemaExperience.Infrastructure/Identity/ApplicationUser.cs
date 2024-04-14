@@ -15,14 +15,4 @@ public class ApplicationUser : IdentityUser
     [Required]
     [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
     public string LastName { get; set; } = null!;
-
-    //Collection of reviews that the user has made
-    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
-
-
-    //Distinguishes between regular user and critic
-    public bool IsCritic { get; set; } = false;
-
-    //Distinguishes between regular user or critic and admin
-    public bool IsAdmin { get; set; } = false;
 }

@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Movie;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
+using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Movie;
 
 namespace CinemaExperience.Infrastructure.Data.Models;
 public class Movie

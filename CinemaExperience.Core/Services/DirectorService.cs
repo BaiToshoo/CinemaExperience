@@ -15,7 +15,7 @@ public class DirectorService : IDirectorService
         repository = _repository;
     }
 
-    public async Task<int> AddDirectorAsync(AddDirectorViewModel directorForm)
+    public async Task<int> AddDirectorAsync(DirectorViewModel directorForm)
     {
         var director = new Director
         {
@@ -30,13 +30,68 @@ public class DirectorService : IDirectorService
         return director.Id;
     }
 
+    public async Task<DirectorDeleteViewModel> DeleteAsync(int directorId)
+    {
+        var director = await repository.AllReadOnly<Director>()
+            .Where(d => d.Id == directorId)
+            .Select(d => new DirectorDeleteViewModel
+            {
+                Id = d.Id,
+                Name = d.Name,
+                ImageUrl = d.ImageUrl
+            })
+            .FirstOrDefaultAsync();
+
+        return director;
+    }
+
+    public async Task<int> DeleteConfirmedAsync(int directorId)
+    {
+        var director = await repository.GetByIdAsync<Director>(directorId);
+
+        await repository.DeleteAsync(director);
+        await repository.SaveChangesAsync();
+
+        return director.Id;
+    }
+
     public async Task<bool> DirectorExistsAsync(int directorId)
     {
         return await repository.AllReadOnly<Director>()
             .AnyAsync(d => d.Id == directorId);
     }
 
-    public async Task<IEnumerable<AllDirectorsViewModel>> GetAllDirectosAsync()
+    public async Task<DirectorViewModel> EditGetAsync(int directorId)
+    {
+        var currentDirector = await repository.GetByIdAsync<Director>(directorId);
+
+        var directorForm = new DirectorViewModel
+        {
+            Id = directorId,
+            Name = currentDirector.Name,
+            BirthDate = currentDirector.BirthDate,
+            ImageUrl = currentDirector.ImageUrl,
+            Biography = currentDirector.Biography
+        };
+
+        return directorForm;
+    }
+
+    public async Task<int> EditPostAsync(DirectorViewModel directorForm)
+    {
+        var director = repository.GetByIdAsync<Director>(directorForm.Id).Result;
+
+        director.Name = directorForm.Name;
+        director.BirthDate = directorForm.BirthDate;
+        director.ImageUrl = directorForm.ImageUrl;
+        director.Biography = directorForm.Biography;
+
+        await repository.SaveChangesAsync();
+
+        return director.Id;
+    }
+
+    public async Task<IEnumerable<AllDirectorsViewModel>> GetAllDirectorsAsync()
     {
         return await repository.AllReadOnly<Director>()
             .Select(d => new AllDirectorsViewModel
@@ -48,10 +103,10 @@ public class DirectorService : IDirectorService
             .ToListAsync();
     }
 
-    public async Task<DirectorDetailsViewModel> GetDirectorDetailsAsync(int actorId)
+    public async Task<DirectorDetailsViewModel> GetDirectorDetailsAsync(int directorId)
     {
         var directorDetails = repository.AllReadOnly<Director>()
-            .Where(d => d.Id == actorId)
+            .Where(d => d.Id == directorId)
             .Select(d => new DirectorDetailsViewModel
             {
                 Id = d.Id,
@@ -59,7 +114,7 @@ public class DirectorService : IDirectorService
                 BirthDate = d.BirthDate,
                 ImageUrl = d.ImageUrl,
                 Biography = d.Biography,
-                Movies = d.Movies.Select(m => new MovieViewModel
+                Movies = d.Movies.Select(m => new MovieBarViewModel
                 {
                     Id = m.Id,
                     Title = m.Title,
@@ -69,5 +124,32 @@ public class DirectorService : IDirectorService
             .FirstOrDefaultAsync();
 
         return await directorDetails;
+    }
+
+    public async Task<IEnumerable<DirectorFormViewModel>> GetDirectorsForFormAsync()
+    {
+        return await repository.AllReadOnly<Director>()
+             .Select(d => new DirectorFormViewModel
+             {
+                 Id = d.Id,
+                 Name = d.Name
+             })
+             .ToListAsync();
+    }
+
+    public async Task<IEnumerable<AllDirectorsViewModel>> SearchAsync(string input)
+    {
+        var searchedDirectors = await repository.AllReadOnly<Director>()
+            .Where(d => input.ToLower().Contains(d.Name.ToLower())
+            || d.Name.ToLower().Contains(input.ToLower()))
+            .Select(m => new AllDirectorsViewModel
+            {
+                Id = m.Id,
+                Name = m.Name,
+                ImageUrl = m.ImageUrl
+            })
+            .ToListAsync();
+
+        return searchedDirectors;
     }
 }

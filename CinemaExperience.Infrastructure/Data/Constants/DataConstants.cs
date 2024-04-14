@@ -8,8 +8,9 @@ public static class DataConstants
     public const string DirectorErrorMessage = "Director does not exist.";
     public const string GenreNoExistErrorMessage = "Genre does not exist.";
     public const string AtLeastOneGenreErrorMessage = "At least one genre is required.";
+    public const string RequiredFieldErrorMessage = "The field {0} is reqired.";
     public const int ImageUrlMinLength = 5;
-    public const int ImageUrlMaxLength = 200;
+    public const int ImageUrlMaxLength = 50;
     public static class Movie
     {
         //Name
@@ -87,5 +88,10 @@ public static class DataConstants
         public const int LastNameMinLength = 5;
 
 
+    }
+
+    public static class CriticConstants
+    {
+        public const string CriticEmailRegex = @"^[\w\.\-]+@[a-zA-Z_]+\.[a-zA-Z]{2,3}$";
     }
 }

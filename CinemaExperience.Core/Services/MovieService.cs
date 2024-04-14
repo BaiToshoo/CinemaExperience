@@ -1,25 +1,31 @@
 ﻿using CinemaExperience.Core.Contracts;
-using CinemaExperience.Core.ViewModels.Director;
 using CinemaExperience.Core.ViewModels.Genre;
 using CinemaExperience.Core.ViewModels.Movie;
 using CinemaExperience.Core.ViewModels.Review;
 using CinemaExperience.Infrastructure.Data.Common;
+using CinemaExperience.Infrastructure.Data.Models;
+using CinemaExperience.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static CinemaExperience.Infrastructure.Data.Constants.RoleConstants;
 
 namespace CinemaExperience.Core.Services;
 public class MovieService : IMovieService
 {
     private readonly IRepository repository;
+    private readonly UserManager<ApplicationUser> userManager;
 
-    public MovieService(IRepository _repository)
+    public MovieService(IRepository _repository,
+        UserManager<ApplicationUser> _userManager)
     {
         repository = _repository;
+        userManager = _userManager;
     }
 
-    public async Task<int> AddMovieAsync(AddMovieViewModel movieForm)
+    public async Task<int> AddMovieAsync(MovieViewModel movieForm)
     {
 
-        var movie = new Infrastructure.Data.Models.Movie
+        var movie = new Movie
         {
             Title = movieForm.Title,
             DirectorId = movieForm.DirectorId,
@@ -27,7 +33,11 @@ public class MovieService : IMovieService
             Duration = movieForm.Duration,
             Description = movieForm.Description,
             ImageUrl = movieForm.ImageUrl,
-            MovieGenres = movieForm.GenreIds.Select(g => new Infrastructure.Data.Models.MovieGenre
+            MovieActors = movieForm.ActorIds.Select(a => new MovieActor
+            {
+                ActorId = a
+            }).ToList(),
+            MovieGenres = movieForm.GenreIds.Select(g => new MovieGenre
             {
                 GenreId = g
             }).ToList()
@@ -38,15 +48,123 @@ public class MovieService : IMovieService
         return movie.Id;
     }
 
-    public async Task<bool> GenreExistsAsync(IEnumerable<int> genreId)
+    public async Task<MovieDeleteViewModel> DeleteAsync(int movieId)
     {
-        return await repository.AllReadOnly<Infrastructure.Data.Models.Genre>()
-            .AnyAsync(g => genreId.Contains(g.Id));
+        var movie = await repository.AllReadOnly<Movie>()
+            .Include(m => m.Director)
+            .FirstOrDefaultAsync(m => m.Id == movieId);
+
+        var deleteForm = new MovieDeleteViewModel
+        {
+            Id = movie.Id,
+            Title = movie.Title,
+            Director = movie.Director.Name,
+            ImageUrl = movie.ImageUrl
+        };
+
+        return deleteForm;
+    }
+
+    public async Task<int> DeleteConfirmedAsync(int movieId)
+    {
+        var movie = await repository.AllReadOnly<Movie>()
+            .Include(m => m.Reviews)
+            .FirstOrDefaultAsync(m => m.Id == movieId);
+
+        if (movie.Reviews != null && movie.Reviews.Any())
+        {
+            await repository.DeleteRangeAsync(movie.Reviews);
+        }
+
+        await repository.DeleteAsync(movie);
+        await repository.SaveChangesAsync();
+
+        return movie.Id;
+    }
+
+    public async Task<MovieViewModel> EditGetAsync(int movieId)
+    {
+        var currentmovie = await repository.AllReadOnly<Movie>()
+            .Include(m => m.MovieGenres)
+            .Include(m => m.MovieActors)
+            .FirstOrDefaultAsync(m => m.Id == movieId);
+
+        var movieForm = new MovieViewModel
+        {
+            Id = currentmovie.Id,
+            Title = currentmovie.Title,
+            DirectorId = currentmovie.DirectorId,
+            ReleaseDate = currentmovie.ReleaseDate,
+            Duration = currentmovie.Duration,
+            Description = currentmovie.Description,
+            ImageUrl = currentmovie.ImageUrl,
+            ActorIds = currentmovie.MovieActors.Select(a => a.ActorId),
+            GenreIds = currentmovie.MovieGenres.Select(g => g.GenreId)
+        };
+        movieForm.Genres = await GetGenresForFormAsync();
+
+        return movieForm;
+
+    }
+
+    public async Task<int> EditPostAsync(MovieViewModel movieForm)
+    {
+        var movie = await repository.All<Movie>()
+            .Include(m => m.MovieGenres)
+            .Include(m => m.MovieActors)
+            .FirstOrDefaultAsync(m => m.Id == movieForm.Id);
+
+        movie.Title = movieForm.Title;
+        movie.DirectorId = movieForm.DirectorId;
+        movie.ReleaseDate = movieForm.ReleaseDate;
+        movie.Duration = movieForm.Duration;
+        movie.Description = movieForm.Description;
+        movie.ImageUrl = movieForm.ImageUrl;
+
+        var currentGenreIds = movie.MovieGenres.Select(g => g.GenreId).ToList();
+        var currentActorIds = movie.MovieActors.Select(a => a.ActorId).ToList();
+
+        var genreIdsToAdd = movieForm.GenreIds.Except(currentGenreIds).ToList();
+        var genreIdsToRemove = currentGenreIds.Except(movieForm.GenreIds).ToList();
+
+        var actorIdsToAdd = movieForm.ActorIds.Except(currentActorIds).ToList();
+        var actorIdsToRemove = currentActorIds.Except(movieForm.ActorIds).ToList();
+
+        foreach (var genreId in genreIdsToAdd)
+        {
+            movie.MovieGenres.Add(new MovieGenre { GenreId = genreId });
+        }
+
+        foreach (var actorId in actorIdsToAdd)
+        {
+            movie.MovieActors.Add(new MovieActor { ActorId = actorId });
+        }
+
+        var movieGenresToRemove = movie.MovieGenres
+            .Where(g => genreIdsToRemove.Contains(g.GenreId))
+            .ToList();
+
+        var movieActorsToRemove = movie.MovieActors
+            .Where(a => actorIdsToRemove.Contains(a.ActorId))
+            .ToList();
+
+
+        await repository.DeleteRangeAsync(movieActorsToRemove);
+        await repository.DeleteRangeAsync(movieGenresToRemove);
+
+        await repository.SaveChangesAsync();
+
+        return movie.Id;
+    }
+
+    public async Task<bool> GenreExistsAsync(int genreId)
+    {
+        return await repository.AllReadOnly<Genre>().AnyAsync(g => g.Id == genreId);
     }
 
     public async Task<IEnumerable<AllMoviesViewModel>> GetAllMoviesAsync()
     {
-        return await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+        return await repository.AllReadOnly<Movie>()
             .Select(m => new AllMoviesViewModel
             {
                 Id = m.Id,
@@ -57,20 +175,9 @@ public class MovieService : IMovieService
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<DirectorViewModel>> GetDirectorsAsync()
+    public async Task<IEnumerable<GenreViewModel>> GetGenresForFormAsync()
     {
-        return await repository.AllReadOnly<Infrastructure.Data.Models.Director>()
-             .Select(d => new DirectorViewModel
-             {
-                 Id = d.Id,
-                 Name = d.Name
-             })
-             .ToListAsync();
-    }
-
-    public async Task<IEnumerable<GenreViewModel>> GetGenresAsync()
-    {
-        return await repository.AllReadOnly<Infrastructure.Data.Models.Genre>()
+        return await repository.AllReadOnly<Genre>()
             .Select(g => new GenreViewModel
             {
                 Id = g.Id,
@@ -79,47 +186,59 @@ public class MovieService : IMovieService
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<ReviewViewModel>> GetLatestReviewsAsync(int movieId)
-    {
-        var latestReviews = repository.AllReadOnly<Infrastructure.Data.Models.Review>()
-            .Where(r => r.MovieId == movieId)
-            .OrderByDescending(r => r.PostedOn)
-            .Take(2)
-            .Select(r => new ReviewViewModel
-            {
-                Author = r.User.FirstName + " " + r.User.LastName,
-                Content = r.Content,
-                PostedOn = r.PostedOn,
-                Rating = r.Rating,
-                IsCriticsReview = r.User.IsCritic
-            })
-            .ToListAsync();
-
-        return await latestReviews;
-    }
-
     public async Task<MovieDetailsViewModel> GetMovieDetailsAsync(int movieId)
     {
-        var movie = await repository.AllReadOnly<Infrastructure.Data.Models.Movie>()
+        var movie = await repository.AllReadOnly<Movie>()
             .Include(m => m.Director)
             .Include(m => m.MovieGenres).ThenInclude(g => g.Genre)
             .Include(m => m.MovieActors).ThenInclude(a => a.Actor)
             .Include(m => m.Reviews).ThenInclude(r => r.User)
             .FirstOrDefaultAsync(m => m.Id == movieId);
 
-        if (movie == null)
+        var criticReviews = new List<Review>();
+        var audienceReviews = new List<Review>();
+        var allReviews = new List<ReviewFormViewModel>();
+
+
+        foreach (var review in movie.Reviews)
         {
-            return null;
+            if (await userManager.IsInRoleAsync(review.User, CriticRoleName))
+            {
+                criticReviews.Add(review);
+
+                allReviews.Add(new ReviewFormViewModel
+                {
+                    Id = review.Id,
+                    AuthorName = review.User.FirstName + " " + review.User.LastName,
+                    Content = review.Content,
+                    PostedOn = review.PostedOn,
+                    Rating = review.Rating,
+                    UserId = review.UserId,
+                    IsCriticsReview = true
+                });
+                
+            }
+            else if (await userManager.IsInRoleAsync(review.User, UserRoleName))
+            {
+                audienceReviews.Add(review);
+                allReviews.Add(new ReviewFormViewModel
+                {
+                    Id = review.Id,
+                    AuthorName = review.User.FirstName + " " + review.User.LastName,
+                    Content = review.Content,
+                    PostedOn = review.PostedOn,
+                    Rating = review.Rating,
+                    UserId = review.UserId,
+                    IsCriticsReview = false
+                });
+            }
         }
 
-        var criticReviews = movie.Reviews.Where(r => r.User != null && r.User.IsCritic);
-        var audianceReviews = movie.Reviews.Where(r => r.User != null && !r.User.IsCritic);
-
         var criticScore = criticReviews.Any()
-            ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
+            ? criticReviews.Average(r => r.Rating) * 10 : 0;
 
-        var audienceScore = audianceReviews.Any()
-            ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
+        var audienceScore = audienceReviews.Any()
+            ? audienceReviews.Average(r => r.Rating) * 10 : 0;
 
         var movieDetails = new MovieDetailsViewModel()
         {
@@ -134,9 +253,44 @@ public class MovieService : IMovieService
             UserRating = audienceScore,
             ImageUrl = movie.ImageUrl,
             Genres = movie.MovieGenres.Select(g => g.Genre),
-            Actors = movie.MovieActors.Select(a => a.Actor)
+            Actors = movie.MovieActors.Select(a => a.Actor),
+            LatestReviews = allReviews.OrderByDescending(r => r.PostedOn).Take(2)
         };
 
         return movieDetails;
+    }
+
+    public async Task<IEnumerable<MovieFormViewModel>> GetMoviesForFormAsync()
+    {
+        return await repository.AllReadOnly<Movie>()
+            .Select(m => new MovieFormViewModel
+            {
+                Id = m.Id,
+                Title = m.Title
+            })
+            .ToListAsync();
+    }
+
+    public Task<bool> MovieExistsAsync(int movieId)
+    {
+        return repository.AllReadOnly<Movie>()
+            .AnyAsync(m => m.Id == movieId);
+    }
+
+    public async Task<IEnumerable<AllMoviesViewModel>> SearchAsync(string input)
+    {
+        var searchedMovies = await repository.AllReadOnly<Movie>()
+            .Where(m => input.ToLower().Contains(m.Title.ToLower())
+            || m.Title.ToLower().Contains(input.ToLower()))
+            .Select(m => new AllMoviesViewModel
+            {
+                Id = m.Id,
+                Director = m.Director.Name,
+                Title = m.Title,
+                ImageUrl = m.ImageUrl
+            })
+            .ToListAsync();
+
+        return searchedMovies;
     }
 }

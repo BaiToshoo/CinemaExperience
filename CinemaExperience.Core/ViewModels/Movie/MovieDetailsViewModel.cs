@@ -1,8 +1,8 @@
-﻿using CinemaExperience.Core.ViewModels.Review;
-using CinemaExperience.Infrastructure.Data.Models;
+﻿using CinemaExperience.Core.Contracts;
+using CinemaExperience.Core.ViewModels.Review;
 
 namespace CinemaExperience.Core.ViewModels.Movie;
-public class MovieDetailsViewModel
+public class MovieDetailsViewModel : IMovieModel
 {
     public int Id { set; get; }
     public string Title { set; get; }
@@ -15,6 +15,6 @@ public class MovieDetailsViewModel
     public string ImageUrl { set; get; }
     public IEnumerable<Infrastructure.Data.Models.Genre> Genres { set; get; } = new List<Infrastructure.Data.Models.Genre>();
     public IEnumerable<Infrastructure.Data.Models.Actor> Actors { set; get; } = new List<Infrastructure.Data.Models.Actor>();
-    public IEnumerable<ReviewViewModel> LatestReviews { set; get; } = new List<ReviewViewModel>();
+    public IEnumerable<ReviewFormViewModel> LatestReviews { set; get; } = new List<ReviewFormViewModel>();
 
 }

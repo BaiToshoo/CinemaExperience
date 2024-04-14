@@ -1,12 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CinemaExperience.Core.ViewModels.Movie;
+using System.ComponentModel.DataAnnotations;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
-using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Director;
-namespace CinemaExperience.Core.ViewModels.Director;
-public class AddDirectorViewModel
+using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.Actor;
+
+namespace CinemaExperience.Core.ViewModels.Actor;
+public class ActorViewModel
 {
+    public int Id { get; set; }
+
     [Required]
     [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = LengthErrorMessage)]
     public string Name { get; set; } = null!;
+
+    [Display(Name = "Movies")]
+    public IEnumerable<int> MovieIds { get; set; } = new List<int>();
+    public IEnumerable<MovieFormViewModel> Movies { get; set; } = new List<MovieFormViewModel>();
 
     [Required]
     [DataType(DataType.Date)]
@@ -17,7 +25,7 @@ public class AddDirectorViewModel
     [Required]
     [Display(Name = "Image URL")]
     [StringLength(ImageUrlMaxLength, MinimumLength = ImageUrlMinLength)]
-    public string ImageUrl { get; set; } = "/images/directors/";
+    public string ImageUrl { get; set; } = "/images/actors/";
 
     [Required]
     [StringLength(BiographyMaxLength, MinimumLength = BiographyMinLength, ErrorMessage = LengthErrorMessage)]

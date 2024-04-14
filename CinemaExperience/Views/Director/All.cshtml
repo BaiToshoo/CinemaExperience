@@ -1,21 +1,12 @@
 ﻿@model IEnumerable<AllDirectorsViewModel>
 
-<h1 class="text-center">Directors</h1>
+@{
+	ViewBag.Title = "Directors";
+}
+<h2 class="text-center mt-4 mb-3">@ViewBag.Title</h2>
 
-@*@if (User.IsInRole("Adminstrator"))
-{
-    <a href="@Url.Action("Add", "Director")" class="btn btn-primary">Add Director</a>
-}*@
+<partial name="_DirectorAllPartial" model="@Model"/>
 
-
-<div class="directors-list">
-    @foreach (var director in Model)
-    {
-        <div class="director-item">
-            <a href="@Url.Action("Details", "Director", new { id = director.Id })">
-                <img src="@director.ImageUrl" alt="@director.Name" class="director-image" />
-                <span class="director-name">@director.Name</span>
-            </a>
-        </div>
-    }
-</div>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

@@ -42,8 +42,8 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -135,6 +135,46 @@ namespace CinemaExperience.Infrastructure.Migrations
                             BirthDate = new DateTime(1959, 10, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "/images/actors/Ken_Watanabe.jpg",
                             Name = "Ken Watanabe"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Biography = "Timothee Hal Chalamet is an American actor. He began his acting career in short films, before appearing in the television drama series Homeland in 2012. Two years later, he made his feature film debut in the drama",
+                            BirthDate = new DateTime(1995, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "/images/actors/Timothee_Chalamet.jpg",
+                            Name = "Timothee Chalamet"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Biography = "Zendaya Maree Stoermer Coleman is an American actress and singer. She began her career as a child model and backup dancer, before gaining prominence for her role as Rocky Blue on the Disney Channel sitcom Shake It Up (2010–2013). In 2013, Zendaya was a contestant on the sixteenth season of the competition series Dancing with the Stars. From 2015 to 2018, she produced and starred as the titular spy, K.C. Cooper, in the sitcom K.C. Undercover, and in 2019, she began playing the lead role in the HBO drama series Euphoria.",
+                            BirthDate = new DateTime(1996, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "/images/actors/Zendaya.jpg",
+                            Name = "Zendaya"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Biography = "Rebecca Louisa Ferguson Sundström is a Swedish actress. She began her acting career with the Swedish soap opera Nya tider (1999–2000) and went on to star in the slasher film Drowning Ghost (2004). She came to international prominence with her portrayal of Elizabeth Woodville in the British television miniseries The White Queen (2013), for which she was nominated for a Golden Globe for Best Actress in a Miniseries or Television Film.",
+                            BirthDate = new DateTime(1983, 10, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "/images/actors/Rebecca_Ferguson.jpg",
+                            Name = "Rebecca Ferguson"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Biography = "Javier Ángel Encinas Bardem is a Spanish actor. Bardem won the Academy Award for Best Supporting Actor for his role as the psychopathic assassin Anton Chigurh in the 2007 Coen Brothers film",
+                            BirthDate = new DateTime(1969, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "/images/actors/Javier_Bardem.jpg",
+                            Name = "Javier Bardem"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Biography = "Austin Robert Butler is an American actor and singer. He is known for his roles as James Wilke Wilkerson in Switched at Birth, Jordan Gallagher on Ruby & The Rockits, Sebastian Kydd in The Carrie Diaries, Wil Ohmsford in The Shannara Chronicles, and Elvis Presley in the biographical musical drama film Elvis.",
+                            BirthDate = new DateTime(1991, 8, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "/images/actors/Austin_Butler.jpg",
+                            Name = "Austin Butler"
                         });
                 });
 
@@ -158,8 +198,8 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -179,6 +219,14 @@ namespace CinemaExperience.Infrastructure.Migrations
                             BirthDate = new DateTime(1970, 7, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "/images/directors/Christopher_Nolan.jpg",
                             Name = "Christopher Nolan"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Biography = "Denis Villeneuve is a Canadian film director, writer, and producer. He is a four-time recipient of the Canadian Screen Award for Best Direction, for Maelström in 2001, Polytechnique in 2009, Incendies in 2011, and Enemy in 2013. The first three of these films also won the Canadian Screen Award for Best Motion Picture, while the latter was awarded the prize for best Canadian film of the year by the Toronto Film Critics Association. The first feature film he directed is Un 32 août sur terre, which was selected as the Canadian entry for the Best Foreign Language Film at the 68th Academy Awards, but was not accepted as a nominee. He was later nominated three times for the Academy Award for Best Director, for the films Arrival (2016), Blade Runner 2049 (2017), and Dune (2021).",
+                            BirthDate = new DateTime(1967, 10, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "/images/directors/Denis_Villeneuve.jpg",
+                            Name = "Denis Villeneuve"
                         });
                 });
 
@@ -269,8 +317,8 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2")
@@ -308,6 +356,16 @@ namespace CinemaExperience.Infrastructure.Migrations
                             ImageUrl = "/images/movies/inception.jpg",
                             ReleaseDate = new DateTime(2010, 7, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Inception"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Dune: Part Two is an upcoming American epic science fiction film directed by Denis Villeneuve and written by Jon Spaihts, Villeneuve, and Eric Roth. It is the second of a planned two-part adaptation of the 1965 novel of the same name by Frank Herbert, and will cover the second half of the book. The film stars an ensemble cast including Timothée Chalamet, Rebecca Ferguson, Oscar Isaac, Josh Brolin, Stellan Skarsgård, Dave Bautista, Stephen McKinley Henderson, Zendaya, David Dastmalchian, Chang Chen, Sharon Duncan-Brewster, Charlotte Rampling, Jason Momoa, and Javier Bardem.",
+                            DirectorId = 2,
+                            Duration = 166,
+                            ImageUrl = "/images/movies/Dune_Part_Two.jpg",
+                            ReleaseDate = new DateTime(2023, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Dune: Part Two"
                         });
                 });
 
@@ -375,6 +433,31 @@ namespace CinemaExperience.Infrastructure.Migrations
                         {
                             MovieId = 1,
                             ActorId = 10
+                        },
+                        new
+                        {
+                            MovieId = 3,
+                            ActorId = 11
+                        },
+                        new
+                        {
+                            MovieId = 3,
+                            ActorId = 12
+                        },
+                        new
+                        {
+                            MovieId = 3,
+                            ActorId = 13
+                        },
+                        new
+                        {
+                            MovieId = 3,
+                            ActorId = 14
+                        },
+                        new
+                        {
+                            MovieId = 3,
+                            ActorId = 15
                         });
                 });
 
@@ -417,6 +500,16 @@ namespace CinemaExperience.Infrastructure.Migrations
                         {
                             MovieId = 1,
                             GenreId = 4
+                        },
+                        new
+                        {
+                            MovieId = 3,
+                            GenreId = 6
+                        },
+                        new
+                        {
+                            MovieId = 3,
+                            GenreId = 8
                         });
                 });
 
@@ -714,12 +807,6 @@ namespace CinemaExperience.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCritic")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -732,60 +819,54 @@ namespace CinemaExperience.Infrastructure.Migrations
                         {
                             Id = "2a54cf13-1fde-4537-a977-e1d0c85c3fb0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2cc987b6-2c01-4d1a-a12f-5f4502442fbd",
+                            ConcurrencyStamp = "151f5bff-ee94-4595-8456-260927df01cc",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@admin.com",
                             NormalizedUserName = "admin@admin.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAECk6bPDIgZu6wnVGiPO4J6ncetOCcqLMfpBkrXwHeg6arXy+gtjE8EaLXBypxd5NVg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMCrO2h1ephGgYyzqLiOSBdlUq9j+s8HbC2h2zieP8pRsTeDNPCtB011hyO4tS9HmQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ed86534a-c03b-46e2-aa63-b8c288ba12e5",
+                            SecurityStamp = "d83aa84b-943e-4514-ace8-590835021237",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com",
                             FirstName = "Admin",
-                            IsAdmin = true,
-                            IsCritic = false,
                             LastName = "Admin"
                         },
                         new
                         {
                             Id = "cd5cc46a-ef03-4222-ad12-71572e2c61ba",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6eed808a-9b2b-4e95-af84-623eb7b2921d",
+                            ConcurrencyStamp = "5a380e7c-5234-4fe5-9f67-06426779e684",
                             Email = "critic@critic.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "critic@critic.com",
                             NormalizedUserName = "critic@critic.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM8GvLk7UHNN7HopTBoaALYsxmVpG8uvqdgt/KbkIP8Sw0jsJ4Yf1Gyz6u6Qg1qeCg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOp5GOxrlFDLwJSoLB+khM8MyA9w+GjJh+jscvD+5/j3g4iTjmTcyqiszb0vIqDN9g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2de954df-1603-4d52-8310-fd2fc62ab9fc",
+                            SecurityStamp = "f972f591-250c-4b7b-88b5-51dc169423b7",
                             TwoFactorEnabled = false,
                             UserName = "critic@critic.com",
                             FirstName = "Teodora",
-                            IsAdmin = false,
-                            IsCritic = true,
                             LastName = "Kuzmanova"
                         },
                         new
                         {
                             Id = "9ddac0c8-5b4a-4ac9-9346-08f6dc133ca5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3ab5df31-cc76-4e48-8a09-3cdae51a1494",
+                            ConcurrencyStamp = "5fb88d97-73a8-4f6d-bc4a-bce518ef910d",
                             Email = "guest@guest.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@guest.com",
                             NormalizedUserName = "guest@guest.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEF+haMlMQASc3GLVFOTxAk4meY0S01puUXiFVM+uH35es0ok6wbXko9gZCK+CC3PJw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECgzz0CqA5XfJP+QDFCyzbNV+A933ru+ewk/zPi6dwCBUOFSueT3z6Qhl9dtBpq5/w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a47037a1-a496-461e-b640-18c2eee76eb2",
+                            SecurityStamp = "347a44dd-612f-46f3-8d46-956a5abc5430",
                             TwoFactorEnabled = false,
                             UserName = "guest@guest.com",
                             FirstName = "Todor",
-                            IsAdmin = false,
-                            IsCritic = false,
                             LastName = "Kuzmanov"
                         });
                 });
@@ -848,7 +929,7 @@ namespace CinemaExperience.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("CinemaExperience.Infrastructure.Identity.ApplicationUser", "User")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -930,11 +1011,6 @@ namespace CinemaExperience.Infrastructure.Migrations
 
                     b.Navigation("MovieGenres");
 
-                    b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("CinemaExperience.Infrastructure.Identity.ApplicationUser", b =>
-                {
                     b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618

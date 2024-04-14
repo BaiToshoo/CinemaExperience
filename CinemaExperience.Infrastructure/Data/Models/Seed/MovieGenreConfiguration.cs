@@ -10,6 +10,7 @@ internal class MovieGenreConfiguration : IEntityTypeConfiguration<MovieGenre>
 
         builder.HasData(data.TheDarkKnightMovieGenres.ToArray());
         builder.HasData(data.InceptionMovieGenres.ToArray());
+        builder.HasData(data.DunePartTwoMovieGenres.ToArray());
 
     }
 }

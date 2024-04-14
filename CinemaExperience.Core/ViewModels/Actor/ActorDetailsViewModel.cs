@@ -7,5 +7,6 @@ public class ActorDetailsViewModel
     public string Name { get; set; }
     public string ImageUrl { get; set; }
     public string Biography { get; set; }
-    public IEnumerable<MovieViewModel> Movies { get; set; }
+    public DateTime BirthDate { get; set; }
+    public IEnumerable<MovieBarViewModel> Movies { get; set; }
 }

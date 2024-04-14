@@ -5,4 +5,12 @@ public interface IActorService
 {
     Task<IEnumerable<AllActorsViewModel>> GetAllActorsAsync();
     Task<ActorDetailsViewModel> GetActorDetailsAsync(int actorId);
+    Task<IEnumerable<ActorFormViewModel>> GetActorsForFormAsync();
+    Task<int> AddActorAsync(ActorViewModel actorForm);
+    Task<ActorViewModel> EditGetAsync(int actorId);
+    Task<int> EditPostAsync(ActorViewModel actorForm);
+    Task<bool> ActorExistsAsync(int actorId);
+    Task<ActorDeleteViewModel> DeleteAsync(int actorId);
+    Task<int> DeleteConfirmedAsync(int actorId);
+    Task<IEnumerable<AllActorsViewModel>> SearchAsync(string input);
 }

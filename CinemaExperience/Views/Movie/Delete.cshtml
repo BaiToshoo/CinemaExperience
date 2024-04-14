@@ -1,0 +1,25 @@
+﻿@model MovieDeleteViewModel
+
+@{
+	ViewData["Title"] = "Delete Movie";
+}
+
+<div class="container">
+    <h1 class="text-center">Delete Movie</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Title" style="max-width: 300px; height: auto;" />
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6 text-center">
+            <h4>@Model.Title</h4>
+            <p>Directed by: @Model.Director</p>
+            <form asp-controller="Movie" asp-action="DeleteConfirmed" method="post">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger mr-2">Delete</button>
+                <a asp-controller="Movie" asp-action="All" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

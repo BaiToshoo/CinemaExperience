@@ -1,0 +1,15 @@
+﻿@{
+	ViewData["Title"] = "Admin Actions";
+}
+
+<div class="mt-4 p-5 bg-light text-center">
+    <h2 class="display-4">Admin Panel</h2>
+    <p class="lead mb-1 mt-3"> Welcom to the Admin menu. Here you can <b>Add</b> or <b>Remove</b> <b>Roles</b>.</p>
+    <p class="lead mt-1"> Also, you can see all <b>Critics</b> and <b>Admins.</b></p>
+    <hr class="my-4">
+    <a asp-area="Admin" asp-controller="User" asp-action="AddCritic" class="btn btn-secondary btn-lg">Add Critic</a>
+    <a asp-area="Admin" asp-controller="User" asp-action="RemoveCritic" class="btn btn-danger btn-lg">Remove Critic</a>
+    <span> | </span>
+    <a asp-area="Admin" asp-controller="User" asp-action="AddAdmin" class="btn btn-secondary btn-lg">Add Admin</a>
+    <a asp-area="Admin" asp-controller="User" asp-action="RemoveAdmin" class="btn btn-danger btn-lg">Remove Admin</a>
+</div>
