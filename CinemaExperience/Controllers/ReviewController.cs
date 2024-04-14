@@ -61,7 +61,7 @@ public class ReviewController : BaseController
         {
             return BadRequest();
         }
-        if (User.Id() != reviewForm.UserId && !User.IsInRole("Administrator"))
+        if (User.Id() != reviewForm.UserId && !User.IsAdmin())
         {
             return Unauthorized();
         }
@@ -80,7 +80,7 @@ public class ReviewController : BaseController
         {
             return BadRequest();
         }
-        if (User.Id() != reviewForm.UserId && !User.IsInRole("Administrator"))
+        if (User.Id() != reviewForm.UserId && !User.IsAdmin())
         {
             return Unauthorized();
         }
@@ -103,7 +103,7 @@ public class ReviewController : BaseController
         {
             return BadRequest();
         }
-        if (User.Id() != reviewForm.UserId && !User.IsInRole("Administrator"))
+        if (User.Id() != reviewForm.UserId && !User.IsAdmin())
         {
             return Unauthorized();
         }
@@ -118,7 +118,7 @@ public class ReviewController : BaseController
         {
             return BadRequest();
         }
-        if (User.Id() != reviewForm.UserId && !User.IsInRole("Administrator"))
+        if (User.Id() != reviewForm.UserId && !User.IsAdmin())
         {
             return Unauthorized();
         }

@@ -1,8 +1,10 @@
 ﻿using CinemaExperience.Core.Contracts;
 using CinemaExperience.Core.Extensions;
 using CinemaExperience.Core.ViewModels.Movie;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
+using static CinemaExperience.Infrastructure.Data.Constants.RoleConstants;
 
 namespace CinemaExperience.Controllers;
 
@@ -48,7 +50,8 @@ public class MovieController : BaseController
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> Add()
+    [Authorize(Roles = AdminRoleName)]
+    public async Task<IActionResult> Add()
 	{
 		var model = new MovieViewModel()
 		{
@@ -62,7 +65,8 @@ public class MovieController : BaseController
 	}
 
 	[HttpPost]
-	public async Task<IActionResult> Add(MovieViewModel movieForm)
+    [Authorize(Roles = AdminRoleName)]
+    public async Task<IActionResult> Add(MovieViewModel movieForm)
 	{
 		if (await directorService.DirectorExistsAsync(movieForm.DirectorId) == false)
 		{
@@ -93,7 +97,8 @@ public class MovieController : BaseController
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> Edit(int id, string information)
+    [Authorize(Roles = AdminRoleName)]
+    public async Task<IActionResult> Edit(int id, string information)
 	{
 		if (!await movieService.MovieExistsAsync(id))
 		{
@@ -113,7 +118,8 @@ public class MovieController : BaseController
 	}
 
 	[HttpPost]
-	public async Task<IActionResult> Edit(MovieViewModel movieForm)
+    [Authorize(Roles = AdminRoleName)]
+    public async Task<IActionResult> Edit(MovieViewModel movieForm)
 	{
 		if (!await movieService.MovieExistsAsync(movieForm.Id))
 		{
@@ -168,7 +174,8 @@ public class MovieController : BaseController
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> Delete(int id, string information)
+    [Authorize(Roles = AdminRoleName)]
+    public async Task<IActionResult> Delete(int id, string information)
 	{
 		if (!await movieService.MovieExistsAsync(id))
 		{
@@ -186,7 +193,8 @@ public class MovieController : BaseController
 	}
 
 	[HttpPost]
-	public async Task<IActionResult> DeleteConfirmed(int id)
+    [Authorize(Roles = AdminRoleName)]
+    public async Task<IActionResult> DeleteConfirmed(int id)
 	{
 		if (!await movieService.MovieExistsAsync(id))
 		{

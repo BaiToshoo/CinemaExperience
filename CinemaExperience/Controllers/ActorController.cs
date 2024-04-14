@@ -1,8 +1,10 @@
 ﻿using CinemaExperience.Core.Contracts;
 using CinemaExperience.Core.Services;
 using CinemaExperience.Core.ViewModels.Actor;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
+using static CinemaExperience.Infrastructure.Data.Constants.RoleConstants;
 
 namespace CinemaExperience.Controllers;
 
@@ -45,6 +47,7 @@ public class ActorController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = AdminRoleName)]
     public async Task<IActionResult> Add()
     {
         var model = new ActorViewModel()
@@ -55,6 +58,7 @@ public class ActorController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Roles = AdminRoleName)]
     public async Task<IActionResult> Add(ActorViewModel actorForm)
     {
         if (actorForm == null)
@@ -84,6 +88,7 @@ public class ActorController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = AdminRoleName)]
     public async Task<IActionResult> Edit(int id)
     {
         if (!await actorService.ActorExistsAsync(id))
@@ -98,6 +103,7 @@ public class ActorController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Roles = AdminRoleName)]
     public async Task<IActionResult> Edit(ActorViewModel actorForm)
     {
 
@@ -129,6 +135,7 @@ public class ActorController : BaseController
     }
 
     [HttpGet]
+    [Authorize(Roles = AdminRoleName)]
     public async Task<IActionResult> Delete(int id)
     {
         if (!await actorService.ActorExistsAsync(id))
@@ -142,6 +149,7 @@ public class ActorController : BaseController
     }
 
     [HttpPost]
+    [Authorize(Roles = AdminRoleName)]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         if (!await actorService.ActorExistsAsync(id))
