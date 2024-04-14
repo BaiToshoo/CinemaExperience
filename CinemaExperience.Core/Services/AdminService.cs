@@ -33,6 +33,10 @@ public class AdminService : IAdminService
     public async Task<bool> AddCriticAsync(string criticId)
     {
         ApplicationUser user = await userService.GetUserByIdAsync(criticId);
+        if (await userManager.IsInRoleAsync(user,UserRoleName))
+        {
+            await userManager.RemoveFromRoleAsync(user, UserRoleName);
+        }
         var result = await userManager.AddToRoleAsync(user, CriticRoleName);
 
         return result.Succeeded;
@@ -50,6 +54,10 @@ public class AdminService : IAdminService
     public async Task<bool> RemoveCriticAsync(string criticId)
     {
         ApplicationUser user = await userManager.FindByIdAsync(criticId);
+        if (!await userManager.IsInRoleAsync(user, UserRoleName))
+        {
+            await userManager.AddToRoleAsync(user, UserRoleName);
+        }
         var result = await userManager.RemoveFromRoleAsync(user, CriticRoleName);
 
         return result.Succeeded;
