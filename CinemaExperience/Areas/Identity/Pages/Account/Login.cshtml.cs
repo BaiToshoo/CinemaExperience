@@ -15,18 +15,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using CinemaExperience.Infrastructure.Identity;
+using static CinemaExperience.Infrastructure.Data.Constants.RoleConstants;
 
 namespace CinemaExperience.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<ApplicationUser> usermanager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ILogger<LoginModel> logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> _signInManager,
+            ILogger<LoginModel> _logger, 
+            UserManager<ApplicationUser> _userManager)
         {
-            _signInManager = signInManager;
-            _logger = logger;
+            signInManager = _signInManager;
+            logger = _logger;
+            usermanager = _userManager;
         }
 
         [BindProperty]
@@ -65,7 +70,7 @@ namespace CinemaExperience.Areas.Identity.Pages.Account
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
         }
@@ -74,17 +79,26 @@ namespace CinemaExperience.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    var user = await usermanager.FindByEmailAsync(Input.Email);
+                    logger.LogInformation("User logged in.");
+
+                    if (await usermanager.IsInRoleAsync(user, AdminRoleName))
+                    {
+                        return RedirectToAction("Actions", "Home", new { area = "Admin" });
+                    }
+                    else
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -92,7 +106,7 @@ namespace CinemaExperience.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }
                 else

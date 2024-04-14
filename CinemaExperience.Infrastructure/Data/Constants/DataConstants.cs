@@ -89,4 +89,9 @@ public static class DataConstants
 
 
     }
+
+    public static class CriticConstants
+    {
+        public const string CriticEmailRegex = @"^[\w\.\-]+@[a-zA-Z_]+\.[a-zA-Z]{2,3}$";
+    }
 }

@@ -16,6 +16,8 @@ public static class ServiceCollectionExtension
         services.AddScoped<IActorService, ActorService>();
         services.AddScoped<IDirectorService, DirectorService>();
         services.AddScoped<IReviewService, ReviewService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IAdminService, AdminService>();
 
         return services;
     }

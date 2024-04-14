@@ -1,0 +1,84 @@
+﻿@model PagedResult<UserViewModel>
+
+@{
+    ViewBag.Title = "Add Admin";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><label>Email</label></th>
+            <th><label>Full Name</label></th>
+            <th><label>User Is Critic</label></th>
+            <th><label>User Is Admin</label></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Items)
+        {
+            <tr>
+                <td><label>@user.Email</label></td>
+                <td>
+                    <form asp-action="AddAdmin" asp-controller="User" method="post">
+                        <input type="hidden" name="userId" value="@user.Id" />
+                        <button type="submit" class="btn btn-link">@user.FullName</button>
+                    </form>
+                </td>
+                <td>
+                    @if (user.IsCritic)
+                    {
+                        <label>✔</label>
+                    }
+                    else
+                    {
+                        <label class="text-center">❌</label>
+                    }
+                </td>
+                <td>
+                    @if (user.IsAdmin)
+                    {
+                        <label>✔</label>
+                    }
+                    else
+                    {
+                        <label class="text-center">❌</label>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("AddAdmin", "User", new { pageNumber = Model.CurrentPage - 1 })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("AddAdmin", "User", new { pageNumber = i })">@i</a>
+                </li>
+            }
+
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("AddAdmin", "User", new { pageNumber = Model.CurrentPage + 1 })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
