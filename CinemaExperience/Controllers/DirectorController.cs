@@ -1,4 +1,5 @@
 ﻿using CinemaExperience.Core.Contracts;
+using CinemaExperience.Core.Services;
 using CinemaExperience.Core.ViewModels.Director;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -141,5 +142,23 @@ public class DirectorController : BaseController
         var directorId = await directorService.DeleteConfirmedAsync(id);
 
         return RedirectToAction(nameof(All));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Search(string input)
+    {
+        if (input == null)
+        {
+            return RedirectToAction(nameof(All));
+        }
+
+        var searchedDirector = await directorService.SearchAsync(input);
+
+        if (searchedDirector == null)
+        {
+            return RedirectToAction(nameof(All));
+        }
+
+        return View(searchedDirector);
     }
 }

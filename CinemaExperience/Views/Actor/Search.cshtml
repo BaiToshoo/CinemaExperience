@@ -1,0 +1,14 @@
+﻿@model IEnumerable<AllActorsViewModel>
+
+@{
+	ViewBag.Title = "Search Actors";
+}
+
+<h2 class="text-center mt-4 mb-3">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_ActorSearchPartial" model="@Model" />
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<AllMoviesViewModel>
 
+@{
+    ViewBag.Title = "Movies";
+}
+<h2 class="text-center mt-4 mb-3">@ViewBag.Title</h2>
+
 <partial name="_MovieAllPartial" model="@Model"/>
 
 @section Scripts {

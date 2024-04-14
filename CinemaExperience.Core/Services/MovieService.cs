@@ -235,10 +235,10 @@ public class MovieService : IMovieService
         }
 
         var criticScore = criticReviews.Any()
-            ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
+            ? criticReviews.Average(r => r.Rating) * 10 : 0;
 
         var audienceScore = audienceReviews.Any()
-            ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
+            ? audienceReviews.Average(r => r.Rating) * 10 : 0;
 
         var movieDetails = new MovieDetailsViewModel()
         {

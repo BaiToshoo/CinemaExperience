@@ -5,33 +5,10 @@
 }
 <h2 class="text-center mt-4 mb-3">@ViewBag.Title</h2>
 
-@if (User.IsInRole(AdminRoleName))
-{
-    <div class="text-center mb-3">
-        <a href="@Url.Action("Add", "Actor")" class="btn btn-primary">Add Director</a>
-    </div>
+<partial name="_ActorAllPartial" model="@Model" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
 
-<hr />
 
-<div class="directors-list">
-    @foreach (var actors in Model)
-    {
-        <div class="col-md-2">
-            <div class="card mb-4 shadow-sm">
-                <img class="bd-placeholder-img card-img-top" width="100%" src="@actors.ImageUrl" alt="@actors.Name">
-                <div class="card-body d-flex flex-column">
-                    <p class="card-text">@actors.Name</p>
-                    <div class="btn-group">
-                        <a href="@Url.Action("Details", "Actor", new { id = actors.Id })" class="btn btn-sm btn-outline-secondary">Details</a>
-                        @if (User.IsInRole(AdminRoleName))
-                        {
-                            <a href="@Url.Action("Edit", "Actor", new { id = actors.Id })" class="btn btn-sm btn-outline-secondary">Edit</a>
-                            <a href="@Url.Action("Delete", "Actor", new { id = actors.Id })" class="btn btn-sm btn btn-danger">Delete</a>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-</div>

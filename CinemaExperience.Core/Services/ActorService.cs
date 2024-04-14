@@ -163,4 +163,20 @@ public class ActorService : IActorService
             })
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<AllActorsViewModel>> SearchAsync(string input)
+    {
+        var searchedMovies = await repository.AllReadOnly<Actor>()
+            .Where(a => input.ToLower().Contains(a.Name.ToLower())
+            || a.Name.ToLower().Contains(input.ToLower()))
+            .Select(m => new AllActorsViewModel
+            {
+                Id = m.Id,
+                Name = m.Name,
+                ImageUrl = m.ImageUrl
+            })
+            .ToListAsync();
+
+        return searchedMovies;
+    }
 }

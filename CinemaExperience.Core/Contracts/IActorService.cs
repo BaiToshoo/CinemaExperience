@@ -12,4 +12,5 @@ public interface IActorService
     Task<bool> ActorExistsAsync(int actorId);
     Task<ActorDeleteViewModel> DeleteAsync(int actorId);
     Task<int> DeleteConfirmedAsync(int actorId);
+    Task<IEnumerable<AllActorsViewModel>> SearchAsync(string input);
 }

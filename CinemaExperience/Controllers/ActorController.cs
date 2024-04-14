@@ -161,4 +161,22 @@ public class ActorController : BaseController
 
         return RedirectToAction(nameof(All));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Search(string input)
+    {
+        if (input == null)
+        {
+            return RedirectToAction(nameof(All));
+        }
+
+        var searchedActor = await actorService.SearchAsync(input);
+
+        if (searchedActor == null)
+        {
+            return RedirectToAction(nameof(All));
+        }
+
+        return View(searchedActor);
+    }
 }

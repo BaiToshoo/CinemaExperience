@@ -1,11 +1,13 @@
 ﻿@model IEnumerable<AllDirectorsViewModel>
 
 @{
-	ViewBag.Title = "Directors";
+	ViewBag.Title = "Search Directos";
 }
-<h2 class="text-center mt-4 mb-3">@ViewBag.Title</h2>
 
-<partial name="_DirectorAllPartial" model="@Model"/>
+<h2 class="text-center mt-4 mb-3">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_DirectorSearchPartial" model="@Model" />
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />

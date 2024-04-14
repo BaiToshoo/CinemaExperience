@@ -136,4 +136,20 @@ public class DirectorService : IDirectorService
              })
              .ToListAsync();
     }
+
+    public async Task<IEnumerable<AllDirectorsViewModel>> SearchAsync(string input)
+    {
+        var searchedDirectors = await repository.AllReadOnly<Director>()
+            .Where(d => input.ToLower().Contains(d.Name.ToLower())
+            || d.Name.ToLower().Contains(input.ToLower()))
+            .Select(m => new AllDirectorsViewModel
+            {
+                Id = m.Id,
+                Name = m.Name,
+                ImageUrl = m.ImageUrl
+            })
+            .ToListAsync();
+
+        return searchedDirectors;
+    }
 }

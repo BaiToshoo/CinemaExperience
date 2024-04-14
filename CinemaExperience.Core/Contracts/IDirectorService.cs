@@ -12,4 +12,5 @@ public interface IDirectorService
     Task<DirectorDeleteViewModel> DeleteAsync(int directorId);
     Task<int> DeleteConfirmedAsync(int directorId);
     Task<IEnumerable<DirectorFormViewModel>> GetDirectorsForFormAsync();
+    Task<IEnumerable<AllDirectorsViewModel>> SearchAsync(string input);
 }
