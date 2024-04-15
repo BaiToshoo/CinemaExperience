@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants.ApplicationUserConstants;
 using static CinemaExperience.Infrastructure.Data.Constants.DataConstants;
+using static CinemaExperience.Infrastructure.Data.Constants.RoleConstants;
 
 namespace CinemaExperience.Areas.Identity.Pages.Account
 {
@@ -110,6 +111,7 @@ namespace CinemaExperience.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
                     await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("UserFullNameClaim", $"{user.FirstName} {user.LastName}"));
+                    await _userManager.AddToRoleAsync(user, UserRoleName);
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
