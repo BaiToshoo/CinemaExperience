@@ -9,6 +9,8 @@ internal class SeedData
     public ApplicationUser GuestUser { get; set; }
     public ApplicationUser CriticUser { get; set; }
     public ApplicationUser AdminUser { get; set; }
+    public ApplicationUser DwightBrown { get; set; }
+    public ApplicationUser KimberlyPierce { get; set; }
 
     //Movies
     public Movie Inception { get; set; }
@@ -43,6 +45,12 @@ internal class SeedData
     public Review Review2 { get; set; }
     public Review Review3 { get; set; }
     public Review Review4 { get; set; }
+    public Review Review5 { get; set; }
+    public Review Review6 { get; set; }
+    public Review Review7 { get; set; }
+    public Review Review8 { get; set; }
+    public Review Review9 { get; set; }
+    public Review Review10 { get; set; }
 
     //Genres
     public Genre Action { get; set; }
@@ -87,9 +95,9 @@ internal class SeedData
             LastName = "Kuzmanov",
             Id = "9ddac0c8-5b4a-4ac9-9346-08f6dc133ca5",
             UserName = "guest@guest.com",
-            NormalizedUserName = "guest@guest.com",
+            NormalizedUserName = "GUEST@GUEST.COM",
             Email = "guest@guest.com",
-            NormalizedEmail = "guest@guest.com",
+            NormalizedEmail = "GUEST@GUEST.COM",
         };
 
         GuestUser.PasswordHash =
@@ -101,9 +109,9 @@ internal class SeedData
             LastName = "Kuzmanova",
             Id = "cd5cc46a-ef03-4222-ad12-71572e2c61ba",
             UserName = "critic@critic.com",
-            NormalizedUserName = "critic@critic.com",
+            NormalizedUserName = "CRITIC@CRITIC.COM",
             Email = "critic@critic.com",
-            NormalizedEmail = "critic@critic.com",
+            NormalizedEmail = "CRITIC@CRITIC.COM",
         };
 
         CriticUser.PasswordHash =
@@ -115,13 +123,41 @@ internal class SeedData
             LastName = "Admin",
             Id = "2a54cf13-1fde-4537-a977-e1d0c85c3fb0",
             UserName = "admin@admin.com",
-            NormalizedUserName = "admin@admin.com",
+            NormalizedUserName = "ADMIN@ADMIN.COM",
             Email = "admin@admin.com",
-            NormalizedEmail = "admin@admin.com",
+            NormalizedEmail = "ADMIN@ADMIN.COM",
         };
 
         AdminUser.PasswordHash =
             hasher.HashPassword(AdminUser, "admin123456");
+
+        DwightBrown = new ApplicationUser()
+        {
+            FirstName = "Dwight",
+            LastName = "Brown",
+            Id = "5ed4fe5a-5f46-4223-bcd5-49e1263b4182",
+            UserName = "dwight@brown.com",
+            NormalizedUserName = "DWIGHT@BROWN.COM",
+            Email = "dwight@brown.com",
+            NormalizedEmail = "DWIGHT@BROWN.COM"
+        };
+
+        DwightBrown.PasswordHash =
+            hasher.HashPassword(DwightBrown, "dwight123456");
+
+        KimberlyPierce = new ApplicationUser()
+        {
+            FirstName = "Kimberly",
+            LastName = "Pierce",
+            Id = "f4320fef-5953-4193-8c9e-4b72f71873ab",
+            UserName = "kimberly@pierce.com",
+            NormalizedUserName = "KIMBERLY@PIERCE.COM",
+            Email = "kimberly@pierce.com",
+            NormalizedEmail = "KIMBERLY@PIERCE.COM"
+        };
+
+        KimberlyPierce.PasswordHash =
+            hasher.HashPassword(KimberlyPierce, "kimberly123456");
     }
 
     private void SeedMovies()
@@ -387,6 +423,61 @@ internal class SeedData
             MovieId = TheDarkKnight.Id,
             PostedOn = new DateTime(2021, 7, 18)
         };
+        Review5 = new Review()
+        {
+            Id = 5,
+            UserId = DwightBrown.Id,
+            Content = "An epic and spectacular sci-fi allegory with mass appeal.",
+            Rating = 8,
+            MovieId = DunePartTwo.Id,
+            PostedOn = new DateTime(2023, 10, 20)
+        };
+        Review6 = new Review()
+        {
+            Id = 6,
+            UserId = KimberlyPierce.Id,
+            Content = "The best movie of the year. A must-see.",
+            Rating = 10,
+            MovieId = DunePartTwo.Id,
+            PostedOn = new DateTime(2023, 10, 20)
+        };
+        Review7 = new Review()
+        {
+            Id = 7,
+            UserId = KimberlyPierce.Id,
+            Content = "This film must be revisited, talked about, analyzed, and rewatched again and again. It will surely grow upon each viewing, but it proves instantly enthralling the first time.",
+            Rating = 8,
+            MovieId = Inception.Id,
+            PostedOn = new DateTime(2023, 10, 20)
+        };
+        Review8 = new Review()
+        {
+            Id = 8,
+            UserId = DwightBrown.Id,
+            Content = "The Dark Knight is a film that is not only a great comic book movie, but a great movie in general. It's a film that transcends the superhero genre and is a film that will be remembered for years to come.",
+            Rating = 9,
+            MovieId = TheDarkKnight.Id,
+            PostedOn = new DateTime(2023, 10, 20)
+        };
+        Review9 = new Review()
+        {
+            Id = 9,
+            UserId = KimberlyPierce.Id,
+            Content = "The Dark Knight is a film that is not only a great comic book movie, but a great movie in general. It's a film that transcends the superhero genre and is a film that will be remembered for years to come.",
+            Rating = 8,
+            MovieId = TheDarkKnight.Id,
+            PostedOn = new DateTime(2023, 10, 20)
+        };
+        Review10 = new Review()
+        {
+            Id = 10,
+            UserId = DwightBrown.Id,
+            Content = "When you have such a great writer/director as Christopher Nolan making his own thing, you can only expect to be mindblown. And I was, but not in the good way. I was blown",
+            Rating = 3,
+            MovieId = Inception.Id,
+            PostedOn = new DateTime(2023, 10, 20)
+        };
+
     }
     private void SeedMovieGenres()
     {
