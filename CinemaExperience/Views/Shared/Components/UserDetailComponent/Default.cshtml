@@ -1,0 +1,13 @@
+﻿@model UserDetailViewModel
+
+@if (!string.IsNullOrEmpty(Model.FullName))
+{
+    <div class="d-flex align-items-center">
+    <span>Hello, @Model.FullName </span>
+    @if (!string.IsNullOrEmpty(Model.Role))
+    {
+        <span class="badge badge-pill @(Model.Role == "User" ? "audience-role" : "critic-role")">@Model.Role</span>
+    }
+    </div>
+
+}
