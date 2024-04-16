@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Moq;
-using NuGet.Frameworks;
 using NUnit.Framework;
+using static CinemaExperience.Infrastructure.Data.Constants.RoleConstants;
 
 namespace CinemaExperience.UnitTests;
 
@@ -30,11 +30,17 @@ public class ReviewUnitTests
         mockUserManager = new Mock<UserManager<ApplicationUser>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
 
         mockUserManager.Setup(x => x.IsInRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
-       .ReturnsAsync((ApplicationUser user, string role) => role == "Critic" || role == "Admin");
+       .ReturnsAsync((ApplicationUser user, string role) => role == CriticRoleName || role == AdminRoleName);
+
+        mockUserManager.Setup(x => x.GetRolesAsync(It.IsAny<ApplicationUser>()))
+            .ReturnsAsync(new List<string> { CriticRoleName });
+
+        mockUserManager.Setup(x => x.FindByIdAsync(It.IsAny<string>()))
+            .ReturnsAsync(new ApplicationUser());
 
 
         var configuration = new ConfigurationBuilder()
-            .AddUserSecrets<MovieUnitTests>()
+            .AddUserSecrets<ReviewUnitTests>()
             .Build();
 
         var connectionString = configuration.GetConnectionString("TestConnection");
@@ -54,9 +60,10 @@ public class ReviewUnitTests
     [Test]
     public async Task Test_AddReviewAsync_DeleteAsync_And_DeleteConfirmedAsync()
     {
+        var maxReviewId = await repository.AllReadOnly<Review>().MaxAsync(r => r.Id);
         var review = new ReviewViewModel()
         {
-            Id = 5,
+            Id = maxReviewId + 1,
             Content = "Test Content",
             Rating = 5,
             MovieId = 1,
@@ -131,6 +138,31 @@ public class ReviewUnitTests
         // Assert
         Assert.That(results, Does.Not.Contain(false), "ReviewExistsAsync returned false for one or more reviews");
     }
+
+    [Test]
+    public async Task Test_GetAllReviewsByMovieIdAsync_ReturnsCorrectResult()
+    {
+        // Arrange
+        var movieId = 1;
+        var expectedReviews = await repository.AllReadOnly<Review>()
+            .Where(r => r.MovieId == movieId)
+            .ToListAsync();
+
+        // Act
+        var result = await reviewService.GetAllReviewsByMovieIdAsync(movieId);
+
+        // Assert
+        Assert.That(result.Count(), Is.EqualTo(expectedReviews.Count));
+        foreach (var review in result)
+        {
+            var expectedReview = expectedReviews.Single(r => r.Id == review.Id);
+            Assert.That(review.Content, Is.EqualTo(expectedReview.Content));
+            Assert.That(review.Rating, Is.EqualTo(expectedReview.Rating));
+            Assert.That(review.PostedOn, Is.EqualTo(expectedReview.PostedOn));
+            Assert.That(review.UserId, Is.EqualTo(expectedReview.UserId));
+        }
+    }
+
     [TearDown]
     public void TearDown()
     {

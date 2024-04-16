@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
+using static CinemaExperience.Infrastructure.Data.Constants.RoleConstants;
 
 namespace CinemaExperience.UnitTests;
 
@@ -29,7 +30,7 @@ public class MovieUnitTests
         mockUserManager = new Mock<UserManager<ApplicationUser>>(mockUserStore.Object, null, null, null, null, null, null, null, null);
 
         mockUserManager.Setup(x => x.IsInRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
-       .ReturnsAsync((ApplicationUser user, string role) => role == "Critic" || role == "Admin");
+       .ReturnsAsync((ApplicationUser user, string role) => role == CriticRoleName || role == AdminRoleName);
 
 
         var configuration = new ConfigurationBuilder()
@@ -101,9 +102,10 @@ public class MovieUnitTests
     [Test]
     public async Task Test_Movie_DeleteAsync_DeleteConfirmedAsync_And_AddMovieAsync()
     {
+        var maxMovieId = await repository.AllReadOnly<Movie>().MaxAsync(r => r.Id);
         var movie = new MovieViewModel
         {
-            Id = 4,
+            Id = maxMovieId + 1,
             Title = "Test Movie",
             DirectorId = 1,
             ReleaseDate = DateTime.Now,
@@ -163,6 +165,7 @@ public class MovieUnitTests
             .Include(m => m.Director)
             .Include(m => m.MovieGenres).ThenInclude(g => g.Genre)
             .Include(m => m.MovieActors).ThenInclude(a => a.Actor)
+            .Include(m => m.Reviews).ThenInclude(r => r.User)
             .FirstOrDefault();
         Assert.That(movie, Is.Not.Null, "Movie is null");
 
@@ -173,23 +176,23 @@ public class MovieUnitTests
         var audienceReviews = new List<Review>();
 
 
-        //foreach (var review in movie.Reviews)
-        //{
-        //    if (await userManager.IsInRoleAsync(review.User, "Critic"))
-        //    {
-        //        criticReviews.Add(review);
-        //    }
-        //    else if (await userManager.IsInRoleAsync(review.User, "Guest"))
-        //    {
-        //        audienceReviews.Add(review);
-        //    }
-        //}
+        foreach (var review in movie.Reviews)
+        {
+            if (await mockUserManager.Object.IsInRoleAsync(review.User, "Critic"))
+            {
+                criticReviews.Add(review);
+            }
+            else if (await mockUserManager.Object.IsInRoleAsync(review.User, "Guest"))
+            {
+                audienceReviews.Add(review);
+            }
+        }
 
-        //var criticScore = criticReviews.Any()
-        //    ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
+        var criticScore = criticReviews.Any()
+            ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
 
-        //var audienceScore = audienceReviews.Any()
-        //    ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
+        var audienceScore = audienceReviews.Any()
+            ? movie.Reviews.Average(r => r.Rating) * 10 : 0;
 
         // Assert
         Assert.That(result, Is.Not.Null, "Movie details are null");
@@ -202,8 +205,8 @@ public class MovieUnitTests
         Assert.That(result.ImageUrl, Is.EqualTo(movie.ImageUrl));
         Assert.That(result.Genres.Select(g => g.Name), Is.EqualTo(movie.MovieGenres.Select(mg => mg.Genre.Name)));
         Assert.That(result.Actors.Select(a => a.Name), Is.EqualTo(movie.MovieActors.Select(ma => ma.Actor.Name)));
-        //Assert.That(result.CriticsRating, Is.EqualTo(criticScore));
-        //Assert.That(result.UserRating, Is.EqualTo(audienceScore));
+        Assert.That(result.CriticsRating, Is.EqualTo(criticScore));
+        Assert.That(result.UserRating, Is.EqualTo(audienceScore));
     }
 
     [Test]
