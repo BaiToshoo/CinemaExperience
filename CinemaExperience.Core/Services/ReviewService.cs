@@ -102,6 +102,8 @@ public class ReviewService : IReviewService
     public async Task<IEnumerable<ReviewFormViewModel>> GetAllReviewsByMovieIdAsync(int movieId)
     {
         var reviews = await repository.AllReadOnly<Review>()
+            .Include(u => u.User)
+            .Include(m => m.Movie)
             .Where(r => r.MovieId == movieId)
             .OrderByDescending(r => r.PostedOn)
             .ToListAsync();

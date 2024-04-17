@@ -1,13 +1,12 @@
 ﻿using CinemaExperience.Core.Contracts;
 using CinemaExperience.Core.Services;
-using CinemaExperience.Infrastructure.Data.Common;
+using CinemaExperience.Core.ViewModels.Director;
 using CinemaExperience.infrastructure.Data;
+using CinemaExperience.Infrastructure.Data.Common;
+using CinemaExperience.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-using CinemaExperience.Core.ViewModels.Director;
-using CinemaExperience.Infrastructure.Data.Models;
-using CinemaExperience.Core.ViewModels.Actor;
 
 namespace CinemaExperience.UnitTests;
 
@@ -23,7 +22,7 @@ public class DirectorUnitTests
     {
 
         var configuration = new ConfigurationBuilder()
-            .AddUserSecrets<MovieUnitTests>()
+            .AddUserSecrets<DirectorUnitTests>()
             .Build();
 
         var connectionString = configuration.GetConnectionString("TestConnection");
@@ -43,9 +42,10 @@ public class DirectorUnitTests
     [Test]
     public async Task Test_AddDirectorAsync_DeleteAsync_And_DeleteConfirmedAsync()
     {
+        var maxDirectorId = await repository.AllReadOnly<Director>().MaxAsync(r => r.Id);
         var director = new DirectorViewModel()
         {
-            Id = 3,
+            Id = maxDirectorId + 1,
             Name = "Test Director",
             BirthDate = DateTime.UtcNow.AddYears(-30),
             Biography = "Test Biography",

@@ -1,7 +1,6 @@
 ﻿using CinemaExperience.Core.Contracts;
 using CinemaExperience.Core.Services;
 using CinemaExperience.Core.ViewModels.Actor;
-using CinemaExperience.Core.ViewModels.Movie;
 using CinemaExperience.infrastructure.Data;
 using CinemaExperience.Infrastructure.Data.Common;
 using CinemaExperience.Infrastructure.Data.Models;
@@ -23,7 +22,7 @@ public class ActorUnitTests
     {
 
         var configuration = new ConfigurationBuilder()
-            .AddUserSecrets<MovieUnitTests>()
+            .AddUserSecrets<ActorUnitTests>()
             .Build();
 
         var connectionString = configuration.GetConnectionString("TestConnection");
@@ -43,9 +42,10 @@ public class ActorUnitTests
     [Test]
     public async Task Test_AddActorAsync_DeleteAsync_And_DeleteConfirmedAsync()
     {
+        var maxActorId = await repository.AllReadOnly<Actor>().MaxAsync(r => r.Id);
         var actor = new ActorViewModel()
         {
-            Id = 16,
+            Id = maxActorId + 1,
             Name = "Test Actor",
             BirthDate = DateTime.UtcNow.AddYears(-30),
             Biography = "Test Biography",

@@ -17,6 +17,8 @@ public static class ApplicationBuilderExtensions
             CreateRoleAndAssignToUser(roleManager, userManager, AdminRoleName, "admin@admin.com").GetAwaiter().GetResult();
             CreateRoleAndAssignToUser(roleManager, userManager, UserRoleName, "guest@guest.com").GetAwaiter().GetResult();
             CreateRoleAndAssignToUser(roleManager, userManager, CriticRoleName, "critic@critic.com").GetAwaiter().GetResult();
+            CreateRoleAndAssignToUser(roleManager, userManager, UserRoleName, "kimberly@pierce.com").GetAwaiter().GetResult();
+            CreateRoleAndAssignToUser(roleManager, userManager, CriticRoleName, "dwight@brown.com").GetAwaiter().GetResult();
         }
 
         return app;

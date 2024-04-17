@@ -9,6 +9,6 @@ internal class ApplicationUserConfiguration : IEntityTypeConfiguration<Applicati
     {
         var data = new SeedData();
 
-        builder.HasData(new ApplicationUser[] {data.AdminUser, data.CriticUser, data.GuestUser});
+        builder.HasData(new ApplicationUser[] { data.AdminUser, data.CriticUser, data.GuestUser, data.DwightBrown, data.KimberlyPierce });
     }
 }
