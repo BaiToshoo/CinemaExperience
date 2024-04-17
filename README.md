@@ -6,7 +6,7 @@ Welcome to the Cinema Experience repository! This MVC application is a hub for m
 
 - 🎥 View a list of movies with detailed information
 - ✍️ Submit reviews as a user or critic, with separate ratings
-- 🔍 Search and filter movies by various criteria
+- 🔍 Explore upcoming movies and keep an eye out for "The Next Big Thing".
 
 ## 🛠 Built With
 
