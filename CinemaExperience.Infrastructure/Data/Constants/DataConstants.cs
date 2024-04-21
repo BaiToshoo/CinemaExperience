@@ -81,11 +81,11 @@ public static class DataConstants
     {
         //FirstName
         public const int FirstNameMaxLength = 30;
-        public const int FirstNameMinLength = 5;
+        public const int FirstNameMinLength = 3;
 
         //LastName
         public const int LastNameMaxLength = 30;
-        public const int LastNameMinLength = 5;
+        public const int LastNameMinLength = 3;
 
 
     }
