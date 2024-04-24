@@ -63,6 +63,16 @@ would happen once you run the application, including Test Accounts:
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads): Or use Docker Desktop to run a SQL Server container.
 - [.NET Core SDK](https://dotnet.microsoft.com/download/dotnet/6.0): The software development kit for .NET development.
 
+
+## 🖼️Pictures:
+![project](https://github.com/BaiToshoo/CinemaExperience/assets/79370695/e3bd46d5-88b6-4eb7-a3e2-7fb568271ef8)
+![image](https://github.com/BaiToshoo/CinemaExperience/assets/79370695/65c7d140-f92c-4c54-a837-2c7f4e2179e6)
+![image](https://github.com/BaiToshoo/CinemaExperience/assets/79370695/d5439c67-8bae-403d-88ab-d15fa80c5089)
+![image](https://github.com/BaiToshoo/CinemaExperience/assets/79370695/bb359500-594a-4630-86ea-c40bfecfd1db)
+![image](https://github.com/BaiToshoo/CinemaExperience/assets/79370695/b16749e0-accc-413e-9e62-bb6cffad735c)
+![image](https://github.com/BaiToshoo/CinemaExperience/assets/79370695/3b2965d4-02af-42e0-b509-4966a03827ce)
 ---
 
 This project utilizes the best practices in web development and follows the MVC architectural pattern for a clean, maintainable, and scalable codebase.
+
+
