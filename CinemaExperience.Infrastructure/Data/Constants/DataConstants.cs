@@ -10,7 +10,7 @@ public static class DataConstants
     public const string AtLeastOneGenreErrorMessage = "At least one genre is required.";
     public const string RequiredFieldErrorMessage = "The field {0} is reqired.";
     public const int ImageUrlMinLength = 5;
-    public const int ImageUrlMaxLength = 50;
+    public const int ImageUrlMaxLength = 1000;
     public static class Movie
     {
         //Name
