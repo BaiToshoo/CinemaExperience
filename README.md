@@ -15,6 +15,7 @@ Welcome to the Cinema Experience repository! This MVC application is a hub for m
 - [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/) - Object-relational mapping framework.
 - [Razor](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/razor?view=aspnetcore-6.0) - Template engine for UI.
 - [ASP.NET Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0&tabs=visual-studio) - Identity management system.
+- [Azure](cinemaexperience.azurewebsites.net) - The site is deployed and hosted on Microsoft Azure.
 
 ## 🚀 How It Works
 
@@ -73,6 +74,6 @@ would happen once you run the application, including Test Accounts:
 ![image](https://github.com/BaiToshoo/CinemaExperience/assets/79370695/3b2965d4-02af-42e0-b509-4966a03827ce)
 ---
 
-This project utilizes the best practices in web development and follows the MVC architectural pattern for a clean, maintainable, and scalable codebase.
+This project utilizes the best practices in web development and follows the MVC architectural pattern for a clean, maintainable, and scalable codebase.The application is hosted on [Microsoft Azure](cinemaexperience.azurewebsites.net) for seamless and scalable deployment.
 
 
